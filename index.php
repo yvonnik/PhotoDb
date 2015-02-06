@@ -4,13 +4,14 @@
 $nb_row=5;
 $nb_col=7;
 
+$IMAGE_SERVER="https://192.168.2.11:8081/PhotoDb/";
 include("dbconfig.php");
 
 
 if (isset($_GET["Page"])) $Page=$_GET["Page"]; else $Page=1;
 
 
-/* lecture du tableau d'entrée */
+/* lecture du tableau d'entrï¿½e */
 
 if (isset($HTTP_GET_VARS["Query"])) $Query=rawurldecode($HTTP_GET_VARS["Query"]);
  else $Query="1";
@@ -37,8 +38,8 @@ while (!$rs->EOF) {
 	$im[$i]["I"]=$i;
 	$im[$i]["N"]=$rs->fields["N"];
 	$im[$i]["Date"]=$rs->fields["Date"];
-	$im[$i]["Link"]="display_image.php?Id=".$im[$i]["N"]."&small=0&Date=".$im[$i]["Date"]; 
-	$im[$i]["SmallLink"]="display_image.php?Id=".$im[$i]["N"]."&small=1&Date=".$im[$i]["Date"];
+	$im[$i]["Link"]=$IMAGE_SERVER."display_image.php?Id=".$im[$i]["N"]."&small=0&Date=".$im[$i]["Date"]; 
+	$im[$i]["SmallLink"]=$IMAGE_SERVER."display_image.php?Id=".$im[$i]["N"]."&small=1&Date=".$im[$i]["Date"];
 	$i++;
 	$rs->MoveNext();
 }
