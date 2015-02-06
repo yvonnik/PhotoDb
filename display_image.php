@@ -23,7 +23,7 @@ else
     if ($size and $fp)
     {
         header('Content-Type: '.$size['mime']);
-        thru($fp);
+        fpassthru($fp);
         exit;
     }
    else
