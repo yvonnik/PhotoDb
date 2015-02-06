@@ -18,10 +18,10 @@ var Query='{$QUERY}';
 function movetopage(sens)
 {
  var OldPage=Page;
- if (sens == -4) /* rtour au début */ Page=1;
+ if (sens == -4) /* rtour au dï¿½but */ Page=1;
  if (sens == -3) /* moins une page */ {Page--;if (Page <= 0) Page=1;}
  if (sens == -2) /* avant une page */ {Page++; if (Page > NbPage) Page=NbPage;}
- if (sens == -1) /* à la fin */ Page=NbPage;
+ if (sens == -1) /* ï¿½ la fin */ Page=NbPage;
  if ((sens > 0) && (sens <= NbPage)) Page=sens;
  if (OldPage != Page) raffraichir();
 }
@@ -89,7 +89,7 @@ function MM_swapImage() { //v3.0
   {section name=im loop=$IM} {if ($IM[im].I % $COLS) == 0}
 <tr>{/if}
 
-<td><div align="center">{$IM[im].Date}<a href="{$IM[im].Link}" target="_blank"><img src="{$IM[im].SmallLink}"></a></div></td>
+<td><div align="center"><div align="center">{$IM[im].Date}</div><a href="{$IM[im].Link}" target="_blank"><img src="{$IM[im].SmallLink}"></a></div></td>
 
 {if $IM[im].I%$COLS == $COLS-1}</tr>{/if}
 
