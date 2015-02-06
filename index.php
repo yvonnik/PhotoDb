@@ -1,8 +1,8 @@
 <?php
 
 
-$nb_row=5;
-$nb_col=7;
+$nb_row=4;
+$nb_col=5;
 
 $IMAGE_SERVER="https://192.168.2.11:8081/PhotoDb/";
 include("dbconfig.php");
