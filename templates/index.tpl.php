@@ -119,10 +119,7 @@ function MM_swapImage() { //v3.0
 {literal}
 <script>
   $(function () {
-    // 6 create an instance when the DOM is ready
-    //$('#jstree_query').jstree();
-    // 7 bind to events triggered on the tree
-    
+  
     $('#jstree_query').jstree({
     'core' : {
         'data' : {
