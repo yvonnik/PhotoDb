@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <html>
 
@@ -10,6 +10,8 @@
 <link href="style.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="jsTree/dist/themes/default/style.min.css" />
 <script src="jQuery/jquery.js"></script>
+<!-- http://www.jstree.com/ -->
+
 <script src="jsTree/dist/jstree.min.js"></script>
 
 <script language="JavaScript" type="text/JavaScript">
@@ -71,22 +73,7 @@ function MM_swapImage() { //v3.0
 			<div Id="popup_interior">
 				<img id="close" src="web_images/3.png">
 				<div Id="jstree_query">
-					<ul>
-						<li>
-							Root node 1
-							<ul>
-								<li id="child_node_1">
-									Child node 1
-								</li>
-								<li>
-									Child node 2
-								</li>
-							</ul>
-						</li>
-						<li>
-							Root node 2
-						</li>
-					</ul>
+					
 				</div>
 				<br>
 				<button Id="query_close">
@@ -133,12 +120,23 @@ function MM_swapImage() { //v3.0
 <script>
   $(function () {
     // 6 create an instance when the DOM is ready
-    $('#jstree_query').jstree();
+    //$('#jstree_query').jstree();
     // 7 bind to events triggered on the tree
-    $('#jstree_query').on("changed.jstree", function (e, data) {
+    
+    $('#jstree_query').jstree({
+    'core' : {
+        'data' : {
+            'url' : 'querylist.php',
+            'data' : function (node) {
+                return { 'id' : node.id };
+            }
+        }
+     }
+    });
+    
+	$('#jstree_query').on("changed.jstree", function (e, data) {
       console.log(data.selected);
     });
-
     $("#filtrage").on('click', function () {
     	document.getElementById('popup').style.display = "block";
     });
