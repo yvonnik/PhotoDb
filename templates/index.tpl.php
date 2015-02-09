@@ -1,13 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
 <html>
+
 
 <head>
 <title>PhotoDb</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link href="style.css" rel="stylesheet" type="text/css">
- 
+
+<link href="style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="jsTree/dist/themes/default/style.min.css" />
+<script src="jQuery/jquery.js"></script>
+<script src="jsTree/dist/jstree.min.js"></script>
+
 <script language="JavaScript" type="text/JavaScript">
-<!--
 
 var Page={$PAGE};
 var NbPage={$NBPAGES};
@@ -30,11 +35,6 @@ function raffraichir()
 {
  var URL="index.php?Page="+Page+"&Query="+Query;
  window.location=URL;
-}
-
-function toggleQuery()
-{
- window.open("editquery.php");
 }
 
 function MM_swapImgRestore() { //v3.0
@@ -66,6 +66,35 @@ function MM_swapImage() { //v3.0
 </head>
 
 <body  onLoad="MM_preloadImages('web_images/first_on.gif','web_images/backarrow_on.gif','web_images/forward_on.gif','web_images/last_on.gif')">
+<!-- http://www.formget.com/how-to-create-pop-up-contact-form-using-javascript/ -->	
+	<div Id="popup">
+			<div Id="popup_interior">
+				<img id="close" src="web_images/3.png">
+				<div Id="jstree_query">
+					<ul>
+						<li>
+							Root node 1
+							<ul>
+								<li id="child_node_1">
+									Child node 1
+								</li>
+								<li>
+									Child node 2
+								</li>
+							</ul>
+						</li>
+						<li>
+							Root node 2
+						</li>
+					</ul>
+				</div>
+				<br>
+				<button Id="query_close">
+					Filtrer
+				</button>
+			</div>
+		</div>
+	
 <table width="50%" border="0" align="center" cellpadding="1" cellspacing="5">
     <tr>
       <td><a href="#" onClick="movetopage(-4);" onMouseOver="MM_swapImage('Image2','','web_images/first_on.gif',1)" onMouseOut="MM_swapImgRestore()"><img src="web_images/first.gif" name="Image2" width="32" height="32" border="0"></a></td>
@@ -82,19 +111,42 @@ function MM_swapImage() { //v3.0
       <td><a href="#" onClick="movetopage(-1);" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image5','','web_images/last_on.gif',1)"><img src="web_images/last.gif" name="Image5" width="32" height="32" border="0"></a></td>
   </tr>
 </table>
-<div align="left">WHERE : {$RAWQUERY} 
-  &nbsp;&nbsp;&nbsp;<input name="EditQuery" type="button" onClick="toggleQuery();" value="Editer">
+
+<div align="center"> 
+  <button id="filtrage">Filtrer</button>
 </div>
-<table border="1" cellpadding="3" cellspacing="2" bgcolor="#333333">
+
+
+
+<table  class="thumb" class="tableau">
   {section name=im loop=$IM} {if ($IM[im].I % $COLS) == 0}
 <tr>{/if}
 
-<td><div align="center"><div align="center">{$IM[im].Date}</div><a href="{$IM[im].Link}" target="_blank"><img src="{$IM[im].SmallLink}"></a></div></td>
+<td class="tableau"><div align="center" class="thumb"><div align="center" class="thumb">{$IM[im].Date}</div><a href="{$IM[im].Link}" target="_blank"><img class="thumb" src="{$IM[im].SmallLink}"></a></div></td>
 
 {if $IM[im].I%$COLS == $COLS-1}</tr>{/if}
 
 {/section}
 </table>
 
+{literal}
+<script>
+  $(function () {
+    // 6 create an instance when the DOM is ready
+    $('#jstree_query').jstree();
+    // 7 bind to events triggered on the tree
+    $('#jstree_query').on("changed.jstree", function (e, data) {
+      console.log(data.selected);
+    });
+
+    $("#filtrage").on('click', function () {
+    	document.getElementById('popup').style.display = "block";
+    });
+    $("img#close").on('click', function () {
+    	document.getElementById('popup').style.display = "none";
+    });
+  });
+  </script>
+{/literal}
 </body>
 </html>
