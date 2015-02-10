@@ -1,51 +1,39 @@
 <?php
 // on boucle sur le répoertoire des querys de filtre, et on construit une page avec des ul et des li pour chargement dans l'arbre de la page index
-global $Sep;
+include("dbconfig.php");
 
-if (stristr(php_uname(),"windows")) {$unix=0;$windows=1;} else {$unix=1;$windows=0;}
-if ($windows) {$BaseFolder="Sandbox\\Filtres";$Sep="\\";}
-else {$BaseFolder="../../Multimedia/Photos/PhotoDb/Filtres";$Sep="/";}
+traite_dir(1);
 
-echo "<ul>";
-traite_dir($BaseFolder,$Sep);
-echo "</ul>";
 
-function traite_dir($dir,$Sep)
+function traite_dir($me)
 {
 	
-		
-	$fichiers=scandir($dir);
+	global $bdd;	
 	
-	//d'abord les répoertoires
-	foreach ($fichiers as $f)
+	echo "<ul>";
+	$res=$bdd->Execute("SELECT * from queryfolders WHERE Parent=$me");
+	if ($res)
 	{
-		if (($f == ".") || ($f == ".."))	
-		 {}
-		else if (is_dir($dir.$Sep.$f))
-		{
-			echo utf8_encode("<li>$f");
-			echo "<ul>";
-			traite_dir($dir.$Sep.$f,$Sep);
-			echo "</ul>";
-			echo "</li>";
-		}	
-	}
-
-// Puis les fichiers normaux
+	 while (!$res->EOF)
+	  {
+	 	echo "<li>".$res->fields["Nom"];
+		traite_dir($res->fields["N"]);
+		echo "</li>";
+		$res->MoveNext();
+	  }
+	} 
 	
-	foreach ($fichiers as $f)
+	$res=$bdd->Execute("SELECT * from querys WHERE Parent=$me");
+	if ($res)
 	{
-		if (($f == ".") || ($f == ".."))	
-		 {}
-		else if (!is_dir($dir.$Sep.$f))
-		
-			{
-				$Id=$dir.$Sep.$f;
-				$nom=explode(".",$f);
-				echo utf8_encode("<li Id='$Id'>$nom[0]</li>");
-			}
-		
+	 while (!$res->EOF)
+	  {
+	 	$Id=$res->fields["N"];
+	 	echo "<li Id='$Id'>".$res->fields["Nom"]."</li>";
+		$res->MoveNext();
+	  }
 	}
+	echo "</ul>";
 	
 }
 ?>
