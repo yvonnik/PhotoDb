@@ -21,7 +21,7 @@ traite_dir("root",$BaseFolder,0);
 function traite_dir($nom,$dir,$Parent)
 	
 {
-	global $index, $Sep,$bdd;	
+	global $index, $Sep,$bdd,$unix,$windows;	
 	
 	$me=$index;
 	$bdd->Execute("INSERT queryfolders (N,Nom,Parent) VALUES ($index,'$nom',$Parent)");
@@ -72,6 +72,7 @@ function traite_dir($nom,$dir,$Parent)
 				 }
 				 
 				$requete=fgets($myfile);
+				if ($unix) {$requete=utf8_encode($requete);}
 				
 				fclose($myfile);
 				$bdd->Execute("INSERT querys (N,Nom,Source,Qualite,Debut,Fin,Requete,Parent) VALUES ($index,'$nom',$source,$qualite,'$debut','$fin','$requete',$me)");
