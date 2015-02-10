@@ -16,7 +16,7 @@ function traite_dir($me)
 	{
 	 while (!$res->EOF)
 	  {
-	 	echo "<li>".$res->fields["Nom"];
+	 	echo "<li>".utf8_encode($res->fields["Nom"]);
 		traite_dir($res->fields["N"]);
 		echo "</li>";
 		$res->MoveNext();
@@ -29,7 +29,7 @@ function traite_dir($me)
 	 while (!$res->EOF)
 	  {
 	 	$Id=$res->fields["N"];
-	 	echo "<li Id='$Id'>".$res->fields["Nom"]."</li>";
+	 	echo "<li Id='$Id'>".utf8_encode($res->fields["Nom"])."</li>";
 		$res->MoveNext();
 	  }
 	}

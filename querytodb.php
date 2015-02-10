@@ -44,7 +44,7 @@ function traite_dir($nom,$dir,$Parent)
 			{
 				
 				$Id=$dir.$Sep.$f;
-				$nom=explode(".",$f);$nom=utf8_encode($nom[0]);
+				$nom=explode(".",$f);$nom=$nom[0];
 				
 				$myfile = fopen($Id, "r") or die("Unable to open file $Id!");
 				$source=intval(fgets($myfile));
