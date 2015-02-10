@@ -67,7 +67,7 @@ function MM_swapImage() { //v3.0
 
 </head>
 
-<body  onLoad="MM_preloadImages('web_images/first_on.gif','web_images/backarrow_on.gif','web_images/forward_on.gif','web_images/last_on.gif')">
+<body  onLoad="MM_preloadImages('web_images/first_128_HOT.png','web_images/rewinding_128_HOT.png','web_images/fast_forward_128_HOT.png','web_images/last_128_HOT.png')">
 <!-- http://www.formget.com/how-to-create-pop-up-contact-form-using-javascript/ -->	
 	<div Id="popup">
 			<div Id="popup_interior">
@@ -84,8 +84,8 @@ function MM_swapImage() { //v3.0
 	
 <table width="50%" border="0" align="center" cellpadding="1" cellspacing="5">
     <tr>
-      <td><a href="#" onClick="movetopage(-4);" onMouseOver="MM_swapImage('Image2','','web_images/first_on.gif',1)" onMouseOut="MM_swapImgRestore()"><img src="web_images/first.gif" name="Image2" width="32" height="32" border="0"></a></td>
-      <td><a href="#" onClick="movetopage(-3);" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image3','','web_images/backarrow_on.gif',1)"><img src="web_images/backarrow.gif" name="Image3" width="32" height="32" border="0"></a></td>
+      <td><a href="#" onClick="movetopage(-4);" onMouseOver="MM_swapImage('Image2','','web_images/first_128_HOT.png',1)" onMouseOut="MM_swapImgRestore()"><img src="web_images/first_128.png" name="Image2" width="64" height="64" border="0"></a></td>
+      <td><a href="#" onClick="movetopage(-3);" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image3','','web_images/rewinding_128_HOT.png',1)"><img src="web_images/rewinding_128.png" name="Image3" width="64" height="64" border="0"></a></td>
 	  <td><div align="center"> 
 	      {$ROWS*$COLS*$PAGE-$ROWS*$COLS+1}-{$PAGE*$ROWS*$COLS}/{$NBPHOTOS}, 
           page 
@@ -94,8 +94,8 @@ function MM_swapImage() { //v3.0
           <input name="Aller" type="button" onClick="movetopage(lapage.value);" value="Aller">
         </div>
 	  </td>
-      <td><a href="#" onClick="movetopage(-2);" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image4','','web_images/forward_on.gif',1)"><img src="web_images/forward.gif" name="Image4" width="32" height="32" border="0"></a></td>
-      <td><a href="#" onClick="movetopage(-1);" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image5','','web_images/last_on.gif',1)"><img src="web_images/last.gif" name="Image5" width="32" height="32" border="0"></a></td>
+      <td><a href="#" onClick="movetopage(-2);" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image4','','web_images/fast_forward_128_Hot.png',1)"><img src="web_images/fast_forward_128.png" name="Image4" width="64" height="64" border="0"></a></td>
+      <td><a href="#" onClick="movetopage(-1);" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image5','','web_images/last_128_HOT.png',1)"><img src="web_images/last_128.png" name="Image5" width="64" height="64" border="0"></a></td>
   </tr>
 </table>
 
