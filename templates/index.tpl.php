@@ -67,20 +67,12 @@ function raffraichir()
     	<td><a Id="navbutton-rewind" class="navbutton" href="#" onClick="movetopage(-3);"></a></td>
     	<td><a Id="navbutton-forward" class="navbutton" href="#" onClick="movetopage(-2);"></a></td>
     	<td><a Id="navbutton-last" class="navbutton" href="#" onClick="movetopage(-1);"></a></td>
-        <td><div align="center"> 
-	      {$ROWS*$COLS*$PAGE-$ROWS*$COLS+1}-{$PAGE*$ROWS*$COLS}/{$NBPHOTOS}, 
-          page 
-          <input name="lapage" type="text" value="{$PAGE}" size="4" maxlength="5">
-          /{$NBPAGES}
-          <input name="Aller" type="button" onClick="movetopage(lapage.value);" value="Aller">
-        </div>
+    	<td><a Id="navbutton-filter" class="navbutton" href="#" onClick="document.getElementById('popup').style.display = 'block';"></a></td>
 	  </td>
   </tr>
 </table>
 
-<div align="center"> 
-  <button id="filtrage">Filtrer</button>
-</div>
+
 
 
 

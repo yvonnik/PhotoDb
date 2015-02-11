@@ -134,6 +134,9 @@ button#query_close {
 #navbutton-first { background: url('web_images/first_64.png') no-repeat 0px 0px;}
 #navbutton-first:hover { background-position: 0px -64px; }
 
+#navbutton-filter { background: url('web_images/filter_64.png') no-repeat 0px 0px;}
+#navbutton-filter:hover { background-position: 0px -64px; }
+
 a.navbutton {
 	
 	width: 64px;
