@@ -15,6 +15,8 @@ img {
 	    color: #000;	
 }
 
+.cell:hover { background-color: black;}
+
 .tableau {
 	    border:1px solid #CD853F;
 	    padding: 3px;
@@ -28,118 +30,6 @@ td, th {
 }
 
 
-a {
-	color: #617A81;
-
-}
-
-form {
-}
-
-.title {
-	font-family: Arial, Helvetica, sans-serif;
-  font-size: 24px;
-	line-height: 30px;
-  background-color: #006666;
-	color: #DCDCDC;
-}
-
-.subtitle {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 16px;
-	line-height: 22px;
-	font-weight: bold;
-  color: #006666;
-}
-
-.header {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 24px;
-	background-color: #006666;
-  color: #DCDCDC;
-}
-
-.nav {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-  font-weight: bold;
-	background-color: #CCCCCC;
-}
-
-.navLink {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	font-weight: bold;
-	background-color: #DEDECA;
-}
-
-.sidebar {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	line-height: 18px;
-	padding: 3px;
-	background-color: #FFFFFF;
-}
-
-.sidebarHeader {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 16px;
-	line-height: 24px;
-	color: #FFFFFF;
-	background-color: #339999;
-}
-
-.sidebarFooter {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	line-height: 18px;
-	background-color: #CCCCCC;
-}
-
-.footer {
-  font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	font-weight: bold;
-	line-height: 22px;
-	color: #333333;
-	background-color: #CCCCCC;
-}
-
-.legal {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 9px;
-	color: #333333;
-}
-
-.box1 {
-	border-color: #CCCCCC #333333 #333333 #CCCCCC;
-	border-width: medium;
-  border-style: ridge;
-}
-
-.promo {
-	font-family: "Times New Roman", Times, serif;
-	color: #000033;
-}
-
-.titlebar {
-	font-family: "Times New Roman", Times, serif;
-	font-size: 9px;
-	color: #FFFFFF;
-  background-color: #336699;
-}
-
-.dingbat {
-	font-family: Arial, Helvetica, sans-serif;
-	background-color: #99CC99;
-  color: #006666; 
-	font-weight: bolder;
-	font-size: medium;
-}
-
-a:hover {
-	text-decoration: underline;
-}
 
 input.big {
 	width: 100px;
@@ -174,54 +64,84 @@ input {
 	line-height: normal;
 }
 
+
 div#popup {
-width:100%;
-height:100%;
-opacity:.9;
-top:0;
-left:0;
-display:none;
-position:fixed;
-background-color:#313131;
-overflow:auto
+	width: 100%;
+	height: 100%;
+	opacity: .9;
+	top: 0;
+	left: 0;
+	display: none;
+	position: fixed;
+	background-color: #313131;
+	overflow: auto
 }
+
+
 
 img#close {
-position:absolute;
-right:-14;
-top:-14;
-cursor:pointer
+	position: absolute;
+	right: -14;
+	top: -14;
+	cursor: pointer
 }
 
+
+
 div#popup_interior {
-position:absolute;
-left:50%;
-top:17%;
-margin-left:-202px;
-font-family:'Raleway',sans-serif;
-max-width:300px;
-min-width:250px;
-padding:10px 50px;
-border:2px solid gray;
-border-radius:10px;
-font-family:raleway;
-background-color:#fff
+	position: absolute;
+	left: 50%;
+	top: 17%;
+	margin-left: -202px;
+	font-family: 'Raleway', sans-serif;
+	max-width: 300px;
+	min-width: 250px;
+	padding: 10px 50px;
+	border: 2px solid gray;
+	border-radius: 10px;
+	font-family: raleway;
+	background-color: #fff
 }
+
 
 
 
 button {
-width:10%;
-height:45px;
-border-radius:10px;
-background-color:#cd853f;
-color:#fff;
-font-family:'Raleway',sans-serif;
-font-size:18px;
-cursor:pointer
+	width: 10%;
+	height: 45px;
+	border-radius: 10px;
+	background-color: #cd853f;
+	color: #fff;
+	font-family: 'Raleway', sans-serif;
+	font-size: 18px;
+	cursor: pointer
 }
+
 
 button#query_close {
 	width:80%;
 }
+
+#navbutton-forward { background: url('web_images/forward_64.png') no-repeat 0px 0px;}
+#navbutton-forward:hover { background-position: 0px -64px; }
+
+#navbutton-rewind { background: url('web_images/rewind_64.png') no-repeat 0px 0px;}
+#navbutton-rewind:hover { background-position: 0px -64px; }
+
+#navbutton-last { background: url('web_images/last_64.png') no-repeat 0px 0px;}
+#navbutton-last:hover { background-position: 0px -64px; }
+
+#navbutton-first { background: url('web_images/first_64.png') no-repeat 0px 0px;}
+#navbutton-first:hover { background-position: 0px -64px; }
+
+a.navbutton {
+	
+	width: 64px;
+	height: 64px;
+	display: block;
+	text-indent: -9999px;
 }
+
+
+
+

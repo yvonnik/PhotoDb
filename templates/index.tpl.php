@@ -39,35 +39,14 @@ function raffraichir()
  window.location=URL;
 }
 
-function MM_swapImgRestore() { //v3.0
-  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
-}
-
-function MM_preloadImages() { //v3.0
-  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
-    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
-    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
-}
-
-function MM_findObj(n, d) { //v4.01
-  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
-    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
-  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
-  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
-  if(!x && d.getElementById) x=d.getElementById(n); return x;
-}
-
-function MM_swapImage() { //v3.0
-  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
-   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
-}
 //-->
 {/literal}
+
 </script>
 
 </head>
 
-<body  onLoad="MM_preloadImages('web_images/first_128_HOT.png','web_images/rewinding_128_HOT.png','web_images/fast_forward_128_HOT.png','web_images/last_128_HOT.png')">
+
 <!-- http://www.formget.com/how-to-create-pop-up-contact-form-using-javascript/ -->	
 	<div Id="popup">
 			<div Id="popup_interior">
@@ -84,9 +63,11 @@ function MM_swapImage() { //v3.0
 	
 <table width="50%" border="0" align="center" cellpadding="1" cellspacing="5">
     <tr>
-      <td><a href="#" onClick="movetopage(-4);" onMouseOver="MM_swapImage('Image2','','web_images/first_128_HOT.png',1)" onMouseOut="MM_swapImgRestore()"><img src="web_images/first_128.png" name="Image2" width="64" height="64" border="0"></a></td>
-      <td><a href="#" onClick="movetopage(-3);" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image3','','web_images/rewinding_128_HOT.png',1)"><img src="web_images/rewinding_128.png" name="Image3" width="64" height="64" border="0"></a></td>
-	  <td><div align="center"> 
+    	<td><a Id="navbutton-first" class="navbutton" href="#" onClick="movetopage(-4);"></a></td>
+    	<td><a Id="navbutton-rewind" class="navbutton" href="#" onClick="movetopage(-3);"></a></td>
+    	<td><a Id="navbutton-forward" class="navbutton" href="#" onClick="movetopage(-2);"></a></td>
+    	<td><a Id="navbutton-last" class="navbutton" href="#" onClick="movetopage(-1);"></a></td>
+        <td><div align="center"> 
 	      {$ROWS*$COLS*$PAGE-$ROWS*$COLS+1}-{$PAGE*$ROWS*$COLS}/{$NBPHOTOS}, 
           page 
           <input name="lapage" type="text" value="{$PAGE}" size="4" maxlength="5">
@@ -94,8 +75,6 @@ function MM_swapImage() { //v3.0
           <input name="Aller" type="button" onClick="movetopage(lapage.value);" value="Aller">
         </div>
 	  </td>
-      <td><a href="#" onClick="movetopage(-2);" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image4','','web_images/fast_forward_128_Hot.png',1)"><img src="web_images/fast_forward_128.png" name="Image4" width="64" height="64" border="0"></a></td>
-      <td><a href="#" onClick="movetopage(-1);" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image5','','web_images/last_128_HOT.png',1)"><img src="web_images/last_128.png" name="Image5" width="64" height="64" border="0"></a></td>
   </tr>
 </table>
 
