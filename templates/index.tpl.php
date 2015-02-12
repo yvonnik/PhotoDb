@@ -19,15 +19,56 @@
 var Page=1;
 var NbPage=2;
 var Query=0;
-var Rows={$ROWS};
-var Cols={$COLS};
-var Len=Rows*Cols;
+
+var Len=20;
 var Count=0;
 var ImageServer='{$IMAGESERVER}';
-raffraichir();
+var start_position=0;
+
+
 
 {literal}
 
+function table_destroy()
+{
+    for (i=0; i < Rows;i++) document.getElementById("latable").removeChild(document.getElementById("r"+i));
+}
+
+function table_create()
+{
+    var l=0;
+    Rows=Math.floor((document.body.clientHeight-80)/230);if (Rows <= 2) Rows=3;
+    Cols=Math.floor((document.body.clientWidth-20)/278);if (Cols <= 2) Cols=3;
+    Len=Rows*Cols;
+    Page=Math.floor(start_position/Len)+1;
+    for (i=0; i < Rows;i++) {
+      var ligne=document.createElement("tr");
+      ligne.setAttribute("id","r"+i)
+      for (j=0;j < Cols;j++) {
+          var cellule=document.createElement("td");
+          cellule.setAttribute("class","tableau");
+          
+          var div1=document.createElement("div");div1.setAttribute("class","thumb");div1.setAttribute("align","center");
+          
+          var div2=document.createElement("div");div2.setAttribute("class","thumb");div2.setAttribute("align","center");
+          div2.setAttribute("Id","d"+l);
+          
+          var aa=document.createElement("a");aa.setAttribute("Id","a"+l);aa.setAttribute("target","_blank");
+          
+          var limg=document.createElement("img");limg.setAttribute("class","thumb");limg.setAttribute("Id","i"+l);
+          
+          aa.appendChild(limg);
+          
+          div1.appendChild(div2);
+          div1.appendChild(aa);
+          
+          cellule.appendChild(div1);
+          ligne.appendChild(cellule);
+          l++;
+      }
+     document.getElementById("latable").appendChild(ligne);
+  }  
+}
 // Callback de l'appel Ajax pour récupérer la liste des images
 function success_images(data) { 
         $.each(data, function(index, element) {
@@ -61,10 +102,12 @@ function movetopage(sens)
  if (sens == -1) /* � la fin */ Page=NbPage;
  if ((sens > 0) && (sens <= NbPage)) Page=sens;
  if (OldPage != Page) raffraichir();
+ 
 }
 
 function raffraichir()
 {
+   start_position=(Page-1)*Len;
    $.ajax({ 
     type: 'GET', 
     url: 'listimages.php', 
@@ -110,22 +153,18 @@ function raffraichir()
 </table>
 
 
+<table  class="thumb,tableau" Id="latable"></table>
 
+</body>
 
-
-<table  class="thumb" class="tableau">
-  {section name=im loop=$IM} {if ($IM[im].I % $COLS) == 0}
-<tr>{/if}
-
-<td class="tableau" "><div align="center" class="thumb"><div id="d{$IM[im].I}" align="center" class="thumb"></div><a id="a{$IM[im].I}" href="" target="_blank"><img id="i{$IM[im].I}" class="thumb" src=""></a></div></td>
-
-{if $IM[im].I%$COLS == $COLS-1}</tr>{/if}
-
-{/section}
-</table>
 
 {literal}
 <script>
+  
+    table_create();
+    raffraichir();
+
+
   $(function () {
   
     $('#jstree_query').jstree({
@@ -148,8 +187,11 @@ function raffraichir()
     $("img#close").on('click', function () {
     	document.getElementById('popup').style.display = "none";
     });
+    $(window).resize(function() {
+        table_destroy();table_create();raffraichir();
+    });
   });
   </script>
 {/literal}
-</body>
+
 </html>
