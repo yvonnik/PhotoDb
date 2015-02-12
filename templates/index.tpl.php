@@ -16,12 +16,42 @@
 
 <script language="JavaScript" type="text/JavaScript">
 
-var Page={$PAGE};
-var NbPage={$NBPAGES};
-var Query='{$QUERY}';
+var Page=1;
+var NbPage=2;
+var Query=0;
+var Rows={$ROWS};
+var Cols={$COLS};
+var Len=Rows*Cols;
+var Count=0;
+var ImageServer='{$IMAGESERVER}';
+raffraichir();
 
 {literal}
 
+// Callback de l'appel Ajax pour récupérer la liste des images
+function success_images(data) { 
+        $.each(data, function(index, element) {
+            if (index == "Count") {
+                Count=element;
+                NbPage=Math.ceil( Count/Len );
+            }
+            else {
+                // Ici, on a dans le tableau element toutes les images
+                    for (i=0;i < element.length;i++) {
+                        $('#i'+i).attr("src",ImageServer+"display_image.php?Id="+element[i].N+"&small=1&Date="+element[i].Date);
+                        $('#d'+i).text(element[i].Date);
+                        $('#a'+i).attr("href",ImageServer+"display_image.php?Id="+element[i].N+"&small=0&Date="+element[i].Date);
+                    }
+                    for (i=i; i < Len;i++) {
+                        $('#i'+i).attr("src","web_images/empty.png");
+                        $('#d'+i).text("");
+                        $('#a'+i).attr("href","");
+                    }
+                     
+                 }
+        });
+    }
+    
 function movetopage(sens)
 {
  var OldPage=Page;
@@ -35,8 +65,15 @@ function movetopage(sens)
 
 function raffraichir()
 {
- var URL="index.php?Page="+Page+"&Query="+Query;
- window.location=URL;
+   $.ajax({ 
+    type: 'GET', 
+    url: 'listimages.php', 
+    data: { 'Query': Query, 'Page': Page, 'Len': Len }, 
+    dataType: 'json',
+    success: success_images
+});  
+ /*var URL="index.php?Page="+Page+"&Query="+Query;
+ window.location=URL;*/
 }
 
 //-->
@@ -80,7 +117,7 @@ function raffraichir()
   {section name=im loop=$IM} {if ($IM[im].I % $COLS) == 0}
 <tr>{/if}
 
-<td class="tableau"><div align="center" class="thumb"><div align="center" class="thumb">{$IM[im].Date}</div><a href="{$IM[im].Link}" target="_blank"><img class="thumb" src="{$IM[im].SmallLink}"></a></div></td>
+<td class="tableau" "><div align="center" class="thumb"><div id="d{$IM[im].I}" align="center" class="thumb"></div><a id="a{$IM[im].I}" href="" target="_blank"><img id="i{$IM[im].I}" class="thumb" src=""></a></div></td>
 
 {if $IM[im].I%$COLS == $COLS-1}</tr>{/if}
 

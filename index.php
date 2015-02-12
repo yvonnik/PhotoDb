@@ -36,21 +36,13 @@ $im=array();
 $i=0;
 while (!$rs->EOF) {
 	$im[$i]["I"]=$i;
-	$im[$i]["N"]=$rs->fields["N"];
-	$im[$i]["Date"]=$rs->fields["Date"];
-	$im[$i]["Link"]=$IMAGE_SERVER."display_image.php?Id=".$im[$i]["N"]."&small=0&Date=".$im[$i]["Date"]; 
-	$im[$i]["SmallLink"]=$IMAGE_SERVER."display_image.php?Id=".$im[$i]["N"]."&small=1&Date=".$im[$i]["Date"];
-	$i++;
+    $i++;
 	$rs->MoveNext();
 }
 
+$smarty->Assign("IMAGESERVER",$IMAGE_SERVER);
 $smarty->Assign("ROWS",$nb_row);
 $smarty->Assign("COLS",$nb_col);
-$smarty->Assign("PAGE",$Page);
-$smarty->Assign("NBPHOTOS",$nbphotos);
-$smarty->Assign("NBPAGES",$nbpages);
-$smarty->Assign("QUERY",rawurlencode($Query));
-$smarty->Assign("RAWQUERY",$Query);
 $smarty->Assign("IM",$im);
 $smarty->Display("index.tpl.php");
 

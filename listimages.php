@@ -89,7 +89,9 @@
      $Json.="'portrait' : '".$res->fields["portrait"]."' ,";
      $Json.="'paysage' : '".$res->fields["paysage"]."' ,";
      $Json.="'largeur' : '".$res->fields["largeur"]."' ,";
-     $Json.="'hauteur' : '".$res->fields["hauteur"]."' ,";
+     $Json.="'hauteur' : '".$res->fields["hauteur"]."'";
+     $Json.="},";
+     
      
      
      //$Json.="}<br>";
@@ -97,6 +99,7 @@
      $res->MoveNext();
  }
  
+ $Json=substr($Json,0,strlen($Json)-1); // on enlève la dernière virgule
  $Json.="]}";
  $Json=str_replace("'","\"",$Json);
  print_r($Json);
