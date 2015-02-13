@@ -13,12 +13,14 @@ function traite_dir($me)
 	global $bdd,$unix,$windows;	
 	
 	echo "<ul>";
+    if ($me == 1) echo '<li id="0">Toutes les photos</li>';
 	$res=$bdd->Execute("SELECT * from queryfolders WHERE Parent=$me");
 	if ($res)
 	{
 	 while (!$res->EOF)
 	  {
-	 	echo "<li>".($windows ? utf8_encode($res->fields["Nom"]) : $res->fields["Nom"]);
+	    $Id=$res->fields["N"];
+	 	echo '<li Id="folder-'.$Id.'">'.($windows ? utf8_encode($res->fields["Nom"]) : $res->fields["Nom"]);
 		traite_dir($res->fields["N"]);
 		echo "</li>";
 		$res->MoveNext();

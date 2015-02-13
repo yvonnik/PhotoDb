@@ -9,6 +9,7 @@
     
  if ($Query == 0) // Pas de requete, rien à faire
     {
+     $Nom="Toutes les photos";
      $Source=-1;
      $Qualite=-1;
      $Debut="1900-01-01";
@@ -19,7 +20,7 @@
      {
         $res=$bdd->Execute("SELECT * FROM querys WHERE N=$Query");
         if (!$res) die("Select failed : SELECT * FROM queries WHERE N=$Query");
- 
+        $Nom=utf8_encode($res->fields["Nom"]);
         $Source=$res->fields["Source"];
         $Qualite=$res->fields["Qualite"];
         $Debut=$res->fields["Debut"];
@@ -44,6 +45,7 @@
  // Ensuite, on remplace "mots-clés" par la sous-requête
  // attention en dessous, encore des histoires avec les accents : é dans mysql c'est 195, dans le php c'est 233...Et en unix ça va donner quoi
  $Requete=str_replace("mots-cl".chr(233)."s", "(SELECT Motcle FROM RELMC WHERE IMAGE=N)", $Requete);
+ $Requete=str_replace("Qualit".chr(233), "Qualite", $Requete);
  
  // On rajoute le header
  
@@ -69,6 +71,7 @@
  
  // on commence à fabriquer l'objet JSon
  $Json="{'Count' : '$maxx',";
+ $Json.="'Name' : '$Nom',";
  $Json.="'images' : [";
  
  while (!$res->EOF)

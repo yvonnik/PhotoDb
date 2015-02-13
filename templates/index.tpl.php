@@ -20,9 +20,11 @@
 
 var start_position=0;
 var Query=0;
+var QueryName="Toutes les photos";
 var Len=20;
 var Count=0;
 var ImageServer='{$IMAGESERVER}';
+var NextQuery;
 
 // {literal} 
 
@@ -75,6 +77,9 @@ function success_images(data) {
                 Count=element;
                 document.getElementById("navcount").innerHTML=(start_position+1)+"-"+(start_position+Len)+" sur "+Count+", "+(Math.round(start_position*100/Count)+"%");
             }
+            else if (index == "Name") {
+                QueryName=element;
+            }
             else {
                 // Ici, on a dans le tableau element toutes les images
                     for (i=0;i < element.length;i++) {
@@ -92,6 +97,7 @@ function success_images(data) {
                      
                  }
         });
+        $('#bottomline').text(QueryName);
     }
     
 function movetopage(sens)
@@ -119,6 +125,11 @@ function raffraichir()
  window.location=URL;*/
 }
 
+function select_query()
+{
+    
+}
+
 
 </script>
 <!-- {/literal} /-->
@@ -133,9 +144,7 @@ function raffraichir()
 					
 				</div>
 				<br>
-				<button Id="query_close">
-					Filtrer
-				</button>
+				<a Id="navbutton-queryok" class="navbutton" href="#" onClick="select_query();"></a>
 			</div>
 		</div>
 	
@@ -143,7 +152,7 @@ function raffraichir()
     <tr>
     	<td><a Id="navbutton-first" class="navbutton" href="#" onClick="movetopage(-4);"></a></td>
     	<td><a Id="navbutton-rewind" class="navbutton" href="#" onClick="movetopage(-3);"></a></td>
-    	<td class="Date" Id="navcount"></td>
+    	<td class="Date"><b Id="navcount"></b>&nbsp;&ndash;&nbsp;<b Id="bottomline"></b></td>
     	<td><a Id="navbutton-forward" class="navbutton" href="#" onClick="movetopage(-2);"></a></td>
     	<td><a Id="navbutton-last" class="navbutton" href="#" onClick="movetopage(-1);"></a></td>
     	<td><a Id="navbutton-filter" class="navbutton" href="#" onClick="document.getElementById('popup').style.display = 'block';"></a></td>
@@ -153,6 +162,7 @@ function raffraichir()
 
 
 <table  class="thumb,tableau" Id="latable"></table>
+
 
 </body>
 
@@ -178,8 +188,15 @@ function raffraichir()
     });
     
 	$('#jstree_query').on("changed.jstree", function (e, data) {
-      console.log(data.selected);
+	    if (data.selected.toString().charAt(0) == "f") { // On est sur un folder
+	       $('#navbutton-queryok').css("background-image","url('web_images/check_64_grey.png')") ;
+	    }
+	    else {
+	       $('#navbutton-queryok').css("background-image","url('web_images/check_64.png')") ; 
+	       NextQuery=data.selected.toString();
+	    }
     });
+    $('#navbutton-queryok').on('click',function() {document.getElementById('popup').style.display = "none";Query=NextQuery;start_position=0;raffraichir();});
     $("#filtrage").on('click', function () {
     	document.getElementById('popup').style.display = "block";
     });
