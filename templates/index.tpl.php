@@ -10,24 +10,21 @@
 <link href="style.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="jsTree/dist/themes/default/style.min.css" />
 <script src="jQuery/jquery.js"></script>
-<!-- http://www.jstree.com/ -->
 
+<!-- http://www.jstree.com/ -->
 <script src="jsTree/dist/jstree.min.js"></script>
+
+
 
 <script language="JavaScript" type="text/JavaScript">
 
-var Page=1;
-var NbPage=2;
+var start_position=0;
 var Query=0;
-
 var Len=20;
 var Count=0;
 var ImageServer='{$IMAGESERVER}';
-var start_position=0;
 
-
-
-{literal}
+// {literal} 
 
 function table_destroy()
 {
@@ -40,7 +37,7 @@ function table_create()
     Rows=Math.floor((document.body.clientHeight-80)/230);if (Rows <= 2) Rows=3;
     Cols=Math.floor((document.body.clientWidth-20)/278);if (Cols <= 2) Cols=3;
     Len=Rows*Cols;
-    Page=Math.floor(start_position/Len)+1;
+    if (start_position+Len >= Count) start_position=Count-Len;
     for (i=0; i < Rows;i++) {
       var ligne=document.createElement("tr");
       ligne.setAttribute("id","r"+i)
@@ -74,7 +71,7 @@ function success_images(data) {
         $.each(data, function(index, element) {
             if (index == "Count") {
                 Count=element;
-                NbPage=Math.ceil( Count/Len );
+                document.getElementById("navcount").innerHTML=(start_position+1)+"-"+(start_position+Len)+" sur "+Count+", "+(Math.round(start_position*100/Count)+"%");
             }
             else {
                 // Ici, on a dans le tableau element toutes les images
@@ -95,23 +92,22 @@ function success_images(data) {
     
 function movetopage(sens)
 {
- var OldPage=Page;
- if (sens == -4) /* rtour au d�but */ Page=1;
- if (sens == -3) /* moins une page */ {Page--;if (Page <= 0) Page=1;}
- if (sens == -2) /* avant une page */ {Page++; if (Page > NbPage) Page=NbPage;}
- if (sens == -1) /* � la fin */ Page=NbPage;
- if ((sens > 0) && (sens <= NbPage)) Page=sens;
- if (OldPage != Page) raffraichir();
+ var OldPosition=start_position;
+ if (sens == -4) /* rtour au d�but */ start_position=0;
+ if (sens == -3) /* moins une page */ {start_position-=Len;if (start_position < 0) start_position=0;}
+ if (sens == -2) /* avant une page */ {start_position+=Len;if (start_position+Len >= Count) start_position=Count-Len;}
+ if (sens == -1) /* � la fin */ start_position=Count-Len;;
+ 
+ if (OldPosition != start_position) raffraichir();
  
 }
 
 function raffraichir()
 {
-   start_position=(Page-1)*Len;
-   $.ajax({ 
+    $.ajax({ 
     type: 'GET', 
     url: 'listimages.php', 
-    data: { 'Query': Query, 'Page': Page, 'Len': Len }, 
+    data: { 'Query': Query, 'Position': start_position, 'Len': Len }, 
     dataType: 'json',
     success: success_images
 });  
@@ -119,11 +115,9 @@ function raffraichir()
  window.location=URL;*/
 }
 
-//-->
-{/literal}
 
 </script>
-
+<!-- {/literal} /-->
 </head>
 
 
@@ -145,6 +139,7 @@ function raffraichir()
     <tr>
     	<td><a Id="navbutton-first" class="navbutton" href="#" onClick="movetopage(-4);"></a></td>
     	<td><a Id="navbutton-rewind" class="navbutton" href="#" onClick="movetopage(-3);"></a></td>
+    	<td class="Date" Id="navcount"></td>
     	<td><a Id="navbutton-forward" class="navbutton" href="#" onClick="movetopage(-2);"></a></td>
     	<td><a Id="navbutton-last" class="navbutton" href="#" onClick="movetopage(-1);"></a></td>
     	<td><a Id="navbutton-filter" class="navbutton" href="#" onClick="document.getElementById('popup').style.display = 'block';"></a></td>
@@ -158,7 +153,7 @@ function raffraichir()
 </body>
 
 
-{literal}
+<!-- {literal} -->
 <script>
   
     table_create();
@@ -192,6 +187,6 @@ function raffraichir()
     });
   });
   </script>
-{/literal}
+<!-- {/literal} -->
 
 </html>

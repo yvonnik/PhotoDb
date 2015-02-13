@@ -3,7 +3,7 @@
  include("dbconfig.php");
     
  if (isset($_GET["Query"])) $Query=$_GET["Query"]; else die("Need query");   
- if (isset($_GET["Page"])) $Page=$_GET["Page"]; else die("Need Page");
+ if (isset($_GET["Position"])) $Position=$_GET["Position"]; else die("Need Position");
  if (isset($_GET["Len"])) $Len=$_GET["Len"]; else die("Need Len");     
     
     
@@ -17,7 +17,7 @@
     }
  else 
      {
-         $res=$bdd->Execute("SELECT * FROM querys WHERE N=$Query");
+        $res=$bdd->Execute("SELECT * FROM querys WHERE N=$Query");
         if (!$res) die("Select failed : SELECT * FROM queries WHERE N=$Query");
  
         $Source=$res->fields["Source"];
@@ -64,7 +64,7 @@
  
  
  $Requete="SELECT * FROM Images WHERE ".$Requete;
- $res=$bdd->SelectLimit($Requete, $Len,($Page-1)*$Len);
+ $res=$bdd->SelectLimit($Requete, $Len,$Position);
  if (!$res) die("Failed : $Requete");
  
  // on commence à fabriquer l'objet JSon
