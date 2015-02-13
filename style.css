@@ -18,8 +18,33 @@ img {
 .cell:hover { background-color: black;}
 
 .tableau {
+	    border:0px solid #CD853F;
+	    padding: 3px;
+	   }
+	   
+.tableau0 {
 	    border:1px solid #CD853F;
 	    padding: 3px;
+	   }
+	   
+.tableau1 {
+	    border:1px solid #CD853F;
+	    padding: 3px;
+	   }
+	   
+.tableau2 {
+	    border:1px solid #CD853F;
+	    padding: 3px;
+	   }
+	   
+.tableau3 {
+	    border:2px solid #1F60A9;
+	    padding: 3px;
+	   }
+	   
+.tableau4 {
+	    border:3px solid #ff3300;
+	    padding: 1px;
 	   }
 
 td, th {

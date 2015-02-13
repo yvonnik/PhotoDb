@@ -23,6 +23,7 @@ else
     if ($size and $fp)
     {
         header('Content-Type: '.$size['mime']);
+        header('cache:private, max-age=10000');
         fpassthru($fp);
         exit;
     }

@@ -38,12 +38,14 @@ function table_create()
     Cols=Math.floor((document.body.clientWidth-20)/278);if (Cols <= 2) Cols=3;
     Len=Rows*Cols;
     if (start_position+Len >= Count) start_position=Count-Len;
+    if (start_position < 0) start_position=0;
     for (i=0; i < Rows;i++) {
       var ligne=document.createElement("tr");
       ligne.setAttribute("id","r"+i)
       for (j=0;j < Cols;j++) {
           var cellule=document.createElement("td");
           cellule.setAttribute("class","tableau");
+          cellule.setAttribute("Id","cl"+l);
           
           var div1=document.createElement("div");div1.setAttribute("class","thumb");div1.setAttribute("align","center");
           
@@ -77,13 +79,15 @@ function success_images(data) {
                 // Ici, on a dans le tableau element toutes les images
                     for (i=0;i < element.length;i++) {
                         $('#i'+i).attr("src",ImageServer+"display_image.php?Id="+element[i].N+"&small=1&Date="+element[i].Date);
-                        $('#d'+i).text(element[i].Date);
+                        $('#d'+i).text("("+element[i].N+") "+element[i].Date);
                         $('#a'+i).attr("href",ImageServer+"display_image.php?Id="+element[i].N+"&small=0&Date="+element[i].Date);
+                        $('#cl'+i).attr("class","tableau"+element[i].Qualite);
                     }
                     for (i=i; i < Len;i++) {
                         $('#i'+i).attr("src","web_images/empty.png");
                         $('#d'+i).text("");
                         $('#a'+i).attr("href","");
+                        $("cl"+i).attr("class","tableau");
                     }
                      
                  }
