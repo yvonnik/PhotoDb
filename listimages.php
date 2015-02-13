@@ -1,6 +1,8 @@
 <?php
  
  include("dbconfig.php");
+ 
+ if (stristr(php_uname(),"windows")) {$unix=0;$windows=1;} else {$unix=1;$windows=0;}
     
  if (isset($_GET["Query"])) $Query=$_GET["Query"]; else die("Need query");   
  if (isset($_GET["Position"])) $Position=$_GET["Position"]; else die("Need Position");
@@ -20,12 +22,12 @@
      {
         $res=$bdd->Execute("SELECT * FROM querys WHERE N=$Query");
         if (!$res) die("Select failed : SELECT * FROM queries WHERE N=$Query");
-        $Nom=utf8_encode($res->fields["Nom"]);
+        $Nom=($windows ? utf8_encode($res->fields["Nom"]) : $res->fields["Nom"]);
         $Source=$res->fields["Source"];
         $Qualite=$res->fields["Qualite"];
         $Debut=$res->fields["Debut"];
         $Fin=$res->fields["Fin"];
-        $Requete=$res->fields["Requete"];
+        $Requete=($windows ? $res->fields["Requete"] : utf8_decode($res->fields["Requete"]));
      }
  
  
@@ -35,18 +37,20 @@
  
  foreach ($mcs[0] as $cle)
  {
-     $cle=substr($cle,1,strlen($cle)-2);
-     $res=$bdd->Execute("SELECT * FROM motcles WHERE Nom='$cle'");
-     if (!$res) die("Failed : SELECT * FROM motcles WHERE Nom='$cle'");
+     $cle=substr($cle,1,strlen($cle)-2);$cle8=$cle;
+     if ($unix) $cle8=utf8_encode($cle);
+     $res=$bdd->Execute("SELECT * FROM motcles WHERE Nom='$cle8'");
+     if (!$res) die("Failed : SELECT * FROM motcles WHERE Nom='$cle8'");
+     if ($res->EOF) die("no records : SELECT * FROM motcles WHERE Nom='$cle8'");
      $num=$res->fields["N"];
      $Requete=str_replace("[".$cle."]", $num, $Requete);
  }
  
  // Ensuite, on remplace "mots-clés" par la sous-requête
  // attention en dessous, encore des histoires avec les accents : é dans mysql c'est 195, dans le php c'est 233...Et en unix ça va donner quoi
- $Requete=str_replace("mots-cl".chr(233)."s", "(SELECT Motcle FROM RELMC WHERE IMAGE=N)", $Requete);
+ $Requete=str_replace("mots-cl".chr(233)."s", "(SELECT Motcle FROM relmc WHERE Image=N)", $Requete);
  $Requete=str_replace("Qualit".chr(233), "Qualite", $Requete);
- 
+ $Requete=str_replace("Qualit".chr(195).chr(169), "Qualite", $Requete);
  // On rajoute le header
  
  
@@ -60,12 +64,15 @@
  $Requete=$Requete." ORDER BY Date,ms";
  
  // on compte
- $res=$bdd->Execute("SELECT COUNT(*) AS NN FROM Images WHERE ".$Requete);
- if (!$res) die("Failed : SELECT COUNT(*) AS NN FROM Images WHERE ".$Requete);
+ $res=$bdd->Execute("SELECT COUNT(*) AS NN FROM images WHERE ".$Requete);
+ if (!$res) {
+     for ($i=0; $i < strlen($Requete);$i++) echo "<br>".substr($Requete,$i,1)."-".ord(substr($Requete,$i,1));
+     die("<br>Failed : SELECT COUNT(*) AS NN FROM images WHERE ".$Requete);
+ }
  $maxx=$res->fields["NN"];
  
  
- $Requete="SELECT * FROM Images WHERE ".$Requete;
+ $Requete="SELECT * FROM images WHERE ".$Requete;
  $res=$bdd->SelectLimit($Requete, $Len,$Position);
  if (!$res) die("Failed : $Requete");
  
