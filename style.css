@@ -12,19 +12,37 @@ img {
 
 .thumb {
 	    background: #aaa;
-	    color: #000;	
+	    color: #000;
+	    margin-left: auto;
+    	margin-right: auto;	
+    	padding:5px;
 }
 
-.cell:hover { background-color: black;}
+.thumbimg {
+	    background: #aaa;
+	    color: #000;
+	    margin-left: auto;
+    	margin-right: auto;	
+    	max-height: 180px;
+    	}
+
+.thumbimgselected {
+	    filter: invert(100%);
+}
+
 
 .tableau {
 	    border:0px solid #CD853F;
 	    padding: 3px;
+	    margin-left: auto;
+    	margin-right: auto;
 	   }
 	   
 .tableau0 {
 	    border:1px solid #CD853F;
 	    padding: 3px;
+	    margin-left: auto;
+    	margin-right: auto;
 	   }
 	   
 .tableau1 {
@@ -39,13 +57,18 @@ img {
 	   
 .tableau3 {
 	    border:2px solid #1F60A9;
-	    padding: 3px;
+	    padding: 1px;
 	   }
 	   
 .tableau4 {
 	    border:3px solid #ff3300;
-	    padding: 1px;
+	    padding: 6px;
 	   }
+	   
+.cellselected {
+		background: #FF0000;
+	    color: #000;
+}
 
 td, th {
 	font-family: Arial, Helvetica, sans-serif;

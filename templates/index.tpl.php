@@ -25,7 +25,7 @@ var Len=20;
 var Count=0;
 var ImageServer='{$IMAGESERVER}';
 var NextQuery;
-
+var Selected={};
 // {literal} 
 
 function table_destroy()
@@ -48,22 +48,23 @@ function table_create()
           var cellule=document.createElement("td");
           cellule.setAttribute("class","tableau");
           cellule.setAttribute("Id","cl"+l);
+                   
+          var div2=document.createElement("div");div2.setAttribute("Id","d"+l);div2.setAttribute("vertical-align","top")
+          var div3=document.createElement("div");div3.setAttribute("class","thumb");div3.setAttribute("align","right");
+          div3.setAttribute("Id","dd"+l);
           
-          var div1=document.createElement("div");div1.setAttribute("class","thumb");div1.setAttribute("align","center");
+          var ouvrir=document.createElement("a");ouvrir.setAttribute("Id","o"+l);ouvrir.setAttribute("target","_blank");
+          var oimg=document.createElement("img");oimg.setAttribute("align","left");oimg.setAttribute("Id","oi"+l);
+          ouvrir.appendChild(oimg);
+          div2.appendChild(ouvrir);
+          div2.appendChild(div3);
+                 
+          var limg=document.createElement("img");limg.setAttribute("class","thumbimg");limg.setAttribute("Id","i"+l);limg.setAttribute("align","center");
+          var div4=document.createElement("div");div4.setAttribute("class","thumb");div4.setAttribute("align","center");div4.setAttribute("Id","z"+l)
+          div4.appendChild(limg);
           
-          var div2=document.createElement("div");div2.setAttribute("class","thumb");div2.setAttribute("align","center");
-          div2.setAttribute("Id","d"+l);
-          
-          var aa=document.createElement("a");aa.setAttribute("Id","a"+l);aa.setAttribute("target","_blank");
-          
-          var limg=document.createElement("img");limg.setAttribute("class","thumb");limg.setAttribute("Id","i"+l);
-          
-          aa.appendChild(limg);
-          
-          div1.appendChild(div2);
-          div1.appendChild(aa);
-          
-          cellule.appendChild(div1);
+          cellule.appendChild(div2);
+          cellule.appendChild(div4);
           ligne.appendChild(cellule);
           l++;
       }
@@ -71,6 +72,19 @@ function table_create()
   }  
 }
 // Callback de l'appel Ajax pour récupérer la liste des images
+function toggleselect(Id,pos)
+{
+  if(Id in Selected) {
+      if (Selected[Id] == "1") Selected[Id]="0"; else Selected[Id]=1;
+  } else {
+      Selected[Id]="1";
+  }
+  
+  if (Selected[Id] == "1")  {$("#z"+pos).addClass("cellselected");$("#dd"+pos).addClass("cellselected");}
+  else {$("#z"+pos).removeClass("cellselected");$("#dd"+pos).removeClass("cellselected");}
+     
+}  
+
 function success_images(data) { 
         $.each(data, function(index, element) {
             if (index == "Count") {
@@ -84,15 +98,21 @@ function success_images(data) {
                 // Ici, on a dans le tableau element toutes les images
                     for (i=0;i < element.length;i++) {
                         $('#i'+i).attr("src",ImageServer+"display_image.php?Id="+element[i].N+"&small=1&Date="+element[i].Date);
-                        $('#d'+i).text("("+element[i].N+") "+element[i].Date);
-                        $('#a'+i).attr("href",ImageServer+"display_image.php?Id="+element[i].N+"&small=0&Date="+element[i].Date);
+                        $('#i'+i).attr("onclick","toggleselect("+element[i].N+","+i+")");
+                        $('#oi'+i).attr("src","web_images/preview_24.png");
+                        $('#dd'+i).text("("+element[i].N+") "+element[i].Date);
+                        $('#o'+i).attr("onclick","window.open('"+ImageServer+"display_image.php?Id="+element[i].N+"&small=0&Date="+element[i].Date+"')");
+                        /*$('#a'+i).attr("href","");*/
                         $('#cl'+i).attr("class","tableau"+element[i].Qualite);
+                        if (Selected[element[i].N] == "1")  {$("#z"+i).addClass("cellselected");$("#dd"+i).addClass("cellselected");}
+                        else {$("#z"+i).removeClass("cellselected");$("#dd"+i).removeClass("cellselected");}
                     }
                     for (i=i; i < Len;i++) {
                         $('#i'+i).attr("src","web_images/empty.png");
-                        $('#d'+i).text("");
+                        $('#dd'+i).text("");
                         $('#a'+i).attr("href","");
                         $("cl"+i).attr("class","tableau");
+                        $("#z"+i).removeClass("cellselected");$("#dd"+i).removeClass("cellselected");
                     }
                      
                  }
