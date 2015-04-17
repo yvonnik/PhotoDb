@@ -60,6 +60,7 @@ function table_create()
           div2.appendChild(div3);
                  
           var limg=document.createElement("img");limg.setAttribute("class","thumbimg");limg.setAttribute("Id","i"+l);limg.setAttribute("align","center");
+        
           var div4=document.createElement("div");div4.setAttribute("class","thumb");div4.setAttribute("align","center");div4.setAttribute("Id","z"+l)
           div4.appendChild(limg);
           
@@ -99,10 +100,11 @@ function success_images(data) {
                     for (i=0;i < element.length;i++) {
                         $('#i'+i).attr("src",ImageServer+"display_image.php?Id="+element[i].N+"&small=1&Date="+element[i].Date);
                         $('#i'+i).attr("onclick","toggleselect("+element[i].N+","+i+")");
+                        $('#i'+i).attr("title",element[i].keywords);
                         $('#oi'+i).attr("src","web_images/preview_24.png");
                         $('#dd'+i).text("("+element[i].N+") "+element[i].Date);
                         $('#o'+i).attr("onclick","window.open('"+ImageServer+"display_image.php?Id="+element[i].N+"&small=0&Date="+element[i].Date+"')");
-                        /*$('#a'+i).attr("href","");*/
+                       
                         $('#cl'+i).attr("class","tableau"+element[i].Qualite);
                         if (Selected[element[i].N] == "1")  {$("#z"+i).addClass("cellselected");$("#dd"+i).addClass("cellselected");}
                         else {$("#z"+i).removeClass("cellselected");$("#dd"+i).removeClass("cellselected");}
@@ -150,7 +152,7 @@ function selectall()
     $.ajax({ 
     type: 'GET', 
     url: 'listimages.php', 
-    data: { 'Query': Query, 'Position': 0, 'Len': 100000 }, 
+    data: { 'Query': Query, 'Position': 0, 'Len': 100000, 'Keywords':0}, 
     dataType: 'json',
     success: selectallsuccess
     });   
@@ -167,7 +169,7 @@ function raffraichir()
     $.ajax({ 
     type: 'GET', 
     url: 'listimages.php', 
-    data: { 'Query': Query, 'Position': start_position, 'Len': Len }, 
+    data: { 'Query': Query, 'Position': start_position, 'Len': Len, 'Keywords':1 }, 
     dataType: 'json',
     success: success_images
 });  

@@ -6,7 +6,8 @@
     
  if (isset($_GET["Query"])) $Query=$_GET["Query"]; else die("Need query");   
  if (isset($_GET["Position"])) $Position=$_GET["Position"]; else die("Need Position");
- if (isset($_GET["Len"])) $Len=$_GET["Len"]; else die("Need Len");     
+ if (isset($_GET["Len"])) $Len=$_GET["Len"]; else die("Need Len"); 
+ if (isset($_GET["Keywords"])) $Keywords=$_GET["Keywords"]; else die("Need Keywords");     
     
     
  if ($Query == 0) // Pas de requete, rien à faire
@@ -98,8 +99,23 @@
      $Json.="'Diaphragme' : '".$res->fields["Diaphragme"]."' ,";
      $Json.="'portrait' : '".$res->fields["portrait"]."' ,";
      $Json.="'paysage' : '".$res->fields["paysage"]."' ,";
+     if ($Keywords == 1) // on rajoute les motclés
+     {
+        $mc="";
+        $r="SELECT motcles.Nom FROM `relmc` INNER JOIN motcles ON relmc.motcle = motcles.N WHERE Image=".$res->fields["N"];
+        $res2=$bdd->Execute($r);
+        while (!$res2->EOF)
+        {
+            if ($mc != "") $mc.=",";
+            $mc.=($windows ? utf8_encode($res2->fields["Nom"]) : $res2->fields["Nom"]);
+            $res2->MoveNext();
+        } 
+       $Json.="'keywords' : '".$mc."',";
+      
+     }
      $Json.="'largeur' : '".$res->fields["largeur"]."' ,";
      $Json.="'hauteur' : '".$res->fields["hauteur"]."'";
+     
      $Json.="},";
      
      
