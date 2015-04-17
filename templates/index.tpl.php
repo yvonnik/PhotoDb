@@ -132,6 +132,36 @@ function movetopage(sens)
  
 }
 
+function selectallsuccess(data)
+{
+    $.each(data, function(index, element) {
+            if (index == "Count") { }
+            else if (index == "Name") {}
+            else {
+                // Ici, on a dans le tableau element toutes les images
+                    for (i=0;i < element.length;i++) Selected[element[i].N]=1;
+                    }
+        });
+    raffraichir();       
+}
+
+function selectall()
+{
+    $.ajax({ 
+    type: 'GET', 
+    url: 'listimages.php', 
+    data: { 'Query': Query, 'Position': 0, 'Len': 100000 }, 
+    dataType: 'json',
+    success: selectallsuccess
+    });   
+}
+
+function unselectall()
+{
+    Selected={};
+    raffraichir();
+}
+
 function raffraichir()
 {
     $.ajax({ 
@@ -176,6 +206,9 @@ function select_query()
     	<td><a Id="navbutton-forward" class="navbutton" href="#" onClick="movetopage(-2);"></a></td>
     	<td><a Id="navbutton-last" class="navbutton" href="#" onClick="movetopage(-1);"></a></td>
     	<td><a Id="navbutton-filter" class="navbutton" href="#" onClick="document.getElementById('popup').style.display = 'block';"></a></td>
+    	<td><a Id="navbutton-select" class="navbutton" href="#" onClick="selectall();"></a></td>
+    	<td><a Id="navbutton-unselect" class="navbutton" href="#" onClick="unselectall();"></a></td>
+    	<td><a Id="navbutton-keyword" class="navbutton" href="#" onClick="document.getElementById('popup').style.display = 'block';"></a></td>
 	  </td>
   </tr>
 </table>
@@ -193,6 +226,22 @@ function select_query()
     table_create();
     raffraichir();
 
+    document.onkeydown = function (e) {
+         e = e || window.event;//Get event
+         if (e.ctrlKey) {
+            var c = e.which || e.keyCode;//Get key code
+        switch (c) {
+            case 83:selectall();
+                    e.preventDefault();     
+                    e.stopPropagation();
+                    break;
+            case 68:unselectall();
+                    e.preventDefault();     
+                    e.stopPropagation();
+                    break;
+            }
+        }
+    }
 
   $(function () {
   
@@ -216,7 +265,7 @@ function select_query()
 	       NextQuery=data.selected.toString();
 	    }
     });
-    $('#navbutton-queryok').on('click',function() {document.getElementById('popup').style.display = "none";Query=NextQuery;start_position=0;raffraichir();});
+    $('#navbutton-queryok').on('click',function() {document.getElementById('popup').style.display = "none";Selected={};Query=NextQuery;start_position=0;raffraichir();});
     $("#filtrage").on('click', function () {
     	document.getElementById('popup').style.display = "block";
     });

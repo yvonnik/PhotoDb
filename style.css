@@ -188,6 +188,16 @@ button#query_close {
 #navbutton-queryok { background: url('web_images/check_64_grey.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
 #navbutton-queryok:hover { background-position: 0px -64px; }
 
+#navbutton-keyword { background: url('web_images/key_64.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
+#navbutton-keyword:hover { background-position: 0px -64px; }
+
+#navbutton-select { background: url('web_images/selectall.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
+#navbutton-select:hover { background-position: 0px -64px; }
+
+#navbutton-unselect { background: url('web_images/unselectall.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
+#navbutton-unselect:hover { background-position: 0px -64px; }
+
+
 a.navbutton {
 	
 	width: 64px;
