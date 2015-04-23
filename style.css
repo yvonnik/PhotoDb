@@ -113,7 +113,7 @@ input {
 }
 
 
-div#popup {
+div#popup, div#popup-keywords {
 	width: 100%;
 	height: 100%;
 	opacity: .9;
@@ -136,7 +136,7 @@ img#close {
 
 
 
-div#popup_interior {
+div#popup_interior, div#popup-keywords_interior {
 	position: absolute;
 	left: 50%;
 	top: 17%;
@@ -185,8 +185,8 @@ button#query_close {
 #navbutton-filter { background: url('web_images/filter_64.png') no-repeat 0px 0px;}
 #navbutton-filter:hover { background-position: 0px -64px; }
 
-#navbutton-queryok { background: url('web_images/check_64_grey.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
-#navbutton-queryok:hover { background-position: 0px -64px; }
+#navbutton-queryok,#navbutton-keywordsok { background: url('web_images/check_64_grey.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
+#navbutton-queryok,#navbutton-keywordsok:hover { background-position: 0px -64px; }
 
 #navbutton-keyword { background: url('web_images/key_64.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
 #navbutton-keyword:hover { background-position: 0px -64px; }
@@ -205,6 +205,8 @@ a.navbutton {
 	display: block;
 	text-indent: -9999px;
 }
+
+#keywords { width: 20em; }
 
 
 
