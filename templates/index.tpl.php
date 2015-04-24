@@ -27,6 +27,7 @@ var Len=20;
 var Count=0;
 var ImageServer='{$IMAGESERVER}';
 var NextQuery;
+var SelectedKW=-1;
 var Selected={};
 // {literal} 
 
@@ -87,6 +88,23 @@ function toggleselect(Id,pos)
   else {$("#z"+pos).removeClass("cellselected");$("#dd"+pos).removeClass("cellselected");}
      
 }  
+
+function assign_keyword()
+{
+    if (SelectedKW < 0) return;
+    $.ajax({ 
+    type: 'POST', 
+    url: 'assignkw.php', 
+    data: { 'Keyword': SelectedKW, 'Selected' : JSON.stringify(Selected)}, 
+    dataType: 'json',
+    success: assignkwsuccess
+    }); 
+}
+
+function assignkwsuccess(data)
+{
+    raffraichir();
+}
 
 function success_images(data) { 
         $.each(data, function(index, element) {
@@ -283,7 +301,7 @@ function select_query()
 	    }
     });
     $('#navbutton-queryok').on('click',function() {document.getElementById('popup').style.display = "none";Selected={};Query=NextQuery;start_position=0;raffraichir();});
-    $('#navbutton-keywordsok').on('click',function() {document.getElementById('popup-keywords').style.display = "none";});
+    $('#navbutton-keywordsok').on('click',function() {document.getElementById('popup-keywords').style.display = "none";assign_keyword();});
     $('#navbutton-keywordsok').css("background-image","url('web_images/check_64.png')") ;
     $("#filtrage").on('click', function () {
     	document.getElementById('popup').style.display = "block";
@@ -313,7 +331,7 @@ function select_query()
       },
       minLength: 3,
       select: function( event, ui ) {
-          if (ui.item) alert("Selected: " + ui.item.id );
+          if (ui.item) SelectedKW=ui.item.id;
       },
     });
   });
