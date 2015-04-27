@@ -243,7 +243,7 @@ function select_query()
     	<td><a Id="navbutton-filter" class="navbutton" href="#" onClick="document.getElementById('popup').style.display = 'block';"></a></td>
     	<td><a Id="navbutton-select" class="navbutton" href="#" onClick="selectall();"></a></td>
     	<td><a Id="navbutton-unselect" class="navbutton" href="#" onClick="unselectall();"></a></td>
-    	<td><a Id="navbutton-keyword" class="navbutton" href="#" onClick="document.getElementById('popup-keywords').style.display = 'block';document.getElementById('keywords').value='';"></a></td>
+    	<td><a Id="navbutton-keyword" class="navbutton" href="#" onClick="document.getElementById('popup-keywords').style.display = 'block';document.getElementById('keywords').value='';$('#keywords').focus();"></a></td>
 	  </td>
   </tr>
 </table>
@@ -266,11 +266,17 @@ function select_query()
          if (e.ctrlKey) {
             var c = e.which || e.keyCode;//Get key code
         switch (c) {
-            case 83:selectall();
+            case 83:selectall(); // Ctrl-S
                     e.preventDefault();     
                     e.stopPropagation();
                     break;
-            case 68:unselectall();
+            case 68:unselectall(); // Ctrl-D
+                    e.preventDefault();     
+                    e.stopPropagation();
+                    break;
+            case 65:document.getElementById('popup-keywords').style.display = 'block'; // Ctrl-A
+                    document.getElementById('keywords').value='';
+                    $("#keywords").focus();
                     e.preventDefault();     
                     e.stopPropagation();
                     break;
@@ -280,6 +286,11 @@ function select_query()
 
   $(function () {
   
+    $("#keywords").keyup(function(event){
+        if(event.keyCode == 13){
+        $("#navbutton-keywordsok").click();
+        }
+    });
     $('#jstree_query').jstree({
     'core' : {
         'data' : {
