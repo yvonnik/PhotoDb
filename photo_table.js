@@ -22,13 +22,13 @@ function table_create()
     if (start_position < 0) start_position=0;
     for (i=0; i < Rows;i++) {
       var ligne=document.createElement("tr");
-      ligne.setAttribute("id","r"+i)
+      ligne.setAttribute("id","r"+i);
       for (j=0;j < Cols;j++) {
           var cellule=document.createElement("td");
           cellule.setAttribute("class","tableau");
           cellule.setAttribute("Id","cl"+l);
                    
-          var div2=document.createElement("div");div2.setAttribute("Id","d"+l);div2.setAttribute("vertical-align","top")
+          var div2=document.createElement("div");div2.setAttribute("Id","d"+l);div2.setAttribute("vertical-align","top");
           var div3=document.createElement("div");div3.setAttribute("class","thumb");div3.setAttribute("align","right");
           div3.setAttribute("Id","dd"+l);
           
@@ -40,7 +40,7 @@ function table_create()
                  
           var limg=document.createElement("img");limg.setAttribute("class","thumbimg");limg.setAttribute("Id","i"+l);limg.setAttribute("align","center");
         
-          var div4=document.createElement("div");div4.setAttribute("class","thumb");div4.setAttribute("align","center");div4.setAttribute("Id","z"+l)
+          var div4=document.createElement("div");div4.setAttribute("class","thumb");div4.setAttribute("align","center");div4.setAttribute("Id","z"+l);
           div4.appendChild(limg);
           
           cellule.appendChild(div2);
@@ -60,7 +60,8 @@ function raffraichir()
     data: { 'Query': Query, 'Position': start_position, 'Len': Len, 'Keywords':1 }, 
     dataType: 'json',
     success: success_images
-});  
+    });  
+
 
 function success_images(data) { 
         $.each(data, function(index, element) {

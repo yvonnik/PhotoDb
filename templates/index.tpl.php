@@ -42,6 +42,17 @@ function movetopage(sens)
  
 }
 
+function photo_import() {
+    document.getElementById('popup-import').style.display = 'block';
+    $('#import-log').html("");
+    $.ajax({ 
+    type: 'GET', 
+    url: 'import.php', 
+    dataType: 'html',
+    success: function (data) {$('#import-log').html(data);}
+    });  
+}
+
 
 </script>
 <!-- {/literal} /-->
@@ -49,6 +60,19 @@ function movetopage(sens)
 
 
 <!-- http://www.formget.com/how-to-create-pop-up-contact-form-using-javascript/ -->
+
+<div Id="popup-import">
+           <div Id="popup-import_interior"> 
+                <img id="close" src="web_images/3.png">
+                <div Id="import-log">
+                   <table>
+                       scoubidou
+                   </table> 
+                </div>
+                
+            </div>
+        </div>
+        
 <!-- Popup de choix de la requete -->	
 	<div Id="popup">
 			<div Id="popup_interior">
@@ -78,7 +102,7 @@ function movetopage(sens)
 <!-- Boutons de naviguation -->  	
 <table width="50%" border="0" align="center" cellpadding="1" cellspacing="5">
     <tr>
-        <td><a Id="navbutton-import" class="navbutton" href="#" onClick="import();"></a></td>
+        <td><a Id="navbutton-import" class="navbutton" href="#" onClick="photo_import();"></a></td>
     	<td><a Id="navbutton-first" class="navbutton" href="#" onClick="movetopage(-4);"></a></td>
     	<td><a Id="navbutton-rewind" class="navbutton" href="#" onClick="movetopage(-3);"></a></td>
     	<td class="Date"><b Id="navcount"></b>&nbsp;&ndash;&nbsp;<b Id="bottomline"></b></td>
@@ -164,6 +188,7 @@ function movetopage(sens)
     $("img#close").on('click', function () {
     	document.getElementById('popup').style.display = "none";
     	document.getElementById('popup-keywords').style.display = "none";
+    	document.getElementById('popup-import').style.display = "none";
     });
     $(window).resize(function() {
         table_destroy();table_create();raffraichir();

@@ -1,17 +1,3 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-<html>
-
-
-<head>
-<title>Import</title>
-</head>
-
-<link href="style.css" rel="stylesheet" type="text/css" />
-<body>
-
-
 <?php
  
  include("dbconfig.php");
@@ -50,6 +36,8 @@ else {
 
 // récupération des infos Exif
 $todelete=array();
+
+print ("<table Id='log-table'>");
 
 foreach ($liste as $base) {
     $exif=exif_read_data($ImportFolder.$Sep.$base.".jpg");
@@ -147,26 +135,32 @@ foreach ($liste as $base) {
      $retouche=0;
      if (file_exists($ImportFolder.$Sep.$base.".jpg")) {copy($ImportFolder.$Sep.$base.".jpg",$filebase.$basename.".jpg");$todelete[]=$ImportFolder.$Sep.$base.".jpg";}
      else if (file_exists($ImportFolder.$Sep.$base.".JPG")) {copy($ImportFolder.$Sep.$base.".JPG",$filebase.$basename.".jpg");$todelete[]=$ImportFolder.$Sep.$base.".JPG";}
-     if (file_exists($ImportFolder.$Sep.$base.".NEF")) {copy($ImportFolder.$Sep.$base.".NEF",$filebase.$base.".nef");$todelete[]=$ImportFolder.$Sep.$base.".NEF";$raw=1;}
-     else if (file_exists($ImportFolder.$Sep.$base.".nef")) {copy($ImportFolder.$Sep.$base.".nef",$filebase.$basename.".nef");$todelete[]=$ImportFolder.$Sep.$base.".nef";$raw=1;}
+     
+     if (file_exists($ImportFolder.$Sep.$base.".nef")) {copy($ImportFolder.$Sep.$base.".nef",$filebase.$basename.".nef");$todelete[]=$ImportFolder.$Sep.$base.".nef";$raw=1;}
+     else if (file_exists($ImportFolder.$Sep.$base.".NEF")) {copy($ImportFolder.$Sep.$base.".NEF",$filebase.$basename.".nef");$todelete[]=$ImportFolder.$Sep.$base.".NEF";$raw=1;}
+     
      if (file_exists($ImportFolder.$Sep.$base."_dxo.jpg")) {copy($ImportFolder.$Sep.$base."_dxo.jpg",$filebase.$basename."_dxo.jpg");$todelete[]=$ImportFolder.$Sep.$base."_dxo.jpg";$retouche=1;}
      else if (file_exists($ImportFolder.$Sep.$base."_dxo.JPG")) {copy($ImportFolder.$Sep.$base."_dxo.JPG",$filebase.$basename."_dxo.jpg");$todelete[]=$ImportFolder.$Sep.$base."_dxo.JPG";$retouche=1;}
+     
      if (file_exists($ImportFolder.$Sep.$base.".jpg.dop")) {copy($ImportFolder.$Sep.$base.".jpg.dop",$filebase.$basename.".jpg.dop");$todelete[]=$ImportFolder.$Sep.$base.".jpg.dop";}
      else if (file_exists($ImportFolder.$Sep.$base.".JPG.dop")) {copy($ImportFolder.$Sep.$base.".JPG.dop",$filebase.$basename.".jpg.dop");$todelete[]=$ImportFolder.$Sep.$base.".JPG.dop";}
+     
+     if (file_exists($ImportFolder.$Sep.$base.".nef.dop")) {copy($ImportFolder.$Sep.$base.".nef.dop",$filebase.$basename.".nef.dop");$todelete[]=$ImportFolder.$Sep.$base.".nef.dop";}
+     else if (file_exists($ImportFolder.$Sep.$base.".NEF.dop")) {copy($ImportFolder.$Sep.$base.".NEF.dop",$filebase.$basename.".nef.dop");$todelete[]=$ImportFolder.$Sep.$base.".NEF.dop";}
    
      $sql="UPDATE images SET raw=$raw,retouche=$retouche WHERE N=$N";
      $res=$bdd->Execute($sql);
      if (!$res) die("Query failed : $sql");
      
-    print("<br>Base :$base, Date : $date, Raw : $raw, Retouche : $retouche, Model : $nom_source, $nsource<br>");  
-    print("sql : $sql<br>");
+    print("<tr><td>$N</td><td>$base</td><td>$nom_source</td><td>$date</td></tr>");  
        
 }
 
-print("<br>to delete :<br>");
-foreach ($todelete as $value) print("<br>$value");
+print("</table>");
+
+print("<br>to delete :<br><br><table Id'log-todelete'>");
+foreach ($todelete as $value) print("<tr><td>$value</td></tr>");
+print("</table>");
 ?>
 
 
-</body>
-</html>
