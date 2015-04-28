@@ -65,9 +65,7 @@ function photo_import() {
            <div Id="popup-import_interior"> 
                 <img id="close" src="web_images/3.png">
                 <div Id="import-log">
-                   <table>
-                       scoubidou
-                   </table> 
+                    
                 </div>
                 
             </div>
