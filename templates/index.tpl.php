@@ -12,6 +12,8 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="jQuery/jquery.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="photo_table.js"></script>
+<script src="select_keywords.js"></script>
 
 <!-- http://www.jstree.com/ -->
 <script src="jsTree/dist/jstree.min.js"></script>
@@ -20,128 +22,14 @@
 
 <script language="JavaScript" type="text/JavaScript">
 
-var start_position=0;
-var Query=0;
-var QueryName="Toutes les photos";
-var Len=20;
-var Count=0;
 var ImageServer='{$IMAGESERVER}';
-var NextQuery;
-var SelectedKW=-1;
-var Selected={};
+
 // {literal} 
 
-function table_destroy()
-{
-    for (i=0; i < Rows;i++) document.getElementById("latable").removeChild(document.getElementById("r"+i));
-}
 
-function table_create()
-{
-    var l=0;
-    Rows=Math.floor((document.body.clientHeight-80)/230);if (Rows <= 2) Rows=3;
-    Cols=Math.floor((document.body.clientWidth-20)/278);if (Cols <= 2) Cols=3;
-    Len=Rows*Cols;
-    if (start_position+Len >= Count) start_position=Count-Len;
-    if (start_position < 0) start_position=0;
-    for (i=0; i < Rows;i++) {
-      var ligne=document.createElement("tr");
-      ligne.setAttribute("id","r"+i)
-      for (j=0;j < Cols;j++) {
-          var cellule=document.createElement("td");
-          cellule.setAttribute("class","tableau");
-          cellule.setAttribute("Id","cl"+l);
-                   
-          var div2=document.createElement("div");div2.setAttribute("Id","d"+l);div2.setAttribute("vertical-align","top")
-          var div3=document.createElement("div");div3.setAttribute("class","thumb");div3.setAttribute("align","right");
-          div3.setAttribute("Id","dd"+l);
-          
-          var ouvrir=document.createElement("a");ouvrir.setAttribute("Id","o"+l);ouvrir.setAttribute("target","_blank");
-          var oimg=document.createElement("img");oimg.setAttribute("align","left");oimg.setAttribute("Id","oi"+l);
-          ouvrir.appendChild(oimg);
-          div2.appendChild(ouvrir);
-          div2.appendChild(div3);
-                 
-          var limg=document.createElement("img");limg.setAttribute("class","thumbimg");limg.setAttribute("Id","i"+l);limg.setAttribute("align","center");
-        
-          var div4=document.createElement("div");div4.setAttribute("class","thumb");div4.setAttribute("align","center");div4.setAttribute("Id","z"+l)
-          div4.appendChild(limg);
-          
-          cellule.appendChild(div2);
-          cellule.appendChild(div4);
-          ligne.appendChild(cellule);
-          l++;
-      }
-     document.getElementById("latable").appendChild(ligne);
-  }  
-}
 // Callback de l'appel Ajax pour récupérer la liste des images
-function toggleselect(Id,pos)
-{
-  if(Id in Selected) {
-      if (Selected[Id] == "1") Selected[Id]="0"; else Selected[Id]=1;
-  } else {
-      Selected[Id]="1";
-  }
-  
-  if (Selected[Id] == "1")  {$("#z"+pos).addClass("cellselected");$("#dd"+pos).addClass("cellselected");}
-  else {$("#z"+pos).removeClass("cellselected");$("#dd"+pos).removeClass("cellselected");}
-     
-}  
 
-function assign_keyword()
-{
-    if (SelectedKW < 0) return;
-    $.ajax({ 
-    type: 'POST', 
-    url: 'assignkw.php', 
-    data: { 'Keyword': SelectedKW, 'Selected' : JSON.stringify(Selected)}, 
-    dataType: 'json',
-    success: assignkwsuccess
-    }); 
-}
 
-function assignkwsuccess(data)
-{
-    raffraichir();
-}
-
-function success_images(data) { 
-        $.each(data, function(index, element) {
-            if (index == "Count") {
-                Count=element;
-                document.getElementById("navcount").innerHTML=(start_position+1)+"-"+(start_position+Len)+" sur "+Count+", "+(Math.round(start_position*100/Count)+"%");
-            }
-            else if (index == "Name") {
-                QueryName=element;
-            }
-            else {
-                // Ici, on a dans le tableau element toutes les images
-                    for (i=0;i < element.length;i++) {
-                        $('#i'+i).attr("src",ImageServer+"display_image.php?Id="+element[i].N+"&small=1&Date="+element[i].Date);
-                        $('#i'+i).attr("onclick","toggleselect("+element[i].N+","+i+")");
-                        $('#i'+i).attr("title",element[i].keywords);
-                        $('#oi'+i).attr("src","web_images/preview_24.png");
-                        $('#dd'+i).text("("+element[i].N+") "+element[i].Date);
-                        $('#o'+i).attr("onclick","window.open('"+ImageServer+"display_image.php?Id="+element[i].N+"&small=0&Date="+element[i].Date+"')");
-                       
-                        $('#cl'+i).attr("class","tableau"+element[i].Qualite);
-                        if (Selected[element[i].N] == "1")  {$("#z"+i).addClass("cellselected");$("#dd"+i).addClass("cellselected");}
-                        else {$("#z"+i).removeClass("cellselected");$("#dd"+i).removeClass("cellselected");}
-                    }
-                    for (i=i; i < Len;i++) {
-                        $('#i'+i).attr("src","web_images/empty.png");
-                        $('#dd'+i).text("");
-                        $('#a'+i).attr("href","");
-                        $("cl"+i).attr("class","tableau");
-                        $("#z"+i).removeClass("cellselected");$("#dd"+i).removeClass("cellselected");
-                    }
-                     
-                 }
-        });
-        $('#bottomline').text(QueryName);
-    }
-    
 function movetopage(sens)
 {
  var OldPosition=start_position;
@@ -154,61 +42,14 @@ function movetopage(sens)
  
 }
 
-function selectallsuccess(data)
-{
-    $.each(data, function(index, element) {
-            if (index == "Count") { }
-            else if (index == "Name") {}
-            else {
-                // Ici, on a dans le tableau element toutes les images
-                    for (i=0;i < element.length;i++) Selected[element[i].N]=1;
-                    }
-        });
-    raffraichir();       
-}
-
-function selectall()
-{
-    $.ajax({ 
-    type: 'GET', 
-    url: 'listimages.php', 
-    data: { 'Query': Query, 'Position': 0, 'Len': 100000, 'Keywords':0}, 
-    dataType: 'json',
-    success: selectallsuccess
-    });   
-}
-
-function unselectall()
-{
-    Selected={};
-    raffraichir();
-}
-
-function raffraichir()
-{
-    $.ajax({ 
-    type: 'GET', 
-    url: 'listimages.php', 
-    data: { 'Query': Query, 'Position': start_position, 'Len': Len, 'Keywords':1 }, 
-    dataType: 'json',
-    success: success_images
-});  
- /*var URL="index.php?Page="+Page+"&Query="+Query;
- window.location=URL;*/
-}
-
-function select_query()
-{
-    
-}
-
 
 </script>
 <!-- {/literal} /-->
 </head>
 
 
-<!-- http://www.formget.com/how-to-create-pop-up-contact-form-using-javascript/ -->	
+<!-- http://www.formget.com/how-to-create-pop-up-contact-form-using-javascript/ -->
+<!-- Popup de choix de la requete -->	
 	<div Id="popup">
 			<div Id="popup_interior">
 				<img id="close" src="web_images/3.png">
@@ -219,7 +60,8 @@ function select_query()
 				<a Id="navbutton-queryok" class="navbutton" href="#" onClick=""></a>
 			</div>
 		</div>
-		
+
+<!-- Popup de choix d'un mot-clé -->   		
 		<div Id="popup-keywords">
             <div Id="popup-keywords_interior">
                 <img id="close" src="web_images/3.png">
@@ -232,9 +74,11 @@ function select_query()
                 <a Id="navbutton-keywordsok" class="navbutton" href="#" onClick=""></a>
             </div>
         </div>
-	
+
+<!-- Boutons de naviguation -->  	
 <table width="50%" border="0" align="center" cellpadding="1" cellspacing="5">
     <tr>
+        <td><a Id="navbutton-import" class="navbutton" href="#" onClick="import();"></a></td>
     	<td><a Id="navbutton-first" class="navbutton" href="#" onClick="movetopage(-4);"></a></td>
     	<td><a Id="navbutton-rewind" class="navbutton" href="#" onClick="movetopage(-3);"></a></td>
     	<td class="Date"><b Id="navcount"></b>&nbsp;&ndash;&nbsp;<b Id="bottomline"></b></td>
@@ -248,7 +92,7 @@ function select_query()
   </tr>
 </table>
 
-
+<!-- table pour les vignettes --> 
 <table  class="thumb,tableau" Id="latable"></table>
 
 
