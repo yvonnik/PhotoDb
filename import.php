@@ -43,6 +43,7 @@ print("<table Id='log-table'>");
 
 foreach ($liste as $base) {
     $exif=exif_read_data($ImportFolder.$Sep.$base.".jpg");
+    if ($exif == FALSE) $exif=exif_read_data($ImportFolder.$Sep.$base.".JPG");
  
     if ($Exif != 0) {
         print "<br>Base : $base<br>";
@@ -144,6 +145,10 @@ foreach ($liste as $base) {
      $retouche=MyCopy("_dxo.jpg", FALSE);
      MyCopy(".jpg.dop", FALSE);
      MyCopy(".nef.dop", FALSE);
+     MyCopy(".jpg.DOP", FALSE);
+     MyCopy(".nef.DOP", FALSE);
+     MyCopy(".JPG.dop", FALSE);
+     MyCopy(".NEF.dop", FALSE);
            
      $sql="UPDATE images SET raw=$raw,retouche=$retouche WHERE N=$N";
      $res=$bdd->Execute($sql);
