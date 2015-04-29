@@ -21,16 +21,10 @@ function assign_keyword()
     type: 'POST', 
     url: 'assignkw.php', 
     data: { 'Keyword': SelectedKW, 'Selected' : JSON.stringify(Selected)}, 
-    dataType: 'json',
-    success: assignkwsuccess
+    dataType: 'html',
+    success: function (data) {raffraichir();}
     }); 
 }
-
-function assignkwsuccess(data)
-{
-    raffraichir();
-}
-
 
 function selectallsuccess(data)
 {
