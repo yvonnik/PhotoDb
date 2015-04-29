@@ -23,6 +23,7 @@
 <script language="JavaScript" type="text/JavaScript">
 
 var ImageServer='{$IMAGESERVER}';
+var Admin={$ADMIN};
 
 // {literal} 
 
@@ -100,7 +101,7 @@ function photo_import() {
 <!-- Boutons de naviguation -->  	
 <table width="50%" border="0" align="center" cellpadding="1" cellspacing="5">
     <tr>
-        <td><a Id="navbutton-import" class="navbutton" href="#" onClick="photo_import();"></a></td>
+        <td class="admin"><a Id="navbutton-import" class="navbutton" href="#" onClick="photo_import();"></a></td>
     	<td><a Id="navbutton-first" class="navbutton" href="#" onClick="movetopage(-4);"></a></td>
     	<td><a Id="navbutton-rewind" class="navbutton" href="#" onClick="movetopage(-3);"></a></td>
     	<td class="Date"><b Id="navcount"></b>&nbsp;&ndash;&nbsp;<b Id="bottomline"></b></td>
@@ -109,7 +110,7 @@ function photo_import() {
     	<td><a Id="navbutton-filter" class="navbutton" href="#" onClick="document.getElementById('popup').style.display = 'block';"></a></td>
     	<td><a Id="navbutton-select" class="navbutton" href="#" onClick="selectall();"></a></td>
     	<td><a Id="navbutton-unselect" class="navbutton" href="#" onClick="unselectall();"></a></td>
-    	<td><a Id="navbutton-keyword" class="navbutton" href="#" onClick="document.getElementById('popup-keywords').style.display = 'block';document.getElementById('keywords').value='';$('#keywords').focus();"></a></td>
+    	<td class="admin"><a Id="navbutton-keyword" class="navbutton" href="#" onClick="document.getElementById('popup-keywords').style.display = 'block';document.getElementById('keywords').value='';$('#keywords').focus();"></a></td>
 	  </td>
   </tr>
 </table>
@@ -126,6 +127,7 @@ function photo_import() {
   
     table_create();
     raffraichir();
+    if (Admin == 0) $(".admin").hide();
 
     document.onkeydown = function (e) {
          e = e || window.event;//Get event
@@ -140,7 +142,8 @@ function photo_import() {
                     e.preventDefault();     
                     e.stopPropagation();
                     break;
-            case 65:document.getElementById('popup-keywords').style.display = 'block'; // Ctrl-A
+            case 65:if (Admin == 0) break;
+                    document.getElementById('popup-keywords').style.display = 'block'; // Ctrl-A
                     document.getElementById('keywords').value='';
                     $("#keywords").focus();
                     e.preventDefault();     
@@ -177,6 +180,7 @@ function photo_import() {
 	       NextQuery=data.selected.toString();
 	    }
     });
+    
     $('#navbutton-queryok').on('click',function() {document.getElementById('popup').style.display = "none";Selected={};Query=NextQuery;start_position=0;raffraichir();});
     $('#navbutton-keywordsok').on('click',function() {document.getElementById('popup-keywords').style.display = "none";assign_keyword();});
     $('#navbutton-keywordsok').css("background-image","url('web_images/check_64.png')") ;
