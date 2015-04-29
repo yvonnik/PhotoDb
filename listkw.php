@@ -2,7 +2,7 @@
  
  include("dbconfig.php");
  
- if (stristr(php_uname(),"windows")) {$unix=0;$windows=1;} else {$unix=1;$windows=0;}
+ if (stristr(php_uname(),"windows")) {$unix=0;$windows=1;} else {$unix=1;$windows=0;} 
     
  if (isset($_GET["q"])) $q=$_GET["q"]; else die("Need query");   
   
@@ -18,7 +18,7 @@ while (!$res->EOF)
  {
      $Json.="{";
      $Json.="'id' : '".$res->fields["N"]."' ,";
-     $Json.="'value' : '".$res->fields["Nom"]."'";
+     $Json.="'value' : '".($windows ? utf8_encode($res->fields["Nom"]) : $res->fields["Nom"])."'";
      
      $Json.="},";
         
