@@ -27,6 +27,7 @@ else {
          
          $nom = explode(".", $f);
          $base = $nom[0];
+         for ($i=1;$i <  count($nom)-1;$i++) {$base.=".".$nom[$i];}
          $ext = $nom[count($nom)-1];
          $isdxo = (strtoupper(substr($base, -4)) == "_DXO" ? TRUE : FALSE);
          if ((strtoupper($ext) == "JPG") && !$isdxo) $liste[] = $base;
@@ -52,7 +53,7 @@ foreach ($liste as $base) {
     
     // récupération de la date
     if (array_key_exists("DateTimeOriginal", $exif)) $date=$exif["DateTimeOriginal"];
-    else if (array_key_exists("DateTimeDigitized")) $date=$exif["DateTimeDigitized"];
+    else if (array_key_exists("DateTimeDigitized",$exif)) $date=$exif["DateTimeDigitized"];
     else if (array_key_exists("FileDateTime", $exif)) $date=date("c",$exif["FileDateTime"]);
     else $date=filectime($$ImportFolder.$Sep.$base.".jpg");
     
@@ -130,6 +131,7 @@ foreach ($liste as $base) {
      if (!is_dir($BaseFolder.$Sep.$annee)) mkdir($BaseFolder.$Sep.$annee);
      if (!is_dir($BaseFolder.$Sep.$annee.$Sep.$mois)) mkdir($BaseFolder.$Sep.$annee.$Sep.$mois);
      if (!is_dir($BaseFolder.$Sep.$annee.$Sep.$mois.$Sep.$jour)) mkdir($BaseFolder.$Sep.$annee.$Sep.$mois.$Sep.$jour);
+     if (!is_dir($BaseFolder.$Sep.$annee.$Sep.$mois.$Sep.$jour.$Sep."smalls")) mkdir($BaseFolder.$Sep.$annee.$Sep.$mois.$Sep.$jour.$Sep."smalls");
      
      $basename=sprintf("im%06d",$N);
      $raw=0;
@@ -137,7 +139,7 @@ foreach ($liste as $base) {
      
      $raw=MyCopy(".nef", TRUE);
      
-     MyCopy(".jpg", ($raw != 0 ? FALSE : TRUE); // Si raw, le .jpg n'est pas en readonly, sinon c'est la référence
+     MyCopy(".jpg", ($raw != 0 ? FALSE : TRUE)); // Si raw, le .jpg n'est pas en readonly, sinon c'est la référence
      
      $retouche=MyCopy("_dxo.jpg", FALSE);
      MyCopy(".jpg.dop", FALSE);
