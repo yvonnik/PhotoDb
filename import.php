@@ -37,7 +37,8 @@ else {
 // récupération des infos Exif
 $todelete=array();
 
-print ("<table Id='log-table'>");
+print("<b>Import done :</b><br><br>");
+print("<table Id='log-table'>");
 
 foreach ($liste as $base) {
     $exif=exif_read_data($ImportFolder.$Sep.$base.".jpg");
@@ -133,34 +134,49 @@ foreach ($liste as $base) {
      $basename=sprintf("im%06d",$N);
      $raw=0;
      $retouche=0;
-     if (file_exists($ImportFolder.$Sep.$base.".jpg")) {copy($ImportFolder.$Sep.$base.".jpg",$filebase.$basename.".jpg");$todelete[]=$ImportFolder.$Sep.$base.".jpg";}
-     else if (file_exists($ImportFolder.$Sep.$base.".JPG")) {copy($ImportFolder.$Sep.$base.".JPG",$filebase.$basename.".jpg");$todelete[]=$ImportFolder.$Sep.$base.".JPG";}
      
-     if (file_exists($ImportFolder.$Sep.$base.".nef")) {copy($ImportFolder.$Sep.$base.".nef",$filebase.$basename.".nef");$todelete[]=$ImportFolder.$Sep.$base.".nef";$raw=1;}
-     else if (file_exists($ImportFolder.$Sep.$base.".NEF")) {copy($ImportFolder.$Sep.$base.".NEF",$filebase.$basename.".nef");$todelete[]=$ImportFolder.$Sep.$base.".NEF";$raw=1;}
+     $raw=MyCopy(".nef", TRUE);
      
-     if (file_exists($ImportFolder.$Sep.$base."_dxo.jpg")) {copy($ImportFolder.$Sep.$base."_dxo.jpg",$filebase.$basename."_dxo.jpg");$todelete[]=$ImportFolder.$Sep.$base."_dxo.jpg";$retouche=1;}
-     else if (file_exists($ImportFolder.$Sep.$base."_dxo.JPG")) {copy($ImportFolder.$Sep.$base."_dxo.JPG",$filebase.$basename."_dxo.jpg");$todelete[]=$ImportFolder.$Sep.$base."_dxo.JPG";$retouche=1;}
+     MyCopy(".jpg", ($raw != 0 ? FALSE : TRUE); // Si raw, le .jpg n'est pas en readonly, sinon c'est la référence
      
-     if (file_exists($ImportFolder.$Sep.$base.".jpg.dop")) {copy($ImportFolder.$Sep.$base.".jpg.dop",$filebase.$basename.".jpg.dop");$todelete[]=$ImportFolder.$Sep.$base.".jpg.dop";}
-     else if (file_exists($ImportFolder.$Sep.$base.".JPG.dop")) {copy($ImportFolder.$Sep.$base.".JPG.dop",$filebase.$basename.".jpg.dop");$todelete[]=$ImportFolder.$Sep.$base.".JPG.dop";}
-     
-     if (file_exists($ImportFolder.$Sep.$base.".nef.dop")) {copy($ImportFolder.$Sep.$base.".nef.dop",$filebase.$basename.".nef.dop");$todelete[]=$ImportFolder.$Sep.$base.".nef.dop";}
-     else if (file_exists($ImportFolder.$Sep.$base.".NEF.dop")) {copy($ImportFolder.$Sep.$base.".NEF.dop",$filebase.$basename.".nef.dop");$todelete[]=$ImportFolder.$Sep.$base.".NEF.dop";}
-   
+     $retouche=MyCopy("_dxo.jpg", FALSE);
+     MyCopy(".jpg.dop", FALSE);
+     MyCopy(".nef.dop", FALSE);
+           
      $sql="UPDATE images SET raw=$raw,retouche=$retouche WHERE N=$N";
      $res=$bdd->Execute($sql);
      if (!$res) die("Query failed : $sql");
      
+    
     print("<tr><td>$N</td><td>$base</td><td>$nom_source</td><td>$date</td></tr>");  
        
 }
 
 print("</table>");
 
-print("<br>to delete :<br><br><table Id'log-todelete'>");
-foreach ($todelete as $value) print("<tr><td>$value</td></tr>");
-print("</table>");
+
+ // Déplacement des fichiers dans le répertoire "trash" du répertoire d'import
+foreach ($todelete as $value)  {
+    $file=explode($Sep,$value);$file=$file[count($file)-1];
+    $dest=$ImportFolder.$Sep."Trash";
+    if (!is_dir($dest)) mkdir($dest);
+    $dest.=$Sep.$file;
+    if (!rename($value,$dest)) print("Rename $value failed<br>");
+    
+}   
+
+
+function MyCopy($ext,$readonly) {
+    global $todelete,$base,$basename,$ImportFolder,$filebase,$unix,$Sep;
+    $f="";
+    if (file_exists($ImportFolder.$Sep.$base.strtoupper($ext))) $f=$ImportFolder.$Sep.$base.strtoupper($ext);
+    if (file_exists($ImportFolder.$Sep.$base.$ext)) $f=$ImportFolder.$Sep.$base.$ext;
+    if ($f == "") return 0; // pas de fichier, rien à faire
+    if (copy($f,$filebase.$basename.$ext) == FALSE) {print("copy failed for $f<br>");return 0;}
+    $todelete[]=$f;
+    if ($readonly && $unix) chmod($filebase.$basename.$ext,0444); // passage du fichier en readonly sous Unix
+    return 1;
+}
 ?>
 
 
