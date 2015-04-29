@@ -13,7 +13,7 @@
  }
 else {
     $BaseFolder="../../Multimedia/Photos/PhotoDb/Images";$Sep="/";
-    $ImportFolder="../../Multimedia/Photos/PhotoDb/Images";
+    $ImportFolder="../../Multimedia/Photos/PhotoDb/Images/ToImport";
  }
  
   
