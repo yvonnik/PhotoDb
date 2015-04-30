@@ -50,8 +50,15 @@ function photo_import() {
     type: 'GET', 
     url: 'import.php', 
     dataType: 'html',
-    success: function (data) {$('#import-log').html(data);}
+    success: function (data) {
+        $('#import-log').html(data);
+        Selected={};Query=-1;
+        start_position=0;
+        raffraichir();
+        }
     });  
+    
+    
 }
 
 

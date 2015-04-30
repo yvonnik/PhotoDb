@@ -34,6 +34,8 @@ else {
      }
  }
 
+// Gestion de la InsertDate
+$InsertDate=date("c");
 
 // récupération des infos Exif
 $todelete=array();
@@ -118,7 +120,7 @@ foreach ($liste as $base) {
     
     
        // Insertion de la ligne d'image et récupération du numéro
-    $sql="INSERT INTO images (Date,Source,ms,Focale,Vitesse,ISO,Diaphragme,Flash,portrait,paysage,largeur,hauteur) VALUES ('$date',$nsource,$ms,$Focale,$Vitesse,$ISO,$Diaphragme,$Flash,$portrait,$paysage,$largeur,$hauteur)";
+    $sql="INSERT INTO images (Date,InsertDate,Source,ms,Focale,Vitesse,ISO,Diaphragme,Flash,portrait,paysage,largeur,hauteur) VALUES ('$date','$InsertDate',$nsource,$ms,$Focale,$Vitesse,$ISO,$Diaphragme,$Flash,$portrait,$paysage,$largeur,$hauteur)";
     
     $res=$bdd->Execute($sql);
     if (!$res) die("Query failed : $sql");
@@ -168,7 +170,10 @@ foreach ($todelete as $value)  {
     $dest=$ImportFolder.$Sep."Trash";
     if (!is_dir($dest)) mkdir($dest);
     $dest.=$Sep.$file;
-    if (!rename($value,$dest)) print("Rename $value failed<br>");
+    if (file_exists($value)) {
+        if (!rename($value,$dest)) print("Rename $value failed<br>");     
+    }
+    
     
 }   
 
