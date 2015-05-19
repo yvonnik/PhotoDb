@@ -4,7 +4,7 @@ include("dbconfig.php");
 
 
 if (stristr(php_uname(),"windows")) {$unix=0;$windows=1;} else {$unix=1;$windows=0;}
-if ($windows) {$BaseFolder="\\\\192.168.2.11\\Multimedia\\Photos\\PhotoDb\\Images";$Sep="\\";}
+if ($windows) {$BaseFolder="T:\\PhotoDb\\Images";$Sep="\\";}
 //if ($windows) {$BaseFolder="c:\\temp\\PhotoDb\\Images";$Sep="\\";}
 else {$BaseFolder="../../Multimedia/Photos/PhotoDb/Images";$Sep="/";}
 

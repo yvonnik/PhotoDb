@@ -198,11 +198,22 @@ button#query_close {
 #navbutton-import { background: url('web_images/import_64.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
 #navbutton-import:hover { background-position: 0px -64px; }
 
+#navbutton-addkw { background: url('web_images/next_32.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
+#navbutton-addkw:hover { background-position: 0px -32px; }
+
 
 a.navbutton {
 	
 	width: 64px;
 	height: 64px;
+	display: block;
+	text-indent: -9999px;
+}
+
+a.navbutton-small {
+	
+	width: 32px;
+	height: 32px;
 	display: block;
 	text-indent: -9999px;
 }
