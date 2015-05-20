@@ -113,7 +113,7 @@ input {
 }
 
 
-div#popup, div#popup-keywords, div#popup-import {
+div#popup, div#popup-keywords, div#popup-import, div#popup-filter {
 	width: 100%;
 	height: 100%;
 	opacity: .9;
@@ -136,13 +136,13 @@ img#close {
 
 
 
-div#popup_interior, div#popup-keywords_interior, div#popup-import_interior {
+div#popup_interior, div#popup-keywords_interior, div#popup-import_interior,div#popup-filter_interior {
 	position: absolute;
 	left: 50%;
 	top: 17%;
 	margin-left: -202px;
 	font-family: 'Raleway', sans-serif;
-	max-width: 450px;
+	max-width: 650px;
 	min-width: 250px;
 	padding: 10px 50px;
 	border: 2px solid gray;
@@ -183,6 +183,9 @@ button#query_close {
 #navbutton-filter { background: url('web_images/filter_64.png') no-repeat 0px 0px;}
 #navbutton-filter:hover { background-position: 0px -64px; }
 
+#navbutton-filter2 { background: url('web_images/filter2_64.png') no-repeat 0px 0px;}
+#navbutton-filter2:hover { background-position: 0px -64px; }
+
 #navbutton-queryok,#navbutton-keywordsok { background: url('web_images/check_64_grey.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
 #navbutton-queryok,#navbutton-keywordsok:hover { background-position: 0px -64px; }
 
@@ -198,8 +201,11 @@ button#query_close {
 #navbutton-import { background: url('web_images/import_64.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
 #navbutton-import:hover { background-position: 0px -64px; }
 
-#navbutton-addkw { background: url('web_images/next_32.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
-#navbutton-addkw:hover { background-position: 0px -32px; }
+.buttonnext { background: url('web_images/next_32.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
+.buttonnext:hover { background-position: 0px -32px; }
+
+#navbutton-addkw2 { background: url('web_images/add_32.png') no-repeat 0px 0px;margin-left: 0;margin-right: auto;}
+#navbutton-addkw2:hover { background-position: 0px -32px; }
 
 
 a.navbutton {
@@ -220,7 +226,15 @@ a.navbutton-small {
 
 #keywords { width: 20em; }
 
-
+#Filterzone {
+	
+	width: 250px;
+	height: 96px;
+	font-family: 'Raleway', sans-serif;
+	font-size:10px;
+	border: 2px solid gray;
+	
+}
 
 
 

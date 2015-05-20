@@ -35,7 +35,7 @@ function Addkw()
     <table width="30%" border="0" align="left" cellpadding="1" cellspacing="5">
         <tr>
          <td class="admin"><input id="newkw-input"></td>
-         <td class="admin"><a Id="navbutton-addkw" class="navbutton-small" href="#" onClick="Addkw();"></a></td>
+         <td class="admin"><a Id="navbutton-addkw" class="navbutton-small buttonnext" href="#" onClick="Addkw();"></a></td>
          <td class="admin"><p Id="Selected"></p></td>
         </tr>
     </table>
