@@ -17,7 +17,7 @@
  if (isset($_POST["Keywords"])) $Keywords=$_POST["Keywords"]; 
  if (isset($_POST["LocalQuery"])) $LocalQuery=$_POST["LocalQuery"];     
     
-    
+ $LocalQuery=utf8_decode($LocalQuery);  
  if ($Query == 0) // Pas de requete, rien à faire
     {
      $Nom="Toutes les photos";
@@ -27,7 +27,7 @@
      $Fin="2200-12-31";
      $Requete="1";
     }
- else if ($Query == -1) // Il faut utiliser la LocalQuery
+ else if ($Query == -2) // Il faut utiliser la LocalQuery
     {
      $Nom="Local";
      $Requete=$LocalQuery;
@@ -72,7 +72,7 @@
  
  
  // Ajout des dates
- if ($Query != -1) {
+ if ($Query > 0) {
     $Requete=$Requete." AND Date >= '$Debut' AND Date <= '$Fin'";
     if ($Source > 0) $Requete=$Requete." AND Source=$Source";
     if ($Qualite > 0) $Requete=$Requete." AND Qualite >= $Qualite";

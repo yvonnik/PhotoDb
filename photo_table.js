@@ -55,7 +55,7 @@ function table_create()
 
 function raffraichir()
 {
-    if ((Query == -1) && (LocalQuery == '')) Query=0;
+    if ((Query == -2) && (LocalQuery == '')) Query=0;
     $.ajax({ 
     type: 'POST', 
     url: 'listimages.php', 
@@ -72,8 +72,7 @@ function success_images(data) {
                 document.getElementById("navcount").innerHTML=(start_position+1)+"-"+(start_position+Len)+" sur "+Count+", "+(Math.round(start_position*100/Count)+"%");
             }
             else if (index == "Name") {
-                QueryName=element;
-            }
+                 }
             else {
                 // Ici, on a dans le tableau element toutes les images
                     for (i=0;i < element.length;i++) {

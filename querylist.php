@@ -27,7 +27,7 @@ function traite_dir($me)
 	  }
 	} 
 	
-	$res=$bdd->Execute("SELECT * from querys WHERE Parent=$me");
+	$res=$bdd->Execute("SELECT * from querys WHERE Parent=$me AND N >= 0");
 	if ($res)
 	{
 	 while (!$res->EOF)

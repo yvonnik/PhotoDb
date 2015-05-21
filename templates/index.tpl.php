@@ -114,21 +114,15 @@ function photo_import() {
 <div Id="popup"></div>
 
 <!-- http://www.formget.com/how-to-create-pop-up-contact-form-using-javascript/ -->
-
-<div Id="popup-import">
-           <div Id="popup-import_interior"> 
-                <img id="close" src="web_images/3.png">
-                <div Id="import-log">
-                    
-                </div>
-                
-            </div>
-        </div>
-        
+       
 <!-- Popup de création d'un filtre manuel -->           
 
    <div Id="popup-filter_interior">
 		<img id="close" src="web_images/3.png">
+		<div Id="jstree_query" style="max-height:300px;overflow:auto;">
+
+        </div>
+        <br>
 		<table Id="filter-exterior">
 			<tr>
 				<td Id="table des champs">
@@ -176,10 +170,15 @@ function photo_import() {
 						<td><a Id="navbutton-addkeywordfilter" class="navbutton-small buttonnext" href="#" onClick="AddKeyword();"></a></td>
 					</tr>
 				</table></td>
-				<td Id="Zone de texte">				<textarea Id="Filterzone"></textarea></td>
+				<td Id="Zone de texte"><textarea Id="Filterzone"></textarea></td>
 			</tr>
+		</table>
+		<table>
 			<tr>
-				<td align="center"><a Id="navbutton-filterok" class="navbutton" href="#" onClick=""></a> </td align="center"> <td><a Id="navbutton-filterclear" class="navbutton" href="#" onClick="document.getElementById('Filterzone').value='';Query=0;raffraichir();"></a></td>
+			    
+                <td><a Id="navbutton-queryok" class="navbutton" href="#" ></a></td>
+				<td align="center"><a Id="navbutton-filterok" class="navbutton" href="#" onClick=""></a> </td> 
+				<td><a Id="navbutton-filterclear" class="navbutton" href="#" onClick="document.getElementById('Filterzone').value='';Query=0;raffraichir();"></a></td>
 			</tr>
 		</table>
 	</div>
@@ -189,11 +188,8 @@ function photo_import() {
 		
 	<div Id="popup_interior">
 		<img id="close" src="web_images/3.png">
-		<div Id="jstree_query">
-
-		</div>
-		<br>
-		<a Id="navbutton-queryok" class="navbutton" href="#" onClick=""></a>
+		
+		
 	</div>
 		
 
@@ -221,11 +217,11 @@ function photo_import() {
     	<td class="Date"><b Id="navcount"></b>&nbsp;&ndash;&nbsp;<b Id="bottomline"></b></td>
     	<td><a Id="navbutton-forward" class="navbutton" href="#" onClick="movetopage(-2);"></a></td>
     	<td><a Id="navbutton-last" class="navbutton" href="#" onClick="movetopage(-1);"></a></td>
-    	<td><a Id="navbutton-filter" class="navbutton" href="#" onClick="$('#popup').show();$('#popup_interior').show();"></a></td>
+    	<td><a Id="navbutton-filter" class="navbutton" href="#" onClick="$('#popup').show();$('#popup-filter_interior').show();"></a></td>
     	<td><a Id="navbutton-select" class="navbutton" href="#" onClick="selectall();"></a></td>
     	<td><a Id="navbutton-unselect" class="navbutton" href="#" onClick="unselectall();"></a></td>
     	<td class="admin"><a Id="navbutton-keyword" class="navbutton" href="#" onClick="$('#popup').show();$('#popup-keywords_interior').show();document.getElementById('keywords').value='';$('#keywords').focus();"></a></td>
-    	<td class="admin"><a Id="navbutton-filter2" class="navbutton" href="#" onClick="$('#popup').show();$('#popup-filter_interior').show();"></a></td>
+    	
 	  </td>
   </tr>
 </table>
@@ -289,16 +285,34 @@ function photo_import() {
     
 	$('#jstree_query').on("changed.jstree", function (e, data) {
 	    if (data.selected.toString().charAt(0) == "f") { // On est sur un folder
-	       $('#navbutton-queryok').css("background-image","url('web_images/check_64_grey.png')") ;
+	       $('#navbutton-queryok').css("background-image","url('web_images/file_grey_64.png')") ;
 	    }
 	    else {
-	       $('#navbutton-queryok').css("background-image","url('web_images/check_64.png')") ; 
+	       $('#navbutton-queryok').css("background-image","url('web_images/file_64.png')") ; 
 	       NextQuery=data.selected.toString();
 	    }
     });
     
-    $('#navbutton-queryok').on('click',function() {$('#popup').hide();$('#popup_interior').hide();Selected={};Query=NextQuery;start_position=0;raffraichir();});
-    $('#navbutton-filterok').on('click',function() {Selected={};Query=-1;LocalQuery=document.getElementById("Filterzone").value;start_position=0;raffraichir();});
+    $('#navbutton-queryok').on('click',function() {
+        $('#popup').hide();$('#popup-filter_interior').hide();Selected={};
+        
+        $.ajax({ 
+                 type: 'GET', 
+                 url: 'getquery.php', 
+                 data: { 'N': NextQuery},
+                 dataType: 'json',
+                 success: function (data) {
+                    var SQL=data.SQL;
+                    document.getElementById("Filterzone").value=SQL;
+                    LocalQuery=SQL;
+                    Query=-2;start_position=0;
+                    QueryName=data.Name;
+                    raffraichir();
+                 }
+        });  
+        
+    });
+    $('#navbutton-filterok').on('click',function() {Selected={};Query=-2;QueryName='Local';LocalQuery=document.getElementById("Filterzone").value;start_position=0;raffraichir();});
     $('#navbutton-keywordsok').on('click',function() {$('#popup-keywords_interior').hide();$('#popup').hide();assign_keyword();});
     $('#navbutton-keywordsok').css("background-image","url('web_images/check_64.png')") ;
     $('#navbutton-filterok').css("background-image","url('web_images/check_64.png')") ;
