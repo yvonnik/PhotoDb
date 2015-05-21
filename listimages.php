@@ -3,11 +3,19 @@
  include("dbconfig.php");
  
  if (stristr(php_uname(),"windows")) {$unix=0;$windows=1;} else {$unix=1;$windows=0;}
-    
- if (isset($_GET["Query"])) $Query=$_GET["Query"]; else die("Need query");   
- if (isset($_GET["Position"])) $Position=$_GET["Position"]; else die("Need Position");
- if (isset($_GET["Len"])) $Len=$_GET["Len"]; else die("Need Len"); 
- if (isset($_GET["Keywords"])) $Keywords=$_GET["Keywords"]; else die("Need Keywords");     
+   
+   
+ if (isset($_GET["Query"])) $Query=$_GET["Query"];    
+ if (isset($_GET["Position"])) $Position=$_GET["Position"]; 
+ if (isset($_GET["Len"])) $Len=$_GET["Len"]; 
+ if (isset($_GET["Keywords"])) $Keywords=$_GET["Keywords"]; 
+ if (isset($_GET["LocalQuery"])) $LocalQuery=$_GET["LocalQuery"];  
+ 
+ if (isset($_POST["Query"])) $Query=$_POST["Query"];    
+ if (isset($_POST["Position"])) $Position=$_POST["Position"]; 
+ if (isset($_POST["Len"])) $Len=$_POST["Len"]; 
+ if (isset($_POST["Keywords"])) $Keywords=$_POST["Keywords"]; 
+ if (isset($_POST["LocalQuery"])) $LocalQuery=$_POST["LocalQuery"];     
     
     
  if ($Query == 0) // Pas de requete, rien à faire
@@ -19,7 +27,12 @@
      $Fin="2200-12-31";
      $Requete="1";
     }
- else 
+ else if ($Query == -1) // Il faut utiliser la LocalQuery
+    {
+     $Nom="Local";
+     $Requete=$LocalQuery;
+    }
+ else
      {
         $res=$bdd->Execute("SELECT * FROM querys WHERE N=$Query");
         if (!$res) die("Select failed : SELECT * FROM queries WHERE N=$Query");
@@ -49,7 +62,9 @@
  
  // Ensuite, on remplace "mots-clés" par la sous-requête
  // attention en dessous, encore des histoires avec les accents : é dans mysql c'est 195, dans le php c'est 233...Et en unix ça va donner quoi
+ 
  $Requete=str_replace("mots-cl".chr(233)."s", "(SELECT Motcle FROM relmc WHERE Image=N)", $Requete);
+ $Requete=str_replace("mots-cles", "(SELECT Motcle FROM relmc WHERE Image=N)", $Requete);
  $Requete=str_replace("Qualit".chr(233), "Qualite", $Requete);
  $Requete=str_replace("Qualit".chr(195).chr(169), "Qualite", $Requete);
  // On rajoute le header
@@ -57,26 +72,36 @@
  
  
  // Ajout des dates
- 
- $Requete=$Requete." AND Date >= '$Debut' AND Date <= '$Fin'";
- if ($Source > 0) $Requete=$Requete." AND Source=$Source";
- if ($Qualite > 0) $Requete=$Requete." AND Qualite >= $Qualite";
+ if ($Query != -1) {
+    $Requete=$Requete." AND Date >= '$Debut' AND Date <= '$Fin'";
+    if ($Source > 0) $Requete=$Requete." AND Source=$Source";
+    if ($Qualite > 0) $Requete=$Requete." AND Qualite >= $Qualite";
+ }
  
  $Requete=$Requete." ORDER BY Date,ms";
  
  // on compte
  $res=$bdd->Execute("SELECT COUNT(*) AS NN FROM images WHERE ".$Requete);
  if (!$res) {
-     for ($i=0; $i < strlen($Requete);$i++) echo "<br>".substr($Requete,$i,1)."-".ord(substr($Requete,$i,1));
-     die("<br>Failed : SELECT COUNT(*) AS NN FROM images WHERE ".$Requete);
+     //for ($i=0; $i < strlen($Requete);$i++) echo "<br>".substr($Requete,$i,1)."-".ord(substr($Requete,$i,1));
+     $Err=str_replace("'","",$bdd->ErrorMsg());
+     $Json="{'Count' : '0','Name' : 'Erreur (Count) $Err', 'images':[]}";
+     $Json=str_replace("'","\"",$Json);
+     die($Json);
  }
  $maxx=$res->fields["NN"];
  
  
  $Requete="SELECT * FROM images WHERE ".$Requete;
  $res=$bdd->SelectLimit($Requete, $Len,$Position);
- if (!$res) die("Failed : $Requete");
- 
+ if (!$res) {
+     //for ($i=0; $i < strlen($Requete);$i++) echo "<br>".substr($Requete,$i,1)."-".ord(substr($Requete,$i,1));
+     $Err=str_replace("'","",$bdd->ErrorMsg());
+     $Json="{'Count' : '0','Name' : 'Erreur (Count) $Err', 'images':[]}";
+     $Json=str_replace("'","\"",$Json);
+     die($Json);
+ }
+  
  // on commence à fabriquer l'objet JSon
  $Json="{'Count' : '$maxx',";
  $Json.="'Name' : '$Nom',";

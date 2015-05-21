@@ -43,7 +43,7 @@ function AddOp() {
 
 function AddKeyword() {
     var fz=document.getElementById("Filterzone");
-    var valeur=" (["+document.getElementById("keywords-filter").value+"] IN mots-clés) ";
+    var valeur=" (["+document.getElementById("keywords-filter").value+"] IN mots-cles) ";
     fz.insertAtCaret(valeur);
     fz.focus();
 }
@@ -86,7 +86,8 @@ function movetopage(sens)
 }
 
 function photo_import() {
-    document.getElementById('popup-import').style.display = 'block';
+    $('#popup').show();
+    $('#popup-import_interior').show();
     $('#import-log').html("");
     $.ajax({ 
     type: 'GET', 
@@ -108,6 +109,9 @@ function photo_import() {
 <!-- {/literal} /-->
 </head>
 
+<!-- Div pour le fond grisé /-->
+
+<div Id="popup"></div>
 
 <!-- http://www.formget.com/how-to-create-pop-up-contact-form-using-javascript/ -->
 
@@ -122,108 +126,94 @@ function photo_import() {
         </div>
         
 <!-- Popup de création d'un filtre manuel -->           
-<div Id="popup-filter">
-    <div Id="popup-filter_interior"> 
-        <img id="close" src="web_images/3.png">
-        <table Id="filter-exterior">
-            <tr>
-                <td Id="table des champs">
-                    <table Id="filter-interior" width="50%">
-                        <tr>
-                            <td>Op:</td>
-                            <td>
-                                <select id="ListeOps" onchange="">
-                                  <option value="AND">AND</option>
-                                  <option value="OR">OR</option>
-                                  <option value="NOT">NOT</option>
-                                  <option value="<">&lt;</option>
-                                  <option value="<=">&lt;=</option>
-                                  <option value=">">&gt;</option>
-                                  <option value=">=">&gt;=</option>
-                                </select> 
-                            </td>
-                            <td>
-                                <a Id="navbutton-addop" class="navbutton-small buttonnext" href="#" onClick="AddOp();"></a>   
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Champs:</td>
-                            <td>
-                                <select id="ListeChamps" onchange="">
-                                  <option value="Date">Date</option>
-                                  <option value="Qualite">Qualité</option>
-                                  <option value="Source">Source</option>
-                                  <option value="Raw">Raw</option>
-                                  <option value="Focale">Focale</option>
-                                  <option value="Vitesse">Vitesse</option>
-                                  <option value="ISO">ISO</option>
-                                  <option value="Diaphragme">Diaphragme</option>
-                                  <option value="Flash">Vitesse</option>
-                                  <option value="portrait">Portrait</option>
-                                  <option value="paysage">Paysage</option>
-                                  <option value="largeur">Largeur</option>
-                                  <option value="hauteur">Hauteur</option>
-                                </select> 
-                            </td>
-                            <td>
-                                <a Id="navbutton-addchamp" class="navbutton-small buttonnext" href="#" onClick="AddChamp();"></a>   
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Mot-clés:</td>
-                            <td>
-                              <input id="keywords-filter" width="30%">  
-                            </td>
-                            <td>
-                                <a Id="navbutton-addkeywordfilter" class="navbutton-small buttonnext" href="#" onClick="AddKeyword();"></a>
-                            </td>
-                        </tr>
-                    </table>   
-                </td>
-                <td Id="Zone de texte">
-                    <textarea Id="Filterzone"></textarea>    
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                    <button>Apply</button>
-                    <button>Clear</button>
-                    <button>Save</button>
-                </td>
-            </tr>
-        </table>                
-    </div>
-</div>
+
+   <div Id="popup-filter_interior">
+		<img id="close" src="web_images/3.png">
+		<table Id="filter-exterior">
+			<tr>
+				<td Id="table des champs">
+				<table Id="filter-interior" width="50%">
+					<tr>
+						<td>Op:</td>
+						<td>
+						<select id="ListeOps" onchange="">
+							<option value="AND">AND</option>
+							<option value="OR">OR</option>
+							<option value="NOT">NOT</option>
+							<option value="<">&lt;</option>
+							<option value="<=">&lt;=</option>
+							<option value=">">&gt;</option>
+							<option value=">=">&gt;=</option>
+						</select></td>
+						<td><a Id="navbutton-addop" class="navbutton-small buttonnext" href="#" onClick="AddOp();"></a></td>
+					</tr>
+					<tr>
+						<td>Champs:</td>
+						<td>
+						<select id="ListeChamps" onchange="">
+							<option value="Date">Date</option>
+							<option value="Qualite">Qualité</option>
+							<option value="Source">Source</option>
+							<option value="Raw">Raw</option>
+							<option value="Focale">Focale</option>
+							<option value="Vitesse">Vitesse</option>
+							<option value="ISO">ISO</option>
+							<option value="Diaphragme">Diaphragme</option>
+							<option value="Flash">Vitesse</option>
+							<option value="portrait">Portrait</option>
+							<option value="paysage">Paysage</option>
+							<option value="largeur">Largeur</option>
+							<option value="hauteur">Hauteur</option>
+							<option value="N">N</option>
+						</select></td>
+						<td><a Id="navbutton-addchamp" class="navbutton-small buttonnext" href="#" onClick="AddChamp();"></a></td>
+					</tr>
+					<tr>
+						<td>Mot-clés:</td>
+						<td>
+						<input id="keywords-filter" width="30%">
+						</td>
+						<td><a Id="navbutton-addkeywordfilter" class="navbutton-small buttonnext" href="#" onClick="AddKeyword();"></a></td>
+					</tr>
+				</table></td>
+				<td Id="Zone de texte">				<textarea Id="Filterzone"></textarea></td>
+			</tr>
+			<tr>
+				<td align="center"><a Id="navbutton-filterok" class="navbutton" href="#" onClick=""></a> </td align="center"> <td><a Id="navbutton-filterclear" class="navbutton" href="#" onClick="document.getElementById('Filterzone').value='';Query=0;raffraichir();"></a></td>
+			</tr>
+		</table>
+	</div>
+
         
 <!-- Popup de choix de la requete -->	
-	<div Id="popup">
-			<div Id="popup_interior">
-				<img id="close" src="web_images/3.png">
-				<div Id="jstree_query">
-					
-				</div>
-				<br>
-				<a Id="navbutton-queryok" class="navbutton" href="#" onClick=""></a>
-			</div>
+		
+	<div Id="popup_interior">
+		<img id="close" src="web_images/3.png">
+		<div Id="jstree_query">
+
 		</div>
+		<br>
+		<a Id="navbutton-queryok" class="navbutton" href="#" onClick=""></a>
+	</div>
+		
 
 <!-- Popup de choix d'un mot-clé -->   		
-		<div Id="popup-keywords">
-            <div Id="popup-keywords_interior">
-                <img id="close" src="web_images/3.png">
-                <a Id="navbutton-addkw2" class="navbutton-small" href="keywordsEdit.php" target="_blank"></a>
-                <div Id="keywords-list" class="ui-widget" style="margin-top:2em; font-family:Arial">
-                   Mot-clé&nbsp;:&nbsp;
-                    <input id="keywords"> 
-                </div>
-                
-                <br>
-                <a Id="navbutton-keywordsok" class="navbutton" href="#" onClick=""></a>
-            </div>
-        </div>
+		
+    <div Id="popup-keywords_interior">
+		<img id="close" src="web_images/3.png">
+		<a Id="navbutton-addkw2" class="navbutton-small" href="keywordsEdit.php" target="_blank"></a>
+		<div Id="keywords-list" class="ui-widget" style="margin-top:2em; font-family:Arial">
+			Mot-clé&nbsp;:&nbsp;
+			<input id="keywords">
+		</div>
+
+		<br>
+		<a Id="navbutton-keywordsok" class="navbutton" href="#" onClick=""></a>
+	</div>
+       
 
 <!-- Boutons de naviguation -->  	
-<table width="50%" border="0" align="center" cellpadding="1" cellspacing="5">
+<table width="80%" border="0" align="center" cellpadding="1" cellspacing="2">
     <tr>
         <td class="admin"><a Id="navbutton-import" class="navbutton" href="#" onClick="photo_import();"></a></td>
     	<td><a Id="navbutton-first" class="navbutton" href="#" onClick="movetopage(-4);"></a></td>
@@ -231,11 +221,11 @@ function photo_import() {
     	<td class="Date"><b Id="navcount"></b>&nbsp;&ndash;&nbsp;<b Id="bottomline"></b></td>
     	<td><a Id="navbutton-forward" class="navbutton" href="#" onClick="movetopage(-2);"></a></td>
     	<td><a Id="navbutton-last" class="navbutton" href="#" onClick="movetopage(-1);"></a></td>
-    	<td><a Id="navbutton-filter" class="navbutton" href="#" onClick="document.getElementById('popup').style.display = 'block';"></a></td>
+    	<td><a Id="navbutton-filter" class="navbutton" href="#" onClick="$('#popup').show();$('#popup_interior').show();"></a></td>
     	<td><a Id="navbutton-select" class="navbutton" href="#" onClick="selectall();"></a></td>
     	<td><a Id="navbutton-unselect" class="navbutton" href="#" onClick="unselectall();"></a></td>
-    	<td class="admin"><a Id="navbutton-keyword" class="navbutton" href="#" onClick="document.getElementById('popup-keywords').style.display = 'block';document.getElementById('keywords').value='';$('#keywords').focus();"></a></td>
-    	<td class="admin"><a Id="navbutton-filter2" class="navbutton" href="#" onClick="document.getElementById('popup-filter').style.display = 'block';"></a></td>
+    	<td class="admin"><a Id="navbutton-keyword" class="navbutton" href="#" onClick="$('#popup').show();$('#popup-keywords_interior').show();document.getElementById('keywords').value='';$('#keywords').focus();"></a></td>
+    	<td class="admin"><a Id="navbutton-filter2" class="navbutton" href="#" onClick="$('#popup').show();$('#popup-filter_interior').show();"></a></td>
 	  </td>
   </tr>
 </table>
@@ -268,7 +258,8 @@ function photo_import() {
                     e.stopPropagation();
                     break;
             case 65:if (Admin == 0) break;
-                    document.getElementById('popup-keywords').style.display = 'block'; // Ctrl-A
+                    document.getElementById('popup').style.display = 'block';
+                    document.getElementById('popup-keywords_interior').style.display = 'block'; // Ctrl-A
                     document.getElementById('keywords').value='';
                     $("#keywords").focus();
                     e.preventDefault();     
@@ -306,17 +297,20 @@ function photo_import() {
 	    }
     });
     
-    $('#navbutton-queryok').on('click',function() {document.getElementById('popup').style.display = "none";Selected={};Query=NextQuery;start_position=0;raffraichir();});
-    $('#navbutton-keywordsok').on('click',function() {document.getElementById('popup-keywords').style.display = "none";assign_keyword();});
+    $('#navbutton-queryok').on('click',function() {$('#popup').hide();$('#popup_interior').hide();Selected={};Query=NextQuery;start_position=0;raffraichir();});
+    $('#navbutton-filterok').on('click',function() {Selected={};Query=-1;LocalQuery=document.getElementById("Filterzone").value;start_position=0;raffraichir();});
+    $('#navbutton-keywordsok').on('click',function() {$('#popup-keywords_interior').hide();$('#popup').hide();assign_keyword();});
     $('#navbutton-keywordsok').css("background-image","url('web_images/check_64.png')") ;
+    $('#navbutton-filterok').css("background-image","url('web_images/check_64.png')") ;
     $("#filtrage").on('click', function () {
     	document.getElementById('popup').style.display = "block";
     });
     $("img#close").on('click', function () {
-    	document.getElementById('popup').style.display = "none";
-    	document.getElementById('popup-keywords').style.display = "none";
-    	document.getElementById('popup-import').style.display = "none";
-    	document.getElementById('popup-filter').style.display = "none";
+    	$('#popup').hide();
+    	$('#popup_interior').hide();
+    	$('#popup-keywords_interior').hide();
+    	$('#popup-import_interior').hide();
+    	$('#popup-filter_interior').hide();
     });
     $(window).resize(function() {
         table_destroy();table_create();raffraichir();

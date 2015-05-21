@@ -1,5 +1,6 @@
 var start_position=0;
 var Query=0;
+var LocalQuery="";
 var QueryName="Toutes les photos";
 var Len=20;
 var Count=0;
@@ -54,10 +55,11 @@ function table_create()
 
 function raffraichir()
 {
+    if ((Query == -1) && (LocalQuery == '')) Query=0;
     $.ajax({ 
-    type: 'GET', 
+    type: 'POST', 
     url: 'listimages.php', 
-    data: { 'Query': Query, 'Position': start_position, 'Len': Len, 'Keywords':1 }, 
+    data: { 'Query': Query, 'Position': start_position, 'Len': Len, 'Keywords':1, 'LocalQuery':LocalQuery }, 
     dataType: 'json',
     success: success_images
     });  
