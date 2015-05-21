@@ -123,7 +123,7 @@ function photo_import() {
 
         </div>
         <br>
-		<table Id="filter-exterior">
+		<table Id="filter-exterior" style="display:none">
 			<tr>
 				<td Id="table des champs">
 				<table Id="filter-interior" width="50%">
@@ -177,8 +177,9 @@ function photo_import() {
 			<tr>
 			    
                 <td><a Id="navbutton-queryok" class="navbutton" href="#" ></a></td>
-				<td align="center"><a Id="navbutton-filterok" class="navbutton" href="#" onClick=""></a> </td> 
-				<td><a Id="navbutton-filterclear" class="navbutton" href="#" onClick="document.getElementById('Filterzone').value='';Query=0;raffraichir();"></a></td>
+                <td><a Id="navbutton-editfilter" class="navbutton" href="#" onClick="$('#filter-exterior').toggle();"></a></td>
+				<td ><a Id="navbutton-filterok" class="navbutton" href="#" onClick=""></a> </td> 
+				<td><a Id="navbutton-filterclear" class="navbutton" href="#" onClick="document.getElementById('Filterzone').value='';Query=0;QueryName='Toutes les photos';raffraichir();"></a></td>
 			</tr>
 		</table>
 	</div>

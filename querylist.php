@@ -13,7 +13,7 @@ function traite_dir($me)
 	global $bdd,$unix,$windows;	
 	
 	echo "<ul>";
-    if ($me == 1) echo '<li id="0">Toutes les photos</li>';
+    
 	$res=$bdd->Execute("SELECT * from queryfolders WHERE Parent=$me");
 	if ($res)
 	{

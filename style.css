@@ -191,6 +191,9 @@ button#query_close {
 #navbutton-queryok { background: url('web_images/file_grey_64.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
 #navbutton-queryok:hover { background-position: 0px -64px; }
 
+#navbutton-editfilter { background: url('web_images/gear_64.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
+#navbutton-editfilter:hover { background-position: 0px -64px; }
+
 #navbutton-keyword { background: url('web_images/key_64.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
 #navbutton-keyword:hover { background-position: 0px -64px; }
 
