@@ -11,6 +11,7 @@ $res=$bdd->Execute("SELECT * from querys WHERE N=$N");
 if ($res)
  {
     $Nom=$res->fields["Nom"];
+    if ($unix) $Nom=utf8_decode($Nom);
     $Source=$res->fields["Source"];
     $Qualite=$res->fields["Qualite"];
     $Debut=$res->fields["Debut"];

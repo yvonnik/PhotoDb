@@ -16,7 +16,8 @@
  if (isset($_POST["Len"])) $Len=$_POST["Len"]; 
  if (isset($_POST["Keywords"])) $Keywords=$_POST["Keywords"]; 
  if (isset($_POST["LocalQuery"])) $LocalQuery=$_POST["LocalQuery"];     
-    
+ 
+ $LocalQuery=stripslashes($LocalQuery);  
  $LocalQuery=utf8_decode($LocalQuery);  
  if ($Query == 0) // Pas de requete, rien à faire
     {
