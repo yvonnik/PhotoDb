@@ -187,9 +187,9 @@ function photo_import() {
         
 <!-- Popup de choix de la requete -->	
 		
-	<div Id="popup_interior">
+	<div Id="popup-import_interior">
 		<img id="close" src="web_images/3.png">
-		
+		<div Id="import-log"></div>
 		
 	</div>
 		
@@ -322,7 +322,6 @@ function photo_import() {
     });
     $("img#close").on('click', function () {
     	$('#popup').hide();
-    	$('#popup_interior').hide();
     	$('#popup-keywords_interior').hide();
     	$('#popup-import_interior').hide();
     	$('#popup-filter_interior').hide();
