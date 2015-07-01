@@ -16,8 +16,12 @@ function table_destroy()
 function table_create()
 {
     var l=0;
-    Rows=Math.floor((document.body.clientHeight-80)/230);if (Rows <= 2) Rows=3;
-    Cols=Math.floor((document.body.clientWidth-20)/278);if (Cols <= 2) Cols=3;
+    if (FullScreen) {Rows=1;Cols=1;}
+    else {
+        Rows=Math.floor((document.body.clientHeight-80)/230);if (Rows <= 2) Rows=3;
+        Cols=Math.floor((document.body.clientWidth-20)/278);if (Cols <= 2) Cols=3;    
+    }
+    
     Len=Rows*Cols;
     if (start_position+Len >= Count) start_position=Count-Len;
     if (start_position < 0) start_position=0;
@@ -39,7 +43,11 @@ function table_create()
           div2.appendChild(ouvrir);
           div2.appendChild(div3);
                  
-          var limg=document.createElement("img");limg.setAttribute("class","thumbimg");limg.setAttribute("Id","i"+l);limg.setAttribute("align","center");
+          var limg=document.createElement("img");
+          if (Len != 1) limg.setAttribute("class","thumbimg");
+          else limg.setAttribute("style","max-height :"+(document.body.clientHeight-150)+";max-width :"+(document.body.clientWidth-80));
+          
+          limg.setAttribute("Id","i"+l);limg.setAttribute("align","center");
         
           var div4=document.createElement("div");div4.setAttribute("class","thumb");div4.setAttribute("align","center");div4.setAttribute("Id","z"+l);
           div4.appendChild(limg);
@@ -75,8 +83,9 @@ function success_images(data) {
                  }
             else {
                 // Ici, on a dans le tableau element toutes les images
+                    var small=(element.length == 1 ? 0 : 1);
                     for (i=0;i < element.length;i++) {
-                        $('#i'+i).attr("src",ImageServer+"display_image.php?Id="+element[i].N+"&small=1&Date="+element[i].Date);
+                        $('#i'+i).attr("src",ImageServer+"display_image.php?Id="+element[i].N+"&small="+small+"&Date="+element[i].Date);
                         $('#i'+i).attr("onclick","toggleselect("+element[i].N+","+i+")");
                         $('#i'+i).attr("title",element[i].keywords);
                         $('#oi'+i).attr("src","web_images/preview_24.png");

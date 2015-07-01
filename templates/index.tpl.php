@@ -24,6 +24,7 @@
 
 var ImageServer='{$IMAGESERVER}';
 var Admin={$ADMIN};
+var FullScreen=false;
 
 // {literal} 
 
@@ -212,23 +213,24 @@ function photo_import() {
 <!-- Boutons de naviguation -->  	
 <table width="80%" border="0" align="center" cellpadding="1" cellspacing="2">
     <tr>
-        <td class="admin"><a Id="navbutton-import" class="navbutton" href="#" onClick="photo_import();"></a></td>
-    	<td><a Id="navbutton-first" class="navbutton" href="#" onClick="movetopage(-4);"></a></td>
-    	<td><a Id="navbutton-rewind" class="navbutton" href="#" onClick="movetopage(-3);"></a></td>
+        <td class="admin"><a Id="navbutton-import" title="Import de photos" class="navbutton" href="#" onClick="photo_import();"></a></td>
+        <td><a Id="navbutton-fullscreen" class="navbutton" title="Vignettes/Plein écran" href="#" onClick="FullScreen=!FullScreen;table_destroy();table_create();raffraichir();"></a></td>
+    	<td><a Id="navbutton-first" class="navbutton" href="#" title="Début" onClick="movetopage(-4);"></a></td>
+    	<td><a Id="navbutton-rewind" class="navbutton" href="#" title="Page/Photo précédente" onClick="movetopage(-3);"></a></td>
     	<td class="Date"><b Id="navcount"></b>&nbsp;&ndash;&nbsp;<b Id="bottomline"></b></td>
-    	<td><a Id="navbutton-forward" class="navbutton" href="#" onClick="movetopage(-2);"></a></td>
-    	<td><a Id="navbutton-last" class="navbutton" href="#" onClick="movetopage(-1);"></a></td>
-    	<td><a Id="navbutton-filter" class="navbutton" href="#" onClick="$('#popup').show();$('#popup-filter_interior').show();"></a></td>
-    	<td><a Id="navbutton-select" class="navbutton" href="#" onClick="selectall();"></a></td>
-    	<td><a Id="navbutton-unselect" class="navbutton" href="#" onClick="unselectall();"></a></td>
-    	<td class="admin"><a Id="navbutton-keyword" class="navbutton" href="#" onClick="$('#popup').show();$('#popup-keywords_interior').show();document.getElementById('keywords').value='';$('#keywords').focus();"></a></td>
+    	<td><a Id="navbutton-forward" class="navbutton" title="Page/Photo suivante" href="#" onClick="movetopage(-2);"></a></td>
+    	<td><a Id="navbutton-last" class="navbutton" title="Fin" href="#" onClick="movetopage(-1);"></a></td>
+    	<td><a Id="navbutton-filter" class="navbutton" title="Filtre" href="#" onClick="$('#popup').show();$('#popup-filter_interior').show();"></a></td>
+    	<td><a Id="navbutton-select" class="navbutton" title="Selectionner tout" href="#" onClick="selectall();"></a></td>
+    	<td><a Id="navbutton-unselect" class="navbutton" title="Desélectionner tout" href="#" onClick="unselectall();"></a></td>
+    	<td class="admin"><a Id="navbutton-keyword" class="navbutton" title="Ajouter mot-clé" href="#" onClick="$('#popup').show();$('#popup-keywords_interior').show();document.getElementById('keywords').value='';$('#keywords').focus();"></a></td>
     	
 	  </td>
   </tr>
 </table>
 
 <!-- table pour les vignettes --> 
-<table  class="thumb,tableau" Id="latable"></table>
+<table  class="thumb,tableau" Id="latable" align="center"></table>
 
 
 </body>
