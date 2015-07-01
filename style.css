@@ -188,6 +188,9 @@ button#query_close {
 #navbutton-rewind { background: url('web_images/rewind_64.png') no-repeat 0px 0px;}
 #navbutton-rewind:hover { background-position: 0px -64px; }
 
+#navbutton-diapo { background: url('web_images/play_64.png') no-repeat 0px 0px;}
+#navbutton-diapo:hover { background-position: 0px -64px; }
+
 #navbutton-last { background: url('web_images/last_64.png') no-repeat 0px 0px;}
 #navbutton-last:hover { background-position: 0px -64px; }
 

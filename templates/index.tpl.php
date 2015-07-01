@@ -25,8 +25,24 @@
 var ImageServer='{$IMAGESERVER}';
 var Admin={$ADMIN};
 var FullScreen=false;
+var Diapovar=null;
 
 // {literal} 
+
+function Diapo()
+
+{
+   if (Diapovar == null) {
+       Diapovar=setInterval(function () {movetopage(-2);}, 3000);
+       $('#navbutton-diapo').css("background-image","url('web_images/pause_64.png')") ;
+   }
+   else {
+       clearInterval(Diapovar);
+       Diapovar=null;
+       $('#navbutton-diapo').css("background-image","url('web_images/play_64.png')") ;
+   }
+      
+}
 
 function AddChamp() {
     var fz=document.getElementById("Filterzone");
@@ -218,6 +234,7 @@ function photo_import() {
     	<td><a Id="navbutton-first" class="navbutton" href="#" title="Début" onClick="movetopage(-4);"></a></td>
     	<td><a Id="navbutton-rewind" class="navbutton" href="#" title="Page/Photo précédente" onClick="movetopage(-3);"></a></td>
     	<td class="Date"><b Id="navcount"></b>&nbsp;&ndash;&nbsp;<b Id="bottomline"></b></td>
+    	<td><a Id="navbutton-diapo" class="navbutton" title="Lancer/Arrêter Diaporama" href="#" onClick="Diapo();"></a></td>
     	<td><a Id="navbutton-forward" class="navbutton" title="Page/Photo suivante" href="#" onClick="movetopage(-2);"></a></td>
     	<td><a Id="navbutton-last" class="navbutton" title="Fin" href="#" onClick="movetopage(-1);"></a></td>
     	<td><a Id="navbutton-filter" class="navbutton" title="Filtre" href="#" onClick="$('#popup').show();$('#popup-filter_interior').show();"></a></td>
