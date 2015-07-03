@@ -33,7 +33,7 @@ function Diapo()
 
 {
    if (Diapovar == null) {
-       Diapovar=setInterval(function () {movetopage(-2);}, 3000);
+       Diapovar=setInterval(function () {movetopage(-2);}, 5000);
        $('#navbutton-diapo').css("background-image","url('web_images/pause_64.png')") ;
    }
    else {
@@ -227,13 +227,13 @@ function photo_import() {
        
 
 <!-- Boutons de naviguation -->  	
-<table width="80%" border="0" align="center" cellpadding="1" cellspacing="2">
+<table width="80%" border="0" align="center" cellpadding="1" cellspacing="2" class="ontop">
     <tr>
         <td class="admin"><a Id="navbutton-import" title="Import de photos" class="navbutton" href="#" onClick="photo_import();"></a></td>
         <td><a Id="navbutton-fullscreen" class="navbutton" title="Vignettes/Plein écran" href="#" onClick="FullScreen=!FullScreen;table_destroy();table_create();raffraichir();"></a></td>
     	<td><a Id="navbutton-first" class="navbutton" href="#" title="Début" onClick="movetopage(-4);"></a></td>
     	<td><a Id="navbutton-rewind" class="navbutton" href="#" title="Page/Photo précédente" onClick="movetopage(-3);"></a></td>
-    	<td class="Date"><b Id="navcount"></b>&nbsp;&ndash;&nbsp;<b Id="bottomline"></b></td>
+    	<td class="Date"><b Id="navcount" ></b>&nbsp;&ndash;&nbsp;<b Id="bottomline"></b></td>
     	<td><a Id="navbutton-diapo" class="navbutton" title="Lancer/Arrêter Diaporama" href="#" onClick="Diapo();"></a></td>
     	<td><a Id="navbutton-forward" class="navbutton" title="Page/Photo suivante" href="#" onClick="movetopage(-2);"></a></td>
     	<td><a Id="navbutton-last" class="navbutton" title="Fin" href="#" onClick="movetopage(-1);"></a></td>

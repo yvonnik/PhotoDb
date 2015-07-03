@@ -9,8 +9,8 @@ function toggleselect(Id,pos)
       Selected[Id]="1";
   }
   
-  if (Selected[Id] == "1")  {$("#z"+pos).addClass("cellselected");$("#dd"+pos).addClass("cellselected");}
-  else {$("#z"+pos).removeClass("cellselected");$("#dd"+pos).removeClass("cellselected");}
+  if (Selected[Id] == "1")  {$("#z"+pos).addClass("cellselected");/*$("#dd"+pos).addClass("cellselected");*/}
+  else {$("#z"+pos).removeClass("cellselected");/*$("#dd"+pos).removeClass("cellselected");*/}
      
 }  
 
@@ -41,10 +41,11 @@ function selectallsuccess(data)
 
 function selectall()
 {
+    if ((Query == -2) && (LocalQuery == '')) Query=0;
     $.ajax({ 
-    type: 'GET', 
+    type: 'POST', 
     url: 'listimages.php', 
-    data: { 'Query': Query, 'Position': 0, 'Len': 100000, 'Keywords':0}, 
+    data: { 'Query': Query, 'Position': start_position, 'Len': 100000, 'Keywords':0, 'LocalQuery':LocalQuery }, 
     dataType: 'json',
     success: selectallsuccess
     });   

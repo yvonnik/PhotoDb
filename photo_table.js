@@ -18,8 +18,8 @@ function table_create()
     var l=0;
     if (FullScreen) {Rows=1;Cols=1;}
     else {
-        Rows=Math.floor((document.body.clientHeight-80)/230);if (Rows <= 2) Rows=3;
-        Cols=Math.floor((document.body.clientWidth-20)/278);if (Cols <= 2) Cols=3;    
+        Rows=Math.floor((document.body.clientHeight-50)/200);if (Rows < 2) Rows=2;
+        Cols=Math.floor((document.body.clientWidth-10)/286);if (Cols <= 2) Cols=3;    
     }
     
     Len=Rows*Cols;
@@ -32,29 +32,32 @@ function table_create()
           var cellule=document.createElement("td");
           cellule.setAttribute("class","tableau");
           cellule.setAttribute("Id","cl"+l);
-                   
-          var div2=document.createElement("div");div2.setAttribute("Id","d"+l);div2.setAttribute("vertical-align","top");
-          var div3=document.createElement("div");div3.setAttribute("class","thumb");div3.setAttribute("align","right");
-          div3.setAttribute("Id","dd"+l);
+              
+          var div2=document.createElement("div");div2.setAttribute("Id","d"+l);div2.setAttribute("class","textontop");      
+          div2.setAttribute("Id","dd"+l);
           
           var ouvrir=document.createElement("a");ouvrir.setAttribute("Id","o"+l);ouvrir.setAttribute("target","_blank");
-          var oimg=document.createElement("img");oimg.setAttribute("align","left");oimg.setAttribute("Id","oi"+l);
+          var oimg=document.createElement("img");oimg.setAttribute("Id","oi"+l);oimg.setAttribute("align","left");
+          ouvrir.setAttribute("class","thumbontop");
           ouvrir.appendChild(oimg);
-          div2.appendChild(ouvrir);
-          div2.appendChild(div3);
+          
+         
                  
           var limg=document.createElement("img");
           if (Len != 1) limg.setAttribute("class","thumbimg");
-          else limg.setAttribute("style","max-height :"+(document.body.clientHeight-150)+";max-width :"+(document.body.clientWidth-80));
+          else limg.setAttribute("style","max-height :"+(document.body.clientHeight-40)+";max-width :"+(document.body.clientWidth-30));
           
-          limg.setAttribute("Id","i"+l);limg.setAttribute("align","center");
+          limg.setAttribute("Id","i"+l);
+          //limg.setAttribute("style","z-index:1000");
         
-          var div4=document.createElement("div");div4.setAttribute("class","thumb");div4.setAttribute("align","center");div4.setAttribute("Id","z"+l);
-          div4.appendChild(limg);
-          
-          cellule.appendChild(div2);
+          var div4=document.createElement("div");div4.setAttribute("class","thumb");div4.setAttribute("Id","z"+l);div4.setAttribute("align","center");
+          div4.appendChild(ouvrir);
+          div4.appendChild(limg);         
+          div4.appendChild(div2);
+          div4.setAttribute("style","position:relative;");
           cellule.appendChild(div4);
           ligne.appendChild(cellule);
+          
           l++;
       }
      document.getElementById("latable").appendChild(ligne);
@@ -77,7 +80,8 @@ function success_images(data) {
         $.each(data, function(index, element) {
             if (index == "Count") {
                 Count=element;
-                document.getElementById("navcount").innerHTML=(start_position+1)+"-"+(start_position+Len)+" sur "+Count+", "+(Math.round(start_position*100/Count)+"%");
+                if (Len == 1) document.getElementById("navcount").innerHTML=(start_position+1)+" sur "+Count+", "+(Math.round(start_position*100/Count)+"%");
+                else document.getElementById("navcount").innerHTML=(start_position+1)+"-"+(start_position+Len)+" sur "+Count+", "+(Math.round(start_position*100/Count)+"%");
             }
             else if (index == "Name") {
                  }
