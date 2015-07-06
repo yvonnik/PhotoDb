@@ -29,6 +29,13 @@ var Diapovar=null;
 
 // {literal} 
 
+function FullScreenToggle(Nimage)
+{
+    start_position=start_position+Nimage;
+    FullScreen=!FullScreen;
+    table_destroy();table_create();raffraichir();
+}
+
 function Diapo()
 
 {
@@ -230,7 +237,6 @@ function photo_import() {
 <table width="80%" border="0" align="center" cellpadding="1" cellspacing="2" class="ontop">
     <tr>
         <td class="admin"><a Id="navbutton-import" title="Import de photos" class="navbutton" href="#" onClick="photo_import();"></a></td>
-        <td><a Id="navbutton-fullscreen" class="navbutton" title="Vignettes/Plein écran" href="#" onClick="FullScreen=!FullScreen;table_destroy();table_create();raffraichir();"></a></td>
     	<td><a Id="navbutton-first" class="navbutton" href="#" title="Début" onClick="movetopage(-4);"></a></td>
     	<td><a Id="navbutton-rewind" class="navbutton" href="#" title="Page/Photo précédente" onClick="movetopage(-3);"></a></td>
     	<td class="Date"><b Id="navcount" ></b>&nbsp;&ndash;&nbsp;<b Id="bottomline"></b></td>

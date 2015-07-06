@@ -41,7 +41,10 @@ function table_create()
           ouvrir.setAttribute("class","thumbontop");
           ouvrir.appendChild(oimg);
           
-         
+          var full=document.createElement("a");full.setAttribute("Id","fs"+l);full.setAttribute("target","_blank");
+          var fimg=document.createElement("img");fimg.setAttribute("Id","fsi"+l);fimg.setAttribute("align","left");
+          full.setAttribute("class","thumbontop2");
+          full.appendChild(fimg);
                  
           var limg=document.createElement("img");
           if (Len != 1) limg.setAttribute("class","thumbimg");
@@ -51,7 +54,9 @@ function table_create()
           //limg.setAttribute("style","z-index:1000");
         
           var div4=document.createElement("div");div4.setAttribute("class","thumb");div4.setAttribute("Id","z"+l);div4.setAttribute("align","center");
+          
           div4.appendChild(ouvrir);
+          div4.appendChild(full);
           div4.appendChild(limg);         
           div4.appendChild(div2);
           div4.setAttribute("style","position:relative;");
@@ -87,15 +92,20 @@ function success_images(data) {
                  }
             else {
                 // Ici, on a dans le tableau element toutes les images
-                    var small=(element.length == 1 ? 0 : 1);
+                    var small=(element.length == 1 ? 2 : 1);
                     for (i=0;i < element.length;i++) {
-                        $('#i'+i).attr("src",ImageServer+"display_image.php?Id="+element[i].N+"&small="+small+"&Date="+element[i].Date);
+                        $('#i'+i).attr("src",ImageServer+"display_image.php?Id="+element[i].N+"&small="+small+"&mh="+(document.body.clientHeight-40)+"&mw="+(document.body.clientWidth-30));
                         $('#i'+i).attr("onclick","toggleselect("+element[i].N+","+i+")");
                         $('#i'+i).attr("title",element[i].keywords);
                         $('#oi'+i).attr("src","web_images/preview_24.png");
                         $('#dd'+i).text("("+element[i].N+") "+element[i].Date);
                         $('#o'+i).attr("onclick","window.open('"+ImageServer+"display_image.php?Id="+element[i].N+"&small=0&Date="+element[i].Date+"')");
-                       
+                        
+                        if (Len != 1) $('#fsi'+i).attr("src","web_images/full_screen_reading_24.png");
+                        else $('#fsi'+i).attr("src","web_images/clipart_24.png");
+                        $('#fs'+i).attr("onclick","FullScreenToggle("+i+")");
+                        
+                        
                         $('#cl'+i).attr("class","tableau"+element[i].Qualite);
                         if (Selected[element[i].N] == "1")  {$("#z"+i).addClass("cellselected");$("#dd"+i).addClass("cellselected");}
                         else {$("#z"+i).removeClass("cellselected");$("#dd"+i).removeClass("cellselected");}

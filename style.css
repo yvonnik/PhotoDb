@@ -25,6 +25,13 @@ img {
 	z-index:10;
 }
 
+.thumbontop2 {
+	position:absolute;
+	left:26px;
+	top:2px;
+	z-index:10;
+}
+
 .textontop {
 	position:absolute;
 	right:10px;
