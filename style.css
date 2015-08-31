@@ -186,7 +186,7 @@ img#close {
 
 
 
-div#popup_interior, div#popup-keywords_interior, div#popup-import_interior,div#popup-filter_interior {
+div#popup_interior, div#popup-keywords_interior, div#popup-import_interior,div#popup-filter_interior,div#popup-quality_interior {
 	display: none;
 	position: absolute;
 	left: 50%;
@@ -241,8 +241,8 @@ button#query_close {
 #navbutton-filter { background: url('web_images/filter_64.png') no-repeat 0px 0px;}
 #navbutton-filter:hover { background-position: 0px -64px; }
 
-#navbutton-keywordsok,#navbutton-filterok { background: url('web_images/check_64_grey.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
-#navbutton-keywordsok,#navbutton-filterok:hover { background-position: 0px -64px; }
+#navbutton-keywordsok,#navbutton-filterok,#navbutton-qualityok { background: url('web_images/check_64_grey.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
+#navbutton-keywordsok,#navbutton-filterok,#navbutton-qualityok:hover { background-position: 0px -64px; }
 
 #navbutton-queryok { background: url('web_images/file_grey_64.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
 #navbutton-queryok:hover { background-position: 0px -64px; }
@@ -252,6 +252,9 @@ button#query_close {
 
 #navbutton-keyword { background: url('web_images/key_64.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
 #navbutton-keyword:hover { background-position: 0px -64px; }
+
+#navbutton-quality { background: url('web_images/quality_64.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
+#navbutton-quality:hover { background-position: 0px -64px; }
 
 #navbutton-select { background: url('web_images/selectall.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
 #navbutton-select:hover { background-position: 0px -64px; }

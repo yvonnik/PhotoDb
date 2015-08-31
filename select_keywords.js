@@ -14,6 +14,17 @@ function toggleselect(Id,pos)
      
 }  
 
+
+function assign_quality()
+{
+    $.ajax({ 
+    type: 'POST', 
+    url: 'assignquality.php', 
+    data: { 'Quality': $( "#qualitylist" ).val(), 'Selected' : JSON.stringify(Selected)}, 
+    dataType: 'html',
+    success: function (data) {raffraichir();}
+    }); 
+}
 function assign_keyword()
 {
     if (SelectedKW < 0) return;

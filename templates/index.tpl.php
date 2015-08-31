@@ -231,6 +231,26 @@ function photo_import() {
 		<br>
 		<a Id="navbutton-keywordsok" class="navbutton" href="#" onClick=""></a>
 	</div>
+	
+	<!-- Popup de choix d'une qualité -->           
+        
+    <div Id="popup-quality_interior">
+        <img id="close" src="web_images/3.png">
+        <a Id="navbutton-addquality" class="navbutton-small" href="QualityEdit.php" target="_blank"></a>
+        <div Id="quality-list" class="ui-widget" style="margin-top:2em; font-family:Arial">
+            Qualité&nbsp;:&nbsp;
+            <select id="qualitylist">
+                <option value="0">Non notée</option>
+                <option value="1">Mauvaise</option>
+                <option value="2">Moyenne</option>
+                <option value="3">Bonne</option>
+                <option value="4">Exceptionnelle</option>
+            </select> 
+        </div>
+
+        <br>
+        <a Id="navbutton-qualityok" class="navbutton" href="#" onClick=""></a>
+    </div>
        
 
 <!-- Boutons de naviguation -->  	
@@ -247,6 +267,7 @@ function photo_import() {
     	<td><a Id="navbutton-select" class="navbutton" title="Selectionner tout" href="#" onClick="selectall();"></a></td>
     	<td><a Id="navbutton-unselect" class="navbutton" title="Desélectionner tout" href="#" onClick="unselectall();"></a></td>
     	<td class="admin"><a Id="navbutton-keyword" class="navbutton" title="Ajouter mot-clé" href="#" onClick="$('#popup').show();$('#popup-keywords_interior').show();document.getElementById('keywords').value='';$('#keywords').focus();"></a></td>
+    	<td class="admin"><a Id="navbutton-quality" class="navbutton" title="Qualité" href="#" onClick="$('#popup').show();$('#popup-quality_interior').show();document.getElementById('keywords').value='';$('#keywords').focus();"></a></td>
     	
 	  </td>
   </tr>
@@ -341,6 +362,8 @@ function photo_import() {
     $('#navbutton-filterok').on('click',function() {Selected={};Query=-2;QueryName='Local';LocalQuery=document.getElementById("Filterzone").value;start_position=0;raffraichir();});
     $('#navbutton-keywordsok').on('click',function() {$('#popup-keywords_interior').hide();$('#popup').hide();assign_keyword();});
     $('#navbutton-keywordsok').css("background-image","url('web_images/check_64.png')") ;
+    $('#navbutton-qualityok').on('click',function() {$('#popup-quality_interior').hide();$('#popup').hide();assign_quality();});
+    $('#navbutton-qualityok').css("background-image","url('web_images/check_64.png')") ;
     $('#navbutton-filterok').css("background-image","url('web_images/check_64.png')") ;
     $("#filtrage").on('click', function () {
     	document.getElementById('popup').style.display = "block";
@@ -348,6 +371,7 @@ function photo_import() {
     $("img#close").on('click', function () {
     	$('#popup').hide();
     	$('#popup-keywords_interior').hide();
+    	$('#popup-quality_interior').hide();
     	$('#popup-import_interior').hide();
     	$('#popup-filter_interior').hide();
     });
