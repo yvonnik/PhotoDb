@@ -2,7 +2,6 @@
 
 include("dbconfig.php");
 
-
 if (stristr(php_uname(),"windows")) {$unix=0;$windows=1;} else {$unix=1;$windows=0;}
 if ($windows) {$BaseFolder="\\\\192.168.2.11\\Multimedia\\Photos\\PhotoDb\\Images";$Sep="\\";}
 //if ($windows) {$BaseFolder="c:\\temp\\PhotoDb\\Images";$Sep="\\";}
@@ -49,7 +48,7 @@ if ($small == 1)
             exit;
         }
         else {
-            //header('Content-Type: '.$size['mime']);
+            header('Content-Type: '.$size['mime']);
             header('cache:private, max-age=10000');
             resize_image($file,$mh,$mw);
             exit;
@@ -71,14 +70,17 @@ else
     $ratio=$width/$height;
     $baseratio=$mw/$mh;// l'image doit rentre dans une boite de 266x180, ratio=1.477777
     
-    if ($ratio > $baseratio) { $neww=$w;$newh=$neww/$ratio;} // image étirée en largeur, la référence est la largeur de 266
+    if ($ratio > $baseratio) { $neww=$mw;$newh=$neww/$ratio;} // image étirée en largeur, la référence est la largeur de 266
     else {$newh=$mh;$neww=$ratio*$newh;}  // image étirée en hauteur, la référence est la hauteur de 180 
-   
+    $newh=floor($newh+0.5);
+    $neww=floor($neww+0.5);
 // Redimensionnement
-    $image_p = imagecreatetruecolor($neww, $newh);
-    $image = imagecreatefromjpeg($big);
-    imagecopyresampled($image_p, $image, 0, 0, 0, 0, $neww, $newh, $width, $height);
-    imagejpeg($image_p, $small);
+
+   $imagick=new Imagick($big);
+   $imagick->resizeImage($neww, $newh, Imagick::FILTER_CUBIC, 1);
+ 
+   echo $imagick;
+ 
 } 
  
 function update_small($big,$small) {
@@ -91,10 +93,9 @@ function update_small($big,$small) {
     else {$newh=180;$neww=$ratio*$newh;}  // image étirée en hauteur, la référence est la hauteur de 180 
    
 // Redimensionnement
-    $image_p = imagecreatetruecolor($neww, $newh);
-    $image = imagecreatefromjpeg($big);
-    imagecopyresampled($image_p, $image, 0, 0, 0, 0, $neww, $newh, $width, $height);
 
-    imagejpeg($image_p, $small);
+   $imagick=new Imagick($big);
+   $imagick->resizeImage($neww, $newh, Imagick::FILTER_CUBIC, 1);
+   $imagick->writeImage($small); 
 } 
 ?>

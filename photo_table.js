@@ -92,7 +92,7 @@ function success_images(data) {
                  }
             else {
                 // Ici, on a dans le tableau element toutes les images
-                    var small=(element.length == 1 ? 0 : 1);
+                    var small=(element.length == 1 ? 2 : 1);
                     for (i=0;i < element.length;i++) {
                         $('#i'+i).attr("src",ImageServer+"display_image.php?Id="+element[i].N+"&small="+small+"&mh="+(document.body.clientHeight-40)+"&mw="+(document.body.clientWidth-30));
                         $('#i'+i).attr("onclick","toggleselect("+element[i].N+","+i+")");
