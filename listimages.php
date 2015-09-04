@@ -2,9 +2,7 @@
  
  include("dbconfig.php");
  
- if (stristr(php_uname(),"windows")) {$unix=0;$windows=1;} else {$unix=1;$windows=0;}
-   
-   
+    
  if (isset($_GET["Query"])) $Query=$_GET["Query"];    
  if (isset($_GET["Position"])) $Position=$_GET["Position"]; 
  if (isset($_GET["Len"])) $Len=$_GET["Len"]; 
@@ -37,12 +35,12 @@
      {
         $res=$bdd->Execute("SELECT * FROM querys WHERE N=$Query");
         if (!$res) die("Select failed : SELECT * FROM queries WHERE N=$Query");
-        $Nom=($windows ? utf8_encode($res->fields["Nom"]) : $res->fields["Nom"]);
+        $Nom=utf8_encode($res->fields["Nom"]);
         $Source=$res->fields["Source"];
         $Qualite=$res->fields["Qualite"];
         $Debut=$res->fields["Debut"];
         $Fin=$res->fields["Fin"];
-        $Requete=($windows ? $res->fields["Requete"] : utf8_decode($res->fields["Requete"]));
+        $Requete= $res->fields["Requete"];
      }
  
  
@@ -133,7 +131,7 @@
         while (!$res2->EOF)
         {
             if ($mc != "") $mc.=",";
-            $mc.=($windows ? utf8_encode($res2->fields["Nom"]) : $res2->fields["Nom"]);
+            $mc.=utf8_encode($res2->fields["Nom"]);
             $res2->MoveNext();
         } 
        $Json.="'keywords' : '".$mc."',";

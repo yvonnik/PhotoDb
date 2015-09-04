@@ -2,8 +2,6 @@
 // on boucle sur le répoertoire des querys de filtre, et on construit une page avec des ul et des li pour chargement dans l'arbre de la page index
 include("dbconfig.php");
 
-if (stristr(php_uname(),"windows")) {$unix=0;$windows=1;} else {$unix=1;$windows=0;}
-
 if (isset($_GET["N"])) $N=$_GET["N"];
 
 
@@ -16,7 +14,7 @@ if ($res)
     $Qualite=$res->fields["Qualite"];
     $Debut=$res->fields["Debut"];
     $Fin=$res->fields["Fin"];
-    $Requete=($windows ? $res->fields["Requete"] : utf8_decode($res->fields["Requete"]));
+    $Requete=$res->fields["Requete"];
      
     str_replace("Qualité","Qualite",$Requete);
     $Requete=str_replace("mots-cl".chr(233)."s", "mots-cles", $Requete); 
