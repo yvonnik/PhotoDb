@@ -42,22 +42,25 @@
         $Fin=$res->fields["Fin"];
         $Requete= $res->fields["Requete"];
      }
- 
+
+    
  
  // Premier traitement, on remplace les [keyword] par le numéro des keywords
  
  preg_match_all("/\[.*?\]/",$Requete,$mcs); // voir là https://www.regex101.com/
  
+
  foreach ($mcs[0] as $cle)
  {
      $cle=substr($cle,1,strlen($cle)-2);$cle8=$cle;
-     if ($unix) $cle8=utf8_encode($cle);
+     //if ($unix) $cle8=utf8_encode($cle);
      $res=$bdd->Execute("SELECT * FROM motcles WHERE Nom='$cle8'");
-     if (!$res) die("Failed : SELECT * FROM motcles WHERE Nom='$cle8'");
-     if ($res->EOF) die("no records : SELECT * FROM motcles WHERE Nom='$cle8'");
+     if (!$res) mydie("Failed : SELECT * FROM motcles WHERE Nom='$cle8'");
+     if ($res->EOF) mydie("no records : SELECT * FROM motcles WHERE Nom='$cle8'");
      $num=$res->fields["N"];
      $Requete=str_replace("[".$cle."]", $num, $Requete);
  }
+ 
  
  // Ensuite, on remplace "mots-clés" par la sous-requête
  // attention en dessous, encore des histoires avec les accents : é dans mysql c'est 195, dans le php c'est 233...Et en unix ça va donner quoi
@@ -79,6 +82,9 @@
  
  $Requete=$Requete." ORDER BY Date,ms";
  
+
+ 
+ 
  // on compte
  $res=$bdd->Execute("SELECT COUNT(*) AS NN FROM images WHERE ".$Requete);
  if (!$res) {
@@ -94,7 +100,6 @@
  $Requete="SELECT * FROM images WHERE ".$Requete;
  $res=$bdd->SelectLimit($Requete, $Len,$Position);
  if (!$res) {
-     //for ($i=0; $i < strlen($Requete);$i++) echo "<br>".substr($Requete,$i,1)."-".ord(substr($Requete,$i,1));
      $Err=str_replace("'","",$bdd->ErrorMsg());
      $Json="{'Count' : '0','Name' : 'Erreur (Count) $Err', 'images':[]}";
      $Json=str_replace("'","\"",$Json);
@@ -154,5 +159,13 @@
  $Json=str_replace("'","\"",$Json);
  print_r($Json);
      
+     
+ function mydie($s)
+ {
+  $debug=fopen("debug.log","a");
+  fwrite($debug,$s."\r\n");
+  fclose($debug);
+  die($s);
+ }
     
 ?>
