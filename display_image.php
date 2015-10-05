@@ -77,7 +77,7 @@ else
 // Redimensionnement
 
    $imagick=new Imagick($big);
-   $imagick->resizeImage($neww, $newh, Imagick::FILTER_CUBIC, 1);
+   $imagick->resizeImage($neww, $newh, Imagick::FILTER_BOX, 1);
  
    echo $imagick;
  
@@ -95,7 +95,7 @@ function update_small($big,$small) {
 // Redimensionnement
 
    $imagick=new Imagick($big);
-   $imagick->resizeImage($neww, $newh, Imagick::FILTER_CUBIC, 1);
+   $imagick->resizeImage($neww, $newh, Imagick::FILTER_BOX, 1);
    $imagick->writeImage($small); 
 } 
 ?>
