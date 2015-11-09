@@ -37,8 +37,8 @@ else {
         $ImageFolder=$BaseFolder. $Sep . substr($Date,0,4) . $Sep . substr($Date,5,2) . $Sep . substr($Date,8,2);
 
         $filebase="im".sprintf("%06d",$key);
-        if (file_exists($filebase."r.jpg")) $file=$filebase."r.jpg";
-        else if (file_exists($filebase."_dxo.jpg")) $file=$filebase."_dxo.jpg";
+        if (file_exists($ImageFolder.$Sep.$filebase."r.jpg")) $file=$filebase."r.jpg";
+        else if (file_exists($ImageFolder.$Sep.$filebase."_dxo.jpg")) $file=$filebase."_dxo.jpg";
         else $file=$filebase.".jpg"; 
         
         $source=$ImageFolder.$Sep.$file;
