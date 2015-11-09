@@ -236,7 +236,7 @@ function photo_copy() {
         
     <div Id="popup-copy_interior">
         <img id="close" src="web_images/3.png">
-        <br>
+        <br>Les photos sélectionnées vont être copiées vers Multimedia/Photos/PhotoDb/Export<br><br>
         <input Id="resize_check" type="checkbox" value="1" onclick="togglesize();">Resize
         <div Id="resize_block">
             <br>Taille maximum :

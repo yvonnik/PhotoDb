@@ -44,12 +44,12 @@ else {
         $source=$ImageFolder.$Sep.$file;
         $dest=$ExportFolder.$Sep.$file;
         
-        print("copy $source to $dest<br>");
+        //print("copy $source to $dest<br>");
         if (copy($source,$dest) == FALSE) print("copy failed for $source<br>");
         else $filecopied++;
      }
  }
  
- print("$filecopied files copied<br>");
+ print("$filecopied files copied in Multimedia/Photos/PhotoDb/Export<br>");
  
 ?>
