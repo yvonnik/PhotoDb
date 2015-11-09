@@ -109,6 +109,12 @@ function movetopage(sens)
  
 }
 
+function togglesize() {
+    if ($('#resize_check').prop('checked')) $('#resize_block').show();
+    else $('#resize_block').hide();
+    
+}
+
 function photo_import() {
     $('#popup').show();
     $('#popup-import_interior').show();
@@ -122,6 +128,22 @@ function photo_import() {
         Selected={};Query=-1;
         start_position=0;
         raffraichir();
+        }
+    });  
+    
+    
+}
+function photo_copy() {
+    $('#popup').show();
+    $('#popup-import_interior').show();
+    $('#import-log').html("");
+    $.ajax({ 
+    type: 'POST', 
+    url: 'copy.php', 
+    data: { 'Resize': $('#resize_check').prop('checked'), 'MaxSize' : $('#resize_size').val(), 'Selected' : JSON.stringify(Selected)}, 
+    dataType: 'html',
+    success: function (data) {
+        $('#import-log').html(data);
         }
     });  
     
@@ -209,6 +231,21 @@ function photo_import() {
 	</div>
 
         
+        
+<!-- Popup de copy dans répertoire cible -->   
+        
+    <div Id="popup-copy_interior">
+        <img id="close" src="web_images/3.png">
+        <br>
+        <input Id="resize_check" type="checkbox" value="1" onclick="togglesize();">Resize
+        <div Id="resize_block">
+            <br>Taille maximum :
+            <input Id="resize_size" type="text" value="1024">
+        </div>
+        
+        <a Id="navbutton-copyok" class="navbutton" href="#" onClick=""></a>
+    </div>
+            
 <!-- Popup de choix de la requete -->	
 		
 	<div Id="popup-import_interior">
@@ -266,6 +303,7 @@ function photo_import() {
     	<td><a Id="navbutton-filter" class="navbutton" title="Filtre" href="#" onClick="$('#popup').show();$('#popup-filter_interior').show();"></a></td>
     	<td><a Id="navbutton-select" class="navbutton" title="Selectionner tout" href="#" onClick="selectall();"></a></td>
     	<td><a Id="navbutton-unselect" class="navbutton" title="Desélectionner tout" href="#" onClick="unselectall();"></a></td>
+    	<td><a Id="navbutton-copy" class="navbutton" title="Copier" href="#" onClick="togglesize();$('#popup').show();$('#popup-copy_interior').show();"></a></td>
     	<td class="admin"><a Id="navbutton-keyword" class="navbutton" title="Ajouter mot-clé" href="#" onClick="$('#popup').show();$('#popup-keywords_interior').show();document.getElementById('keywords').value='';$('#keywords').focus();"></a></td>
     	<td class="admin"><a Id="navbutton-quality" class="navbutton" title="Qualité" href="#" onClick="$('#popup').show();$('#popup-quality_interior').show();document.getElementById('keywords').value='';$('#keywords').focus();"></a></td>
     	
@@ -361,10 +399,12 @@ function photo_import() {
     });
     $('#navbutton-filterok').on('click',function() {Selected={};Query=-2;QueryName='Local';LocalQuery=document.getElementById("Filterzone").value;start_position=0;raffraichir();});
     $('#navbutton-keywordsok').on('click',function() {$('#popup-keywords_interior').hide();$('#popup').hide();assign_keyword();});
+    $('#navbutton-copyok').on('click',function() {$('#popup-copy_interior').hide();$('#popup').hide();photo_copy();});
     $('#navbutton-keywordsok').css("background-image","url('web_images/check_64.png')") ;
     $('#navbutton-qualityok').on('click',function() {$('#popup-quality_interior').hide();$('#popup').hide();assign_quality();});
     $('#navbutton-qualityok').css("background-image","url('web_images/check_64.png')") ;
     $('#navbutton-filterok').css("background-image","url('web_images/check_64.png')") ;
+    $('#navbutton-copyok').css("background-image","url('web_images/check_64.png')") ;
     $("#filtrage").on('click', function () {
     	document.getElementById('popup').style.display = "block";
     });
@@ -374,6 +414,7 @@ function photo_import() {
     	$('#popup-quality_interior').hide();
     	$('#popup-import_interior').hide();
     	$('#popup-filter_interior').hide();
+    	$('#popup-copy_interior').hide();
     });
     $(window).resize(function() {
         table_destroy();table_create();raffraichir();

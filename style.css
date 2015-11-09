@@ -186,7 +186,7 @@ img#close {
 
 
 
-div#popup_interior, div#popup-keywords_interior, div#popup-import_interior,div#popup-filter_interior,div#popup-quality_interior {
+div#popup_interior, div#popup-keywords_interior, div#popup-import_interior,div#popup-filter_interior,div#popup-quality_interior,div#popup-copy_interior {
 	display: none;
 	position: absolute;
 	left: 50%;
@@ -241,8 +241,8 @@ button#query_close {
 #navbutton-filter { background: url('web_images/filter_64.png') no-repeat 0px 0px;}
 #navbutton-filter:hover { background-position: 0px -64px; }
 
-#navbutton-keywordsok,#navbutton-filterok,#navbutton-qualityok { background: url('web_images/check_64_grey.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
-#navbutton-keywordsok,#navbutton-filterok,#navbutton-qualityok:hover { background-position: 0px -64px; }
+#navbutton-keywordsok,#navbutton-filterok,#navbutton-qualityok, #navbutton-copyok { background: url('web_images/check_64_grey.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
+#navbutton-keywordsok,#navbutton-filterok,#navbutton-qualityok #navbutton-copyok:hover { background-position: 0px -64px; }
 
 #navbutton-queryok { background: url('web_images/file_grey_64.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
 #navbutton-queryok:hover { background-position: 0px -64px; }
@@ -261,6 +261,9 @@ button#query_close {
 
 #navbutton-unselect { background: url('web_images/unselectall.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
 #navbutton-unselect:hover { background-position: 0px -64px; }
+
+#navbutton-copy { background: url('web_images/copy_64.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
+#navbutton-copy:hover { background-position: 0px -64px; }
 
 #navbutton-import { background: url('web_images/import_64.png') no-repeat 0px 0px;margin-left: auto;margin-right: auto;}
 #navbutton-import:hover { background-position: 0px -64px; }
