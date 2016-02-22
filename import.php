@@ -145,6 +145,7 @@ foreach ($liste as $base) {
      MyCopy(".jpg", ($raw != 0 ? FALSE : TRUE)); // Si raw, le .jpg n'est pas en readonly, sinon c'est la référence
      
      $retouche=MyCopy("_dxo.jpg", FALSE);
+     $retouche=MyCopy("_DxO.jpg", FALSE);
      MyCopy(".jpg.dop", FALSE);
      MyCopy(".nef.dop", FALSE);
      MyCopy(".jpg.DOP", FALSE);
