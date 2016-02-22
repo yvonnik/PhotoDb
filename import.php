@@ -18,6 +18,22 @@ else {
  
   
   // construction de la liste des fichiers a importer : *.jpg sauf les *_dxo.jpg  
+  
+  // On commence par forcer les noms en minuscules, sinon, on se s'y retrouve plus ensuite
+  
+ $fichiers = scandir($ImportFolder);
+ $liste = array();
+ foreach ($fichiers as $f) {
+     if (($f == ".") || ($f == "..")) {} 
+     else if (is_dir($ImportFolder . $Sep . $f)) {} 
+     else {
+           if (strtolower($f) != $f) { // le nom de fichier n'est pas en minuscule pure, on le force
+              rename($ImportFolder . $Sep . $f, $ImportFolder . $Sep . strtolower($f));
+           }
+     }
+ }
+ 
+ 
  $fichiers = scandir($ImportFolder);
  $liste = array();
  foreach ($fichiers as $f) {
@@ -29,8 +45,8 @@ else {
          $base = $nom[0];
          for ($i=1;$i <  count($nom)-1;$i++) {$base.=".".$nom[$i];}
          $ext = $nom[count($nom)-1];
-         $isdxo = (strtoupper(substr($base, -4)) == "_DXO" ? TRUE : FALSE);
-         if ((strtoupper($ext) == "JPG") && !$isdxo) $liste[] = $base;
+         $isdxo = (substr($base, -4) == "_dxo" ? TRUE : FALSE);
+         if (($ext == "jpg") && !$isdxo) $liste[] = $base;
      }
  }
 
@@ -45,8 +61,7 @@ print("<table Id='log-table'>");
 
 foreach ($liste as $base) {
     $exif=exif_read_data($ImportFolder.$Sep.$base.".jpg");
-    if ($exif == FALSE) $exif=exif_read_data($ImportFolder.$Sep.$base.".JPG");
- 
+     
     if ($Exif != 0) {
         print "<br>Base : $base<br>";
         foreach ($exif as $key => $value) {
@@ -141,17 +156,11 @@ foreach ($liste as $base) {
      $retouche=0;
      
      $raw=MyCopy(".nef", TRUE);
-     
      MyCopy(".jpg", ($raw != 0 ? FALSE : TRUE)); // Si raw, le .jpg n'est pas en readonly, sinon c'est la référence
-     
      $retouche=MyCopy("_dxo.jpg", FALSE);
-     $retouche=MyCopy("_DxO.jpg", FALSE);
      MyCopy(".jpg.dop", FALSE);
      MyCopy(".nef.dop", FALSE);
-     MyCopy(".jpg.DOP", FALSE);
-     MyCopy(".nef.DOP", FALSE);
-     MyCopy(".JPG.dop", FALSE);
-     MyCopy(".NEF.dop", FALSE);
+     
            
      $sql="UPDATE images SET raw=$raw,retouche=$retouche WHERE N=$N";
      $res=$bdd->Execute($sql);
@@ -182,7 +191,6 @@ foreach ($todelete as $value)  {
 function MyCopy($ext,$readonly) {
     global $todelete,$base,$basename,$ImportFolder,$filebase,$unix,$Sep;
     $f="";
-    if (file_exists($ImportFolder.$Sep.$base.strtoupper($ext))) $f=$ImportFolder.$Sep.$base.strtoupper($ext);
     if (file_exists($ImportFolder.$Sep.$base.$ext)) $f=$ImportFolder.$Sep.$base.$ext;
     if ($f == "") return 0; // pas de fichier, rien à faire
     if (copy($f,$filebase.$basename.$ext) == FALSE) {print("copy failed for $f<br>");return 0;}
