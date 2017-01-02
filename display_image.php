@@ -25,9 +25,10 @@ $BaseFolder=$BaseFolder. $Sep . substr($Date,0,4) . $Sep . substr($Date,5,2) . $
 $filebase=$BaseFolder.$Sep."im".sprintf("%06d",$Id);
 if (file_exists($filebase."r.jpg")) $file=$filebase."r.jpg";
 else if (file_exists($filebase."_dxo.jpg")) $file=$filebase."_dxo.jpg";
-else $file=$filebase.".jpg"; 
+else if (file_exists($filebase.".jpg")) $file=$filebase.".jpg";
+else die("cannot find file for $filebase");
 
-if ($small == 1) 
+if ($small == 1) ;
  {
   $filesmall=$BaseFolder.$Sep."smalls".$Sep."sim".sprintf("%06d.jpg",$Id);
   if (!file_exists($filesmall)) update_small($file,$filesmall);
