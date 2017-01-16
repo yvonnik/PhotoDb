@@ -52,6 +52,7 @@ else {
 
 // Gestion de la InsertDate
 $InsertDate=date("c");
+if (substr($InsertDate,-6,6) == "+00:00") $InsertDate=substr($InsertDate,0,strlen($InsertDate)-6)."Z";
 
 // récupération des infos Exif
 $todelete=array();
@@ -140,7 +141,7 @@ foreach ($liste as $base) {
     
     
        // Insertion de la ligne d'image et récupération du numéro
-    $sql="INSERT INTO images (Date,InsertDate,Source,ms,Focale,Vitesse,ISO,Diaphragme,Flash,portrait,paysage,largeur,hauteur) VALUES ('$date','$InsertDate',$nsource,$ms,$Focale,$Vitesse,$ISO,$Diaphragme,$Flash,$portrait,$paysage,$largeur,$hauteur)";
+    $sql="INSERT INTO images (Date,InsertDate,Source,ms,Focale,Vitesse,ISO,Diaphragme,Flash,portrait,paysage,largeur,hauteur) VALUES ('$date',STR_TO_DATE('$InsertDate','%Y-%m-%dT%H:%i:%sZ'),$nsource,$ms,$Focale,$Vitesse,$ISO,$Diaphragme,$Flash,$portrait,$paysage,$largeur,$hauteur)";
     
     $res=$bdd->Execute($sql);
     if (!$res) die("Query failed : $sql");
@@ -160,11 +161,12 @@ foreach ($liste as $base) {
      $raw=0;
      $retouche=0;
      
-     $raw=MyCopy(".nef", TRUE);
+     $raw=MyCopy(".nef", TRUE) || MyCopy(".rw2",TRUE);
      MyCopy(".jpg", ($raw != 0 ? FALSE : TRUE)); // Si raw, le .jpg n'est pas en readonly, sinon c'est la référence
      $retouche=MyCopy("_dxo.jpg", FALSE);
      MyCopy(".jpg.dop", FALSE);
      MyCopy(".nef.dop", FALSE);
+     MyCopy(".rw2.dop", FALSE);
      
            
      $sql="UPDATE images SET raw=$raw,retouche=$retouche WHERE N=$N";
