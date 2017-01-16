@@ -132,6 +132,11 @@ foreach ($liste as $base) {
     if ($largeur >= $hauteur) {$portrait=0;$paysage=1;}
     else {$portrait=1;$paysage=0;}
     
+	if ($Focale == '') $Focale=0;
+	if ($Vitesse == '') $Vitesse=0;
+	if ($Diaphragme == '') $Diaphragme=0;
+	if ($ISO == '') $ISO=0;
+	if ($Flash == '') $Flash=0;
     
     
        // Insertion de la ligne d'image et récupération du numéro
