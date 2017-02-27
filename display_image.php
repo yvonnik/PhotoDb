@@ -85,6 +85,7 @@ else
 } 
  
 function update_small($big,$small) {
+
     list($width, $height) = getimagesize($big);
     
     $ratio=$width/$height;

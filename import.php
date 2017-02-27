@@ -51,6 +51,7 @@ else {
  }
 
 // Gestion de la InsertDate
+date_default_timezone_set ( "UTC" );
 $InsertDate=date("c");
 if (substr($InsertDate,-6,6) == "+00:00") $InsertDate=substr($InsertDate,0,strlen($InsertDate)-6)."Z";
 
