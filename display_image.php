@@ -3,7 +3,7 @@
 include("dbconfig.php");
 
 if (stristr(php_uname(),"windows")) {$unix=0;$windows=1;} else {$unix=1;$windows=0;}
-if ($windows) {$BaseFolder="\\\\192.168.2.11\\Multimedia\\Photos\\PhotoDb\\Images";$Sep="\\";}
+if ($windows) {$BaseFolder="c:\\Temp\PhotoDb\\Images";$Sep="\\";}
 //if ($windows) {$BaseFolder="c:\\temp\\PhotoDb\\Images";$Sep="\\";}
 else {$BaseFolder="../../Multimedia/Photos/PhotoDb/Images";$Sep="/";}
 
@@ -85,6 +85,7 @@ else
 } 
  
 function update_small($big,$small) {
+    global $windows;
 
     list($width, $height) = getimagesize($big);
     
@@ -96,8 +97,17 @@ function update_small($big,$small) {
    
 // Redimensionnement
 
+if ($windows) { //Pas Imagick sous windows, on resize "à la main"
+    $thumb = imagecreatetruecolor($neww, $newh);
+    $source = imagecreatefromjpeg($big);
+    imagecopyresized($thumb, $source, 0, 0, 0, 0, $neww, $newh, $width, $height);
+    imagejpeg($thumb,$small);
+    imagedestroy($thumb);
+    
+ } else {
    $imagick=new Imagick($big);
    $imagick->resizeImage($neww, $newh, Imagick::FILTER_BOX, 1);
    $imagick->writeImage($small); 
+ }  
 } 
 ?>
