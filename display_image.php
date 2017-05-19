@@ -42,13 +42,13 @@ if ($small == 1)
     $fp = fopen($file, 'rb');
     if ($size and $fp)
     {
-        if ($small != 2) { // Pas de redimensionnement, small ou large
+        if (($small != 2) || locallan()) { // Pas de redimensionnement, small ou large
             header('Content-Type: '.$size['mime']);
             header('cache:private, max-age=10000');
             fpassthru($fp);
             exit;
         }
-        else {
+        else { // Diaporama sur réseau distant, on reisze les images avant de les envoyer
             header('Content-Type: '.$size['mime']);
             header('cache:private, max-age=10000');
             resize_image($file,$mh,$mw);
@@ -65,7 +65,18 @@ else
   echo "file $file does not exists";
  }
  
+ function locallan() // retourne TRUE si le serveur et le navigateur sont sur le même sous-réseau xxx.yyy.zzz.???, FALSE sinon
+ {
+     global $_SERVER;
+     if ($_SERVER['SERVER_ADDR'] == $_SERVER['REMOTE_ADDR']) return TRUE; //test en localhost
+     $serverip=explode(".",$_SERVER['SERVER_ADDR']);
+     $browserip=explode(".",$_SERVER['REMOTE_ADDR']);
+     if (($serverip[0] == $browserip[0]) && ($serverip[1] == $browserip[1]) && ($serverip[2] == $browserip[2])) return TRUE; else return FALSE;
+     
+ }
+ 
  function resize_image($big,$mh,$mw) {
+    global $windows;
     list($width, $height) = getimagesize($big);
     
     $ratio=$width/$height;
@@ -76,11 +87,17 @@ else
     $newh=floor($newh+0.5);
     $neww=floor($neww+0.5);
 // Redimensionnement
-
-   $imagick=new Imagick($big);
-   $imagick->resizeImage($neww, $newh, Imagick::FILTER_BOX, 1);
+    if ($windows) { //Pas Imagick sous windows, on resize "à la main"
+         $thumb = imagecreatetruecolor($neww, $newh);
+         $source = imagecreatefromjpeg($big);
+         imagecopyresized($thumb, $source, 0, 0, 0, 0, $neww, $newh, $width, $height);
+         imagejpeg($thumb); 
+    } else {
+         $imagick=new Imagick($big);
+         $imagick->resizeImage($neww, $newh, Imagick::FILTER_BOX, 1);
+         echo $imagick; 
+    }  
  
-   echo $imagick;
  
 } 
  
