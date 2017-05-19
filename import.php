@@ -182,18 +182,14 @@ foreach ($liste as $base) {
 print("</table>");
 
 
- // Déplacement des fichiers dans le répertoire "trash" du répertoire d'import
-foreach ($todelete as $value)  {
-    $file=explode($Sep,$value);$file=$file[count($file)-1];
-    $dest=$ImportFolder.$Sep."Trash";
-    if (!is_dir($dest)) mkdir($dest);
-    $dest.=$Sep.$file;
-    if (file_exists($value)) {
-        if (!rename($value,$dest)) print("Rename $value failed<br>");     
-    }
-    
-    
-}   
+
+function myrename($old,$new) {
+    global $windows;
+    if ($windows) $cmd="move /Y $old $new";
+    else $cmd="mv $old $new";
+    exec($cmd,$returnlines,$returnvar);
+    if ((file_exists($old) == FALSE ) && (file_exists($new) == TRUE)) return TRUE; else return FALSE;
+}
 
 
 function MyCopy($ext,$readonly) {
@@ -202,8 +198,8 @@ function MyCopy($ext,$readonly) {
     
     if (file_exists($ImportFolder.$Sep.$base.$ext)) $f=$ImportFolder.$Sep.$base.$ext;
     else {return 0;}
-    if (copy($f,$filebase.$basename.$ext) == FALSE) {print("copy failed for $f<br>");return 0;}
-    $todelete[]=$f;
+    if (myrename($f,$filebase.$basename.$ext) == FALSE) {print("move failed for $f<br>");return 0;}
+    // $todelete[]=$f;
     if ($readonly && $unix) chmod($filebase.$basename.$ext,0444); // passage du fichier en readonly sous Unix
     return 1;
 }
