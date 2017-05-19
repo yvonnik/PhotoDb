@@ -1,0 +1,22 @@
+// Infos Exif classique
+
+// format de date : YYYY:MM:DD HH:MM:SS the date and time separated by one blank character (hex 20). 
+DateTimeOriginal=
+Model=
+SubSecTimeDigitized=
+FocalLength=
+ExposureTime=
+ISOSpeedRatings=
+FNumber=
+Flash=
+ExifImageWidth=
+ExifImageLength=
+
+//Type : photo ou video, par defaut photo
+Type=
+
+// Liste de motclés séparés par des virgules
+Keywords=
+
+// Extension du fichier video ou raw associé au jpg
+RawExtension=

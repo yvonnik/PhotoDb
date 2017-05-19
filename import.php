@@ -62,15 +62,37 @@ print("<b>Import done :</b><br><br>");
 print("<table Id='log-table'>");
 
 foreach ($liste as $base) {
-    $exif=exif_read_data($ImportFolder.$Sep.$base.".jpg");
+        
+    $video=0;
+    if (file_exists($ImportFolder.$Sep.$base.".photodb")) { // Le fichier en extension .photodb va contenir les infos exifs, et d'autres (type, keywords)
+        $exif=array();
+        $handle = fopen($ImportFolder.$Sep.$base.".photodb", "r");
+        if ($handle) {
+            while (($line = fgets($handle)) !== false) {
+                if ($line == "") continue;
+                if (substr($line,0,2) == "//") continue; // On saute les commentaires
+                $entry=explode("=",$line);
+                if (array_key_exists(1,$entry))  {
+                    $entry[1]=trim($entry[1]);
+                    if (($entry[1] != "") && (is_string($entry[1]))) {
+                        if (strlen($entry[1]) > 0) $exif[$entry[0]]=$entry[1];
+                    }
+                }
+            }
+        // process the line read.
+        }
+
+    fclose($handle);
+        
+    } 
+    else {
+        $exif=exif_read_data($ImportFolder.$Sep.$base.".jpg");
      
-    if ($Exif != 0) {
-        print "<br>Base : $base<br>";
-        foreach ($exif as $key => $value) {
-            if (!is_array($value)) print("$key:$value<br>"); else print_r($value);
-        }   
     }
     
+    if (!array_key_exists("Type",$exif)) $exif["Type"]="photo";
+          
+       
     // récupération de la date
     if (array_key_exists("DateTimeOriginal", $exif)) $date=$exif["DateTimeOriginal"];
     else if (array_key_exists("DateTimeDigitized",$exif)) $date=$exif["DateTimeDigitized"];
@@ -139,10 +161,11 @@ foreach ($liste as $base) {
 	if ($Diaphragme == '') $Diaphragme=0;
 	if ($ISO == '') $ISO=0;
 	if ($Flash == '') $Flash=0;
+    $Type=$exif["Type"];
     
     
        // Insertion de la ligne d'image et récupération du numéro
-    $sql="INSERT INTO images (Date,InsertDate,Source,ms,Focale,Vitesse,ISO,Diaphragme,Flash,portrait,paysage,largeur,hauteur) VALUES ('$date',STR_TO_DATE('$InsertDate','%Y-%m-%dT%H:%i:%sZ'),$nsource,$ms,$Focale,$Vitesse,$ISO,$Diaphragme,$Flash,$portrait,$paysage,$largeur,$hauteur)";
+    $sql="INSERT INTO images (Date,InsertDate,Type,Source,ms,Focale,Vitesse,ISO,Diaphragme,Flash,portrait,paysage,largeur,hauteur) VALUES ('$date',STR_TO_DATE('$InsertDate','%Y-%m-%dT%H:%i:%sZ'),'$Type',$nsource,$ms,$Focale,$Vitesse,$ISO,$Diaphragme,$Flash,$portrait,$paysage,$largeur,$hauteur)";
     
     $res=$bdd->Execute($sql);
     if (!$res) die("Query failed : $sql");
@@ -161,16 +184,21 @@ foreach ($liste as $base) {
      $basename=sprintf("im%06d",$N);
      $raw=0;
      $retouche=0;
+     $extension="";
      
-     $raw=MyCopy(".nef", TRUE) + MyCopy(".rw2",TRUE);
+     if (MyCopy(".nef", TRUE)) {$extension="nef";$raw=1;}
+     if (MyCopy(".rw2", TRUE)) {$extension="rw2";$raw=1;}
+     if (array_key_exists("RawExtension",$exif)) {$extension=$exif["RawExtension"];MyCopy(".".$extension,TRUE);} // copie de la video ou d'un raw special associé au JPG si existe
      MyCopy(".jpg", ($raw != 0 ? FALSE : TRUE)); // Si raw, le .jpg n'est pas en readonly, sinon c'est la référence
      $retouche=MyCopy("_dxo.jpg", FALSE);
      MyCopy(".jpg.dop", FALSE);
      MyCopy(".nef.dop", FALSE);
      MyCopy(".rw2.dop", FALSE);
+    
+  
      
            
-     $sql="UPDATE images SET raw=$raw,retouche=$retouche WHERE N=$N";
+     $sql="UPDATE images SET raw=$raw,retouche=$retouche,extension='$extension' WHERE N=$N";
      $res=$bdd->Execute($sql);
      if (!$res) die("Query failed : $sql");
      
