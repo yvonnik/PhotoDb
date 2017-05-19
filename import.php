@@ -162,7 +162,7 @@ foreach ($liste as $base) {
      $raw=0;
      $retouche=0;
      
-     $raw=MyCopy(".nef", TRUE) || MyCopy(".rw2",TRUE);
+     $raw=MyCopy(".nef", TRUE) + MyCopy(".rw2",TRUE);
      MyCopy(".jpg", ($raw != 0 ? FALSE : TRUE)); // Si raw, le .jpg n'est pas en readonly, sinon c'est la référence
      $retouche=MyCopy("_dxo.jpg", FALSE);
      MyCopy(".jpg.dop", FALSE);
@@ -199,8 +199,9 @@ foreach ($todelete as $value)  {
 function MyCopy($ext,$readonly) {
     global $todelete,$base,$basename,$ImportFolder,$filebase,$unix,$Sep;
     $f="";
+    
     if (file_exists($ImportFolder.$Sep.$base.$ext)) $f=$ImportFolder.$Sep.$base.$ext;
-    if ($f == "") return 0; // pas de fichier, rien à faire
+    else {return 0;}
     if (copy($f,$filebase.$basename.$ext) == FALSE) {print("copy failed for $f<br>");return 0;}
     $todelete[]=$f;
     if ($readonly && $unix) chmod($filebase.$basename.$ext,0444); // passage du fichier en readonly sous Unix
