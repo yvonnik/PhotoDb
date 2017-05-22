@@ -202,8 +202,29 @@ foreach ($liste as $base) {
      $res=$bdd->Execute($sql);
      if (!$res) die("Query failed : $sql");
      
-    
-    print("<tr><td>$N</td><td>$base</td><td>$nom_source</td><td>$date</td></tr>");  
+     // ajout des keywords qui pourraient être dans le fichier photodb
+     if (array_key_exists("Keywords",$exif)) {
+         $keywords=explode(",",$exif["Keywords"]);
+         foreach ($keywords as $kw) {
+            $kw=trim($kw);
+            $sql="SELECT * FROM motcles WHERE Nom='$kw'";
+            $res=$bdd->Execute($sql);
+            if (!$res) die("Query failed : $sql");
+            $kwn=-1;
+            while (!($res->EOF)) {
+                $kwn=$res->fields["N"];
+                $res->MoveNext();
+            }
+            
+            if ($kwn == -1) print("<tr><td>mot-clés inconnu</td><td>$kw</td><td> </td><td> </td></tr>");
+            else {
+                $sql="INSERT INTO relmc (Image,Motcle) VALUES ($N,$kwn)";
+                $res=$bdd->Execute($sql);
+                }
+            } 
+         }        
+     
+     print("<tr><td>$N</td><td>$base</td><td>$nom_source</td><td>$date</td></tr>");  
        
 }
 
