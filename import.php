@@ -188,7 +188,7 @@ foreach ($liste as $base) {
      
      if (MyCopy(".nef", TRUE)) {$extension="nef";$raw=1;}
      if (MyCopy(".rw2", TRUE)) {$extension="rw2";$raw=1;}
-     if (array_key_exists("RawExtension",$exif)) MyCopy(".".ltrim($exif["RawExtension"],"."),TRUE);// copie de la video ou d'un raw special associé au JPG si existe
+     if (array_key_exists("RawExtension",$exif)) {$extension=ltrim($exif["RawExtension"],".");MyCopy(".".$extension,TRUE);}// copie de la video ou d'un raw special associé au JPG si existe
      MyCopy(".jpg", ($raw != 0 ? FALSE : TRUE)); // Si raw, le .jpg n'est pas en readonly, sinon c'est la référence
      $retouche=MyCopy("_dxo.jpg", FALSE);
      MyCopy(".jpg.dop", FALSE);
