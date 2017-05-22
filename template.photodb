@@ -20,3 +20,6 @@ Keywords=
 
 // Extension du fichier video ou raw associé au jpg
 RawExtension=
+
+// Extension d'autres fichiers à conservé (fichier video avant conversion MP4 par exemple), séparés par des virgules
+OtherExtensions=

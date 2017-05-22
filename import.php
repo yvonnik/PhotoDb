@@ -188,19 +188,24 @@ foreach ($liste as $base) {
      
      if (MyCopy(".nef", TRUE)) {$extension="nef";$raw=1;}
      if (MyCopy(".rw2", TRUE)) {$extension="rw2";$raw=1;}
-     if (array_key_exists("RawExtension",$exif)) {$extension=$exif["RawExtension"];MyCopy(".".$extension,TRUE);} // copie de la video ou d'un raw special associé au JPG si existe
+     if (array_key_exists("RawExtension",$exif)) MyCopy(".".ltrim($exif["RawExtension"],"."),TRUE);// copie de la video ou d'un raw special associé au JPG si existe
      MyCopy(".jpg", ($raw != 0 ? FALSE : TRUE)); // Si raw, le .jpg n'est pas en readonly, sinon c'est la référence
      $retouche=MyCopy("_dxo.jpg", FALSE);
      MyCopy(".jpg.dop", FALSE);
      MyCopy(".nef.dop", FALSE);
      MyCopy(".rw2.dop", FALSE);
-    
-  
      
-           
+     // copie des fichiers annexes définis dans OtherExtensions
+     if (array_key_exists("OtherExtensions",$exif)) {
+         $otherextensions=explode(",",$exif["OtherExtensions"]);
+         foreach ($otherextensions as $ex) MyCopy(".".ltrim(trim(strtolower($ex)),"."), FALSE);
+         }        
+    
      $sql="UPDATE images SET raw=$raw,retouche=$retouche,extension='$extension' WHERE N=$N";
      $res=$bdd->Execute($sql);
      if (!$res) die("Query failed : $sql");
+     
+     print("<tr><td>$N</td><td>$base</td><td>$nom_source</td><td>$date</td></tr>");  
      
      // ajout des keywords qui pourraient être dans le fichier photodb
      if (array_key_exists("Keywords",$exif)) {
@@ -223,9 +228,6 @@ foreach ($liste as $base) {
                 }
             } 
          }        
-     
-     print("<tr><td>$N</td><td>$base</td><td>$nom_source</td><td>$date</td></tr>");  
-       
 }
 
 print("</table>");
