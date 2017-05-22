@@ -205,6 +205,7 @@ function photo_copy() {
 							<option value="largeur">Largeur</option>
 							<option value="hauteur">Hauteur</option>
 							<option value="N">N</option>
+							<option value="N">Type</option>
 						</select></td>
 						<td><a Id="navbutton-addchamp" class="navbutton-small buttonnext" href="#" onClick="AddChamp();"></a></td>
 					</tr>
