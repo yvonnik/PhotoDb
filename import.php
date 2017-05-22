@@ -237,7 +237,7 @@ print("</table>");
 function myrename($old,$new) {
     global $windows;
     if ($windows) $cmd="move /Y $old $new";
-    else $cmd="mv $old $new";
+    else $cmd="mv '$old' '$new'";
     exec($cmd,$returnlines,$returnvar);
     if ((file_exists($old) == FALSE ) && (file_exists($new) == TRUE)) return TRUE; else return FALSE;
 }
