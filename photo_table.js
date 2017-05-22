@@ -45,6 +45,11 @@ function table_create()
           var fimg=document.createElement("img");fimg.setAttribute("Id","fsi"+l);fimg.setAttribute("align","left");
           full.setAttribute("class","thumbontop2");
           full.appendChild(fimg);
+          
+          var play=document.createElement("a");play.setAttribute("Id","pl"+l);play.setAttribute("target","_blank");
+          var pimg=document.createElement("img");pimg.setAttribute("Id","pi"+l);pimg.setAttribute("align","left");
+          play.setAttribute("class","thumbontop3");
+          play.appendChild(pimg);
                  
           var limg=document.createElement("img");
           if (Len != 1) limg.setAttribute("class","thumbimg");
@@ -57,6 +62,7 @@ function table_create()
           
           div4.appendChild(ouvrir);
           div4.appendChild(full);
+          div4.appendChild(play);
           div4.appendChild(limg);         
           div4.appendChild(div2);
           div4.setAttribute("style","position:relative;");
@@ -100,6 +106,14 @@ function success_images(data) {
                         $('#oi'+i).attr("src","web_images/preview_24.png");
                         $('#dd'+i).text("("+element[i].N+") "+element[i].Date);
                         $('#o'+i).attr("onclick","window.open('"+ImageServer+"display_image.php?Id="+element[i].N+"&small=0&Date="+element[i].Date+"')");
+                        
+                        $('#pi'+i).attr("src","web_images/video.png");
+                        if (element[i].Type != "photo") {
+                            $('#pl'+i).removeAttr("hidden");
+                            $('#pl'+i).attr("onclick","window.open('"+ImageServer+"display_video.php?Id="+element[i].N+"&small=0&Date="+element[i].Date+"')");
+                        }
+                        else $('#pl'+i).attr("hidden","true");
+                        
                         
                         if (Len != 1) $('#fsi'+i).attr("src","web_images/full_screen_reading_24.png");
                         else $('#fsi'+i).attr("src","web_images/clipart_24.png");

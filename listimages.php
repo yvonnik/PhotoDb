@@ -128,6 +128,7 @@
      $Json.="'Diaphragme' : '".$res->fields["Diaphragme"]."' ,";
      $Json.="'portrait' : '".$res->fields["portrait"]."' ,";
      $Json.="'paysage' : '".$res->fields["paysage"]."' ,";
+     $Json.="'Type' : '".$res->fields["Type"]."' ,";
      if ($Keywords == 1) // on rajoute les motclés
      {
         $mc="";
