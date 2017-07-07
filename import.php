@@ -153,6 +153,15 @@ foreach ($liste as $base) {
     else if (array_key_exists("ExifImageLength",$exif)) $hauteur=$exif["ExifImageLength"];
     else $hauteur=0;
     
+    if (array_key_exists("Duration",$exif)) $Duration=$exif["Duration"];
+    else $Duration=0;
+    
+    if (array_key_exists("VideoWidth",$exif)) $Duration=$exif["VideoWidth"];
+    else VideoWidth=0;
+    
+    if (array_key_exists("VideoHeight",$exif)) $Duration=$exif["VideoHeight"];
+    else VideoHeight=0;
+    
     if ($largeur >= $hauteur) {$portrait=0;$paysage=1;}
     else {$portrait=1;$paysage=0;}
     
@@ -165,7 +174,7 @@ foreach ($liste as $base) {
     
     
        // Insertion de la ligne d'image et récupération du numéro
-    $sql="INSERT INTO images (Date,InsertDate,Type,Source,ms,Focale,Vitesse,ISO,Diaphragme,Flash,portrait,paysage,largeur,hauteur) VALUES ('$date',STR_TO_DATE('$InsertDate','%Y-%m-%dT%H:%i:%sZ'),'$Type',$nsource,$ms,$Focale,$Vitesse,$ISO,$Diaphragme,$Flash,$portrait,$paysage,$largeur,$hauteur)";
+    $sql="INSERT INTO images (Date,InsertDate,Type,Source,ms,Focale,Vitesse,ISO,Diaphragme,Flash,portrait,paysage,largeur,hauteur,Duration,VideoWidth,VideoHeight) VALUES ('$date',STR_TO_DATE('$InsertDate','%Y-%m-%dT%H:%i:%sZ'),'$Type',$nsource,$ms,$Focale,$Vitesse,$ISO,$Diaphragme,$Flash,$portrait,$paysage,$largeur,$hauteur,$Duration,$VideoWidth,$VideoHeight)";
     
     $res=$bdd->Execute($sql);
     if (!$res) die("Query failed : $sql");
