@@ -156,11 +156,11 @@ foreach ($liste as $base) {
     if (array_key_exists("Duration",$exif)) $Duration=$exif["Duration"];
     else $Duration=0;
     
-    if (array_key_exists("VideoWidth",$exif)) $Duration=$exif["VideoWidth"];
-    else VideoWidth=0;
+    if (array_key_exists("VideoWidth",$exif)) $VideoWidth=$exif["VideoWidth"];
+    else $VideoWidth=0;
     
-    if (array_key_exists("VideoHeight",$exif)) $Duration=$exif["VideoHeight"];
-    else VideoHeight=0;
+    if (array_key_exists("VideoHeight",$exif)) $VideoHeight=$exif["VideoHeight"];
+    else $VideoHeight=0;
     
     if ($largeur >= $hauteur) {$portrait=0;$paysage=1;}
     else {$portrait=1;$paysage=0;}
