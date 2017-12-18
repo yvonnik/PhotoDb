@@ -33,6 +33,31 @@ function FullScreenToggle(Nimage)
 {
     start_position=start_position+Nimage;
     FullScreen=!FullScreen;
+    if (FullScreen) {
+        $(".admin").hide();
+        $("#navbutton-first").hide();
+        $("#navbutton-rewind").hide();  
+        $("#navbutton-forward").hide();
+        $("#navbutton-last").hide();
+        $("#navbutton-filter").hide();
+        $("#navbutton-select").hide();
+        $("#navbutton-unselect").hide();
+        $("#navbutton-copy").hide();
+        $('#navbutton-monomulti').css("background-image","url('web_images/multi_64.png')") ;
+        $("#navbutton-diapo").show();
+    } else {
+        if (Admin) $(".admin").show();
+        $("#navbutton-first").show();
+        $("#navbutton-rewind").show();  
+        $("#navbutton-forward").show();
+        $("#navbutton-last").show();
+        $("#navbutton-filter").show();
+        $("#navbutton-select").show();
+        $("#navbutton-unselect").show();
+        $("#navbutton-copy").show();
+        $('#navbutton-monomulti').css("background-image","url('web_images/mono_64.png')") ;
+        $("#navbutton-diapo").hide();
+    }
     table_destroy();table_create();raffraichir();
 }
 
@@ -295,21 +320,23 @@ function photo_copy() {
        
 
 <!-- Boutons de naviguation -->  	
-<table width="80%" border="0" align="center" cellpadding="1" cellspacing="2" class="ontop">
+<table Id="boutons_nav" width="80%" border="0" align="center" cellpadding="1" cellspacing="2" class="ontop">
     <tr>
+        <td tyle="min-width:140px"><a Id="navbutton-monomulti" class="navbutton" title="Mode Diaporama/Vignettes" href="#" onClick="FullScreenToggle(0);"></a>
+            <a Id="navbutton-diapo" class="navbutton" title="Lancer/Arrêter Diaporama" href="#" onClick="Diapo();"></a></td>
         <td class="admin"><a Id="navbutton-import" title="Import de photos" class="navbutton" href="#" onClick="photo_import();"></a></td>
-    	<td><a Id="navbutton-first" class="navbutton" href="#" title="Début" onClick="movetopage(-4);"></a></td>
-    	<td><a Id="navbutton-rewind" class="navbutton" href="#" title="Page/Photo précédente" onClick="movetopage(-3);"></a></td>
+    	<td><a Id="navbutton-first" class="navbutton" href="#" title="Début" onClick="movetopage(-4);"></a>
+    	   <a Id="navbutton-rewind" class="navbutton" href="#" title="Page/Photo précédente" onClick="movetopage(-3);"></a></td>
     	<td class="Date"><b Id="navcount" ></b>&nbsp;&ndash;&nbsp;<b Id="bottomline"></b></td>
-    	<td><a Id="navbutton-diapo" class="navbutton" title="Lancer/Arrêter Diaporama" href="#" onClick="Diapo();"></a></td>
-    	<td><a Id="navbutton-forward" class="navbutton" title="Page/Photo suivante" href="#" onClick="movetopage(-2);"></a></td>
-    	<td><a Id="navbutton-last" class="navbutton" title="Fin" href="#" onClick="movetopage(-1);"></a></td>
+    	<td><a Id="navbutton-forward" class="navbutton" title="Page/Photo suivante" href="#" onClick="movetopage(-2);"></a>
+    	   <a Id="navbutton-last" class="navbutton" title="Fin" href="#" onClick="movetopage(-1);"></a></td>
     	<td><a Id="navbutton-filter" class="navbutton" title="Filtre" href="#" onClick="$('#popup').show();$('#popup-filter_interior').show();"></a></td>
-    	<td><a Id="navbutton-select" class="navbutton" title="Selectionner tout" href="#" onClick="selectall();"></a></td>
-    	<td><a Id="navbutton-unselect" class="navbutton" title="Desélectionner tout" href="#" onClick="unselectall();"></a></td>
+    	<td><a Id="navbutton-select" class="navbutton" title="Selectionner tout" href="#" onClick="selectall();"></a>
+    	<a Id="navbutton-unselect" class="navbutton" title="Desélectionner tout" href="#" onClick="unselectall();"></a></td>
     	<td><a Id="navbutton-copy" class="navbutton" title="Copier" href="#" onClick="togglesize();$('#popup').show();$('#popup-copy_interior').show();"></a></td>
-    	<td class="admin"><a Id="navbutton-keyword" class="navbutton" title="Ajouter mot-clé" href="#" onClick="$('#popup').show();$('#popup-keywords_interior').show();document.getElementById('keywords').value='';$('#keywords').focus();"></a></td>
-    	<td class="admin"><a Id="navbutton-quality" class="navbutton" title="Qualité" href="#" onClick="$('#popup').show();$('#popup-quality_interior').show();document.getElementById('keywords').value='';$('#keywords').focus();"></a></td>
+    	<td class="admin"><a Id="navbutton-keyword" class="navbutton" title="Ajouter mot-clé" href="#" onClick="$('#popup').show();$('#popup-keywords_interior').show();document.getElementById('keywords').value='';$('#keywords').focus();"></a>
+    	   <a Id="navbutton-quality" class="navbutton" title="Qualité" href="#" onClick="$('#popup').show();$('#popup-quality_interior').show();document.getElementById('keywords').value='';$('#keywords').focus();"></a></td>
+ 
     	
 	  </td>
   </tr>
@@ -328,6 +355,7 @@ function photo_copy() {
     table_create();
     raffraichir();
     if (Admin == 0) $(".admin").hide();
+    $("#navbutton-diapo").hide();
 
     document.onkeydown = function (e) {
          e = e || window.event;//Get event

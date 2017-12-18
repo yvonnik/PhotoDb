@@ -3,7 +3,7 @@ body {
 	font-size: 14px;
 	line-height: 18px;
 	color: #617A81;	
-    background: #aaa;
+    background: #000; 
 }
 
 img {
@@ -59,7 +59,7 @@ img {
     text-shadow: 1px 1px 0px #ffffff;
 }
 .thumb {
-	    background: #aaa;
+	    background: #000;
 	    color: #000;
 	    margin-left: auto;
     	margin-right: auto;	
@@ -67,7 +67,7 @@ img {
 }
 
 .thumbimg {
-	    background: #aaa;
+	    background: #000;
 	    color: #000;
 	    margin-left: auto;
     	margin-right: auto;	
@@ -75,7 +75,7 @@ img {
     	}
     	
 .thumbimg1 {
-	    background: #aaa;
+	    background: #000;
 	    color: #000;
 	    margin-left: auto;
     	margin-right: auto;	
@@ -89,41 +89,41 @@ img {
 
 
 .tableau {
-	    border:0px solid #CD853F;
+	    border:0px solid #000000;
 	    padding: 3px;
 	    margin-left: auto;
     	margin-right: auto;
 	   }
 	   
 .tableau0 {
-	    border:1px solid #CD853F;
-	    padding: 3px;
+	    border:0px solid #000000;
+	    padding: 1px;
 	    margin-left: auto;
     	margin-right: auto;
 	   }
 	   
 .tableau1 {
-	    border:1px solid #CD853F;
-	    padding: 3px;
+	    border:0px solid #000000;
+	    padding: 1px;
 	   }
 	   
 .tableau2 {
-	    border:1px solid #CD853F;
-	    padding: 3px;
+	    border:0px solid #000000;
+	    padding: 1px;
 	   }
 	   
 .tableau3 {
-	    border:2px solid #1F60A9;
+	    border:1px solid #1F60A9;
 	    padding: 1px;
 	   }
 	   
 .tableau4 {
-	    border:3px solid #ff3300;
+	    border:1px solid #ff3300;
 	    padding: 6px;
 	   }
 	   
 .cellselected {
-		background: #FF0000;
+		background: #00FF00;
 	    color: #000;
 }
 
@@ -239,6 +239,9 @@ button#query_close {
 #navbutton-diapo { background: url('web_images/play_64.png') no-repeat 0px 0px;}
 #navbutton-diapo:hover { background-position: 0px -64px; }
 
+#navbutton-monomulti { background: url('web_images/mono_64.png') no-repeat 0px 0px;}
+#navbutton-monomulti:hover { background-position: 0px -64px; }
+
 #navbutton-last { background: url('web_images/last_64.png') no-repeat 0px 0px;}
 #navbutton-last:hover { background-position: 0px -64px; }
 
@@ -289,7 +292,7 @@ a.navbutton {
 	
 	width: 64px;
 	height: 64px;
-	display: block;
+	display: inline-block;
 	text-indent: -9999px;
 }
 

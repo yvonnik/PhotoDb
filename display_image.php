@@ -69,9 +69,10 @@ else
  {
      global $_SERVER;
      if ($_SERVER['SERVER_ADDR'] == $_SERVER['REMOTE_ADDR']) return TRUE; //test en localhost
-     $serverip=explode(".",$_SERVER['SERVER_ADDR']);
-     $browserip=explode(".",$_SERVER['REMOTE_ADDR']);
-     if (($serverip[0] == $browserip[0]) && ($serverip[1] == $browserip[1]) && ($serverip[2] == $browserip[2])) return TRUE; else return FALSE;
+     return FALSE;
+     //$serverip=explode(".",$_SERVER['SERVER_ADDR']);
+     //$browserip=explode(".",$_SERVER['REMOTE_ADDR']);
+     //if (($serverip[0] == $browserip[0]) && ($serverip[1] == $browserip[1]) && ($serverip[2] == $browserip[2])) return TRUE; else return FALSE;
      
  }
  

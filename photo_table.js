@@ -41,10 +41,10 @@ function table_create()
           ouvrir.setAttribute("class","thumbontop");
           ouvrir.appendChild(oimg);
           
-          var full=document.createElement("a");full.setAttribute("Id","fs"+l);full.setAttribute("target","_blank");
-          var fimg=document.createElement("img");fimg.setAttribute("Id","fsi"+l);fimg.setAttribute("align","left");
-          full.setAttribute("class","thumbontop2");
-          full.appendChild(fimg);
+          //var full=document.createElement("a");full.setAttribute("Id","fs"+l);full.setAttribute("target","_blank");
+          //var fimg=document.createElement("img");fimg.setAttribute("Id","fsi"+l);fimg.setAttribute("align","left");
+          //full.setAttribute("class","thumbontop2");
+          //full.appendChild(fimg);
           
           var play=document.createElement("a");play.setAttribute("Id","pl"+l);play.setAttribute("target","_blank");
           var pimg=document.createElement("img");pimg.setAttribute("Id","pi"+l);pimg.setAttribute("align","left");
@@ -61,7 +61,7 @@ function table_create()
           var div4=document.createElement("div");div4.setAttribute("class","thumb");div4.setAttribute("Id","z"+l);div4.setAttribute("align","center");
           
           div4.appendChild(ouvrir);
-          div4.appendChild(full);
+          //div4.appendChild(full);
           div4.appendChild(play);
           div4.appendChild(limg);         
           div4.appendChild(div2);
@@ -115,9 +115,9 @@ function success_images(data) {
                         else $('#pl'+i).attr("hidden","true");
                         
                         
-                        if (Len != 1) $('#fsi'+i).attr("src","web_images/full_screen_reading_24.png");
-                        else $('#fsi'+i).attr("src","web_images/clipart_24.png");
-                        $('#fs'+i).attr("onclick","FullScreenToggle("+i+")");
+                        //if (Len != 1) $('#fsi'+i).attr("src","web_images/full_screen_reading_24.png");
+                        //else $('#fsi'+i).attr("src","web_images/clipart_24.png");
+                        //$('#fs'+i).attr("onclick","FullScreenToggle("+i+")");
                         
                         
                         $('#cl'+i).attr("class","tableau"+element[i].Qualite);
