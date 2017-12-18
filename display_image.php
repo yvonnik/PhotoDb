@@ -12,8 +12,8 @@ if (isset($_GET["Id"])) $Id=rawurldecode($_GET["Id"]); // num�ro de la photo
 $small=0;
 if (isset($_GET["small"])) $small=rawurldecode($_GET["small"]); //0 full size, 1 small, 2 retaillé
 
-if (isset($_GET["mh"])) $mh=rawurldecode($_GET["mh"]);
-if (isset($_GET["mw"])) $mw=rawurldecode($_GET["mw"]);
+if (isset($_GET["mh"])) $mh=rawurldecode($_GET["mh"]); // Heigth du viewport
+if (isset($_GET["mw"])) $mw=rawurldecode($_GET["mw"]); // Width du viewport
 
 $res=$bdd->Execute("SELECT * from images WHERE N=$Id");
 if (!$res) die("Query failed : SELECT * from images WHERE N=$Id");
@@ -39,18 +39,33 @@ if ($small == 1)
  if (file_exists($file))
 {
     $size = getimagesize($file);
+    list($width, $height) = $size;
     $fp = fopen($file, 'rb');
     if ($size and $fp)
     {
-        if (($small != 2) || locallan()) { // Pas de redimensionnement, small ou large
+        if (($small != 2) ||  (($mh > 1440) || ($mw > 2560)) || (($height < 1440) || ($width < 2560))) { 
+            // pas de redimensionnement si :
+            // $small != -2
+            // Le viewport est plus grand que 2560x1440
+            // L'image de base est plus petite que 2560x1440
             header('Content-Type: '.$size['mime']);
             header('cache:private, max-age=10000');
             fpassthru($fp);
             exit;
         }
         else { // Diaporama sur réseau distant, on reisze les images avant de les envoyer
-            header('Content-Type: '.$size['mime']);
-            header('cache:private, max-age=10000');
+            // on est dans le cas où le viewport est <= à 2560x1440, et l'image est plus grande que le viewport
+            // si l'image existe dans le cache 2560x1440, on la renvoie après resize
+            // sinon on la créer et on la renvoie après resize
+            
+            $file2560=$BaseFolder.$Sep."2560x1440".$Sep."mim".sprintf("%06d.jpg",$Id);
+            if (!is_dir($BaseFolder.$Sep."2560x1440")) mkdir($BaseFolder.$Sep."2560x1440", 0777, true);
+            if (!file_exists($file2560)) update_2560($file,$file2560);
+            if (filemtime($file) > filemtime($file2560)) update_2560($file,$file2560); // Le fichier de base a été modifié après le small, il faut reconstuire le small
+            $file=$file2560;
+  
+            //header('Content-Type: '.$size['mime']);
+            //header('cache:private, max-age=10000');
             resize_image($file,$mh,$mw);
             exit;
         }
@@ -112,6 +127,33 @@ function update_small($big,$small) {
     
     if ($ratio > $baseratio) { $neww=266;$newh=$neww/$ratio;} // image étirée en largeur, la référence est la largeur de 266
     else {$newh=180;$neww=$ratio*$newh;}  // image étirée en hauteur, la référence est la hauteur de 180 
+   
+// Redimensionnement
+
+if ($windows) { //Pas Imagick sous windows, on resize "à la main"
+    $thumb = imagecreatetruecolor($neww, $newh);
+    $source = imagecreatefromjpeg($big);
+    imagecopyresized($thumb, $source, 0, 0, 0, 0, $neww, $newh, $width, $height);
+    imagejpeg($thumb,$small);
+    imagedestroy($thumb);
+    
+ } else {
+   $imagick=new Imagick($big);
+   $imagick->resizeImage($neww, $newh, Imagick::FILTER_BOX, 1);
+   $imagick->writeImage($small); 
+ }  
+} 
+
+function update_2560($big,$small) {
+    global $windows;
+
+    list($width, $height) = getimagesize($big);
+    
+    $ratio=$width/$height;
+    $baseratio=2560/1440;// l'image doit rentre dans une boite de 266x180, ratio=1.477777
+    
+    if ($ratio > $baseratio) { $neww=2560;$newh=$neww/$ratio;} // image étirée en largeur, la référence est la largeur de 266
+    else {$newh=1440;$neww=$ratio*$newh;}  // image étirée en hauteur, la référence est la hauteur de 180 
    
 // Redimensionnement
 
