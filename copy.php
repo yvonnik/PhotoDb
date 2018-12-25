@@ -46,7 +46,10 @@ else {
         
         //print("copy $source to $dest<br>");
         if (copy($source,$dest) == FALSE) print("copy failed for $source<br>");
-        else $filecopied++;
+        else {
+            $filecopied++;
+            touch($dest,filemtime($source));
+        }
      }
  }
  
