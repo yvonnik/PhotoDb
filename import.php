@@ -203,7 +203,7 @@ foreach ($liste as $base) {
      MyCopy(".jpg.dop", FALSE);
      MyCopy(".nef.dop", FALSE);
      MyCopy(".rw2.dop", FALSE);
-     
+     MyCopy(".xmp",FALSE); // copy des fichiers sidecar LightRoom générés par PhotoMechanics
      // copie des fichiers annexes définis dans OtherExtensions
      if (array_key_exists("OtherExtensions",$exif)) {
          $otherextensions=explode(",",$exif["OtherExtensions"]);
