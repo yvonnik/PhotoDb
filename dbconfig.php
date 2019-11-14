@@ -23,7 +23,7 @@ if ($windows)
   $User="photodb";
   $PW="photodb";
   $DB="PhotoDb";
-  $Connection_Type="mysql";
+  $Connection_Type="mysqli";
  }
  
 
