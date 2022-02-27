@@ -22,7 +22,7 @@
 
 <script language="JavaScript" type="text/JavaScript">
 
-var ImageServer='{$IMAGESERVER}';
+var ImageServer="{$IMAGESERVER}";
 var Admin={$ADMIN};
 var FullScreen=false;
 var Diapovar=null;

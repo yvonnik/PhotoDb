@@ -1,8 +1,8 @@
 <?php
-
-$IMAGE_SERVER="/PhotoDb/"; // Machine locale au serveur Web, configuration standard en proiduction
-//$IMAGE_SERVER="https://192.168.2.11:8081/PhotoDb/";
-//$IMAGE_SERVER="https://nginx.prevot.dyndns.org:4439/PhotoDb/"; // Configuration de debug
+//TODO : exemple de To do
+//$IMAGE_SERVER="/PhotoDb/"; // Machine locale au serveur Web, configuration standard en production
+//$IMAGE_SERVER="http://localhost/PhotoDb/";
+$IMAGE_SERVER="https://192.168.2.11/PhotoDb/"; // Configuration de debug
 //$IMAGE_SERVER="http://localhost/PhotoDb/";
 include("dbconfig.php");
 

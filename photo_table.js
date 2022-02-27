@@ -75,17 +75,16 @@ function table_create()
   }  
 }
 
-function raffraichir()
-{
-    if ((Query == -2) && (LocalQuery == '')) Query=0;
-    $.ajax({ 
-    type: 'POST', 
-    url: 'listimages.php', 
-    data: { 'Query': Query, 'Position': start_position, 'Len': Len, 'Keywords':1, 'LocalQuery':LocalQuery }, 
-    dataType: 'json',
-    success: success_images
-    });  
-
+function raffraichir() {
+    if ((Query == -2) && (LocalQuery == '')) Query = 0;
+    $.ajax({
+        type: 'POST',
+        url: 'listimages.php',
+        data: {'Query': Query, 'Position': start_position, 'Len': Len, 'Keywords': 1, 'LocalQuery': LocalQuery},
+        dataType: 'json',
+        success: success_images
+    });
+}
 
 function success_images(data) { 
         $.each(data, function(index, element) {
@@ -136,5 +135,5 @@ function success_images(data) {
         });
         $('#bottomline').text(QueryName);
     }
-}
+
     

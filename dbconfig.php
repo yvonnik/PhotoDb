@@ -35,7 +35,7 @@ $smarty->compile_dir=$basedir."templates_c";
 
 /* ouverture de la bdd */
 
-$bdd=&ADONewConnection($Connection_Type);
+$bdd=ADONewConnection($Connection_Type);
 if (!$bdd->Connect($Server,$User,$PW,$DB)) {die("Cannot open database $Server,$User,$PW,$DB,$Connection_Type");}
 $bdd->SetFetchMode(ADODB_FETCH_ASSOC);
 

@@ -1,8 +1,19 @@
 <?php
  
  include("dbconfig.php");
- 
-    
+ global $bdd;
+
+ $Len=100;
+ $Keywords=0;
+ $Position=0;
+ $LocalQuery="";
+ $Query=0;
+ $Nom="Toutes les photos";
+ $Source=-1;
+ $Qualite=-1;
+ $Debut="1900-01-01";
+ $Fin="2200-12-31";
+ $Requete="1";
  if (isset($_GET["Query"])) $Query=$_GET["Query"];    
  if (isset($_GET["Position"])) $Position=$_GET["Position"]; 
  if (isset($_GET["Len"])) $Len=$_GET["Len"]; 
