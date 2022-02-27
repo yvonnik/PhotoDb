@@ -1,10 +1,10 @@
 <?php 
-// on boucle sur le répoertoire des querys de filtre, et on construit une page avec des ul et des li pour chargement dans l'arbre de la page index
+// on boucle sur le répertoire des querys de filtre, et on construit une page avec des ul et des li pour chargement dans l'arbre de la page index
 include("dbconfig.php");
-
+$N=0;
 if (isset($_GET["N"])) $N=$_GET["N"];
 
-
+global $bdd,$unix;
 $res=$bdd->Execute("SELECT * from querys WHERE N=$N");
 if ($res)
  {
@@ -26,12 +26,10 @@ if ($res)
     $Json="{\"Name\":\"$Nom\",\"SQL\":\"$Requete\"}";
     $Json=utf8_encode($Json);
     //$Json=str_replace("'","\"",$Json);
-	print($Json); 
-		
+
  }
 else {
 	$Json="{'Name':'Empty','SQL':''}";
     $Json=str_replace("'","\"",$Json);
-    print($Json); 
- }	
-?>
+}
+print($Json);
