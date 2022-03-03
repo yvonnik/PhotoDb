@@ -10,6 +10,23 @@ img {
 	text-align: center;
 }
 
+#sidepanel {
+	height: 100%; /* 100% Full-height */
+	width: 0; /* 0 width - change this with JavaScript */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Stay on top */
+	top: 0; /* Stay at the top */
+	left: 0;
+	background-color: #050505; /* Black*/
+	overflow-x: hidden; /* Disable horizontal scroll */
+	padding-top: 60px; /* Place content 60px from the top */
+	transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+#Main {
+	transition: margin-left .5s;
+	padding: 20px;
+}
 
 .ontop {
 	position:fixed;
@@ -186,8 +203,8 @@ div#popup {
 
 img#close {
 	position: absolute;
-	right: -14;
-	top: -14;
+	right: -14px;
+	top: -14px;
 	cursor: pointer
 }
 
@@ -229,6 +246,9 @@ button#query_close {
 
 #navbutton-forward { background: url('web_images/forward_64.png') no-repeat 0px 0px;}
 #navbutton-forward:hover { background-position: 0px -64px; }
+
+#navbutton-info { background: url('web_images/sidepanel.png') no-repeat 0px 0px;}
+#navbutton-info:hover { background-position: 0px -64px; }
 
 #navbutton-fullscreen { background: url('web_images/toggle_full_screen_64.png') no-repeat 0px 0px;}
 #navbutton-fullscreen:hover { background-position: 0px -64px; }

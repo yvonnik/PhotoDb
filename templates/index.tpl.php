@@ -184,6 +184,10 @@ function photo_copy() {
 
 <!-- Div pour le fond grisé /-->
 
+<div Id="sidepanel">
+</div>
+
+<div id="Main">
 <div Id="popup"></div>
 
 <!-- http://www.formget.com/how-to-create-pop-up-contact-form-using-javascript/ -->
@@ -321,10 +325,12 @@ function photo_copy() {
     </div>
        
 
-<!-- Boutons de naviguation -->  	
+<!-- Boutons de naviguation -->
+    <!-- {literal} -->
 <table Id="boutons_nav" width="80%" border="0" align="center" cellpadding="1" cellspacing="2" class="ontop">
     <tr>
-        <td tyle="min-width:140px"><a Id="navbutton-monomulti" class="navbutton" title="Mode Diaporama/Vignettes" href="#" onClick="FullScreenToggle(0);"></a>
+        <td style="min-width:140px">
+            <a Id="navbutton-monomulti" class="navbutton" title="Mode Diaporama/Vignettes" href="#" onClick="FullScreenToggle(0);"></a>
             <a Id="navbutton-diapo" class="navbutton" title="Lancer/Arrêter Diaporama" href="#" onClick="Diapo();"></a>
             <div id="slidercontainer"><input type="range" min="1" max="10" value="3" class="slider" id="myRange">
             </div></td>
@@ -340,15 +346,18 @@ function photo_copy() {
     	<td><a Id="navbutton-copy" class="navbutton" title="Copier" href="#" onClick="togglesize();$('#popup').show();$('#popup-copy_interior').show();"></a></td>
     	<td class="admin"><a Id="navbutton-keyword" class="navbutton" title="Ajouter mot-clé" href="#" onClick="$('#popup').show();$('#popup-keywords_interior').show();document.getElementById('keywords').value='';$('#keywords').focus();"></a>
     	   <a Id="navbutton-quality" class="navbutton" title="Qualité" href="#" onClick="$('#popup').show();$('#popup-quality_interior').show();document.getElementById('keywords').value='';$('#keywords').focus();"></a></td>
+        <td class="navbutton-info">
+            <a Id="navbutton-info" class="navbutton" title="Info Exif" href="#" onClick="if ($('#sidepanel').width() == 0) {$('#sidepanel').width(200);$('#Main').css('marginLeft','200px');} else {$('#sidepanel').width(0);$('#Main').css('marginLeft','0px');} "></a>
+        </td>
  
     	
 	  </td>
   </tr>
 </table>
-
+    <!-- {/literal} -->
 <!-- table pour les vignettes --> 
 <table  class="thumb,tableau" Id="latable" align="center"></table>
-
+</div>
 
 </body>
 

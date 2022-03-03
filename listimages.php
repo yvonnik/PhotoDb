@@ -140,6 +140,12 @@
      $Json.="'portrait' : '".$res->fields["portrait"]."' ,";
      $Json.="'paysage' : '".$res->fields["paysage"]."' ,";
      $Json.="'Type' : '".$res->fields["Type"]."' ,";
+     // Lookup pour la source
+
+     $r="SELECT Nom FROM `sources` WHERE N=".$res->fields["Source"];
+     $res3=$bdd->Execute($r);
+     $Json.="'SourceText' : '".$res3->fields["Nom"]."' ,";
+
      if ($Keywords == 1) // on rajoute les motclés
      {
         $mc="";

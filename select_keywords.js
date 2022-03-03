@@ -2,6 +2,7 @@ var SelectedKW=-1;
 var Selected={};
 
 function toggleselect(Id,pos)
+
 {
   if(Id in Selected) {
       if (Selected[Id] == "1") Selected[Id]="0"; else Selected[Id]=1;
@@ -11,9 +12,8 @@ function toggleselect(Id,pos)
   
   if (Selected[Id] == "1")  {$("#z"+pos).addClass("cellselected");/*$("#dd"+pos).addClass("cellselected");*/}
   else {$("#z"+pos).removeClass("cellselected");/*$("#dd"+pos).removeClass("cellselected");*/}
-     
-}  
 
+}
 
 function assign_quality()
 {
@@ -40,9 +40,7 @@ function assign_keyword()
 function selectallsuccess(data)
 {
     $.each(data, function(index, element) {
-            if (index == "Count") { }
-            else if (index == "Name") {}
-            else {
+            if ((index != "Count")  &&  (index != "Name")  {
                 // Ici, on a dans le tableau element toutes les images
                     for (i=0;i < element.length;i++) Selected[element[i].N]=1;
                     }

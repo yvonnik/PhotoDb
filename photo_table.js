@@ -7,6 +7,52 @@ var Count=0;
 
 var NextQuery;
 
+function displayexifpanel(Id)
+{
+    if ($("#sidepanel").width() != 0)
+    {
+        LocalQuery="N="+Id;
+        $.ajax({
+            type: 'POST',
+            url: 'listimages.php',
+            data: {'Query': -2, 'Position': 0, 'Len': 1, 'Keywords': 1, 'LocalQuery': LocalQuery},
+            dataType: 'json',
+            success: refresh_panel
+        });
+    }
+}
+
+function refresh_panel(data) {
+    message="";
+    $.each(data, function(index, element) {
+        if (index == "Count") { }
+        else if (index == "Name") { }
+        else {
+            // Ici, on a dans le tableau element toutes les images
+
+            message="<table>";
+            for (i=0;i < element.length;i++) {
+              message+='<tr><td><b>Id</b> </td><td>'+element[i].N+"</td></tr>";
+              message+='<tr><td><b>Date</b> </td><td>'+element[i].Date+"</td></td>";
+              message+='<tr><td><b>Resolution</b> </td><td>'+element[i].largeur+"x"+element[i].hauteur+"</td></td>";
+              message+='<tr><td><b>Source</b> </td><td>'+element[i].SourceText+ " ("+element[i].Source+")</td></td>";
+              message+='<tr><td><b>Qualite</b> </td><td>'+element[i].Qualite+"</td></td>";
+              message+='<tr><td><b>Retouche</b> </td><td>'+element[i].Retouche+"</td></td>";
+              message+='<tr><td><b>Raw</b> </td><td>'+element[i].Raw+"</td></td>";
+              message+='<tr><td><b>Focale</b> </td><td>'+element[i].Focale+"</td></td>";
+              message+='<tr><td><b>Vitesse</b> </td><td>1/'+element[i].Vitesse+"</td></td>";
+              message+='<tr><td><b>ISO</b> </td><td>'+element[i].ISO+"</td></td>";
+              message+='<tr><td><b>Mots-clés</b> </td><td>'+element[i].keywords+"</td></td>";
+
+
+
+            }
+            message+="</table>"
+
+        }
+    });
+   $('#sidepanel').html(message);
+}
 
 function table_destroy()
 {
@@ -101,6 +147,7 @@ function success_images(data) {
                     for (i=0;i < element.length;i++) {
                         $('#i'+i).attr("src",ImageServer+"display_image.php?Id="+element[i].N+"&small="+small+"&mh="+(document.body.clientHeight-40)+"&mw="+(document.body.clientWidth-30));
                         $('#i'+i).attr("onclick","toggleselect("+element[i].N+","+i+")");
+                        $('#i'+i).attr("onMouseOver","displayexifpanel("+element[i].N+","+i+")");
                         $('#i'+i).attr("title",element[i].keywords);
                         $('#oi'+i).attr("src","web_images/preview_24.png");
                         $('#dd'+i).text("("+element[i].N+") "+element[i].Date);
@@ -123,7 +170,7 @@ function success_images(data) {
                         if (Selected[element[i].N] == "1")  {$("#z"+i).addClass("cellselected");$("#dd"+i).addClass("cellselected");}
                         else {$("#z"+i).removeClass("cellselected");$("#dd"+i).removeClass("cellselected");}
                     }
-                    for (i=i; i < Len;i++) {
+                    for (; i < Len;i++) { //pas d'intialisation de i, volontaire, c'est pour les images "vides"
                         $('#i'+i).attr("src","web_images/empty.png");
                         $('#dd'+i).text("");
                         $('#a'+i).attr("href","");
