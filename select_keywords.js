@@ -40,7 +40,7 @@ function assign_keyword()
 function selectallsuccess(data)
 {
     $.each(data, function(index, element) {
-            if ((index != "Count")  &&  (index != "Name")  {
+            if ((index != "Count")  &&  (index != "Name"))  {
                 // Ici, on a dans le tableau element toutes les images
                     for (i=0;i < element.length;i++) Selected[element[i].N]=1;
                     }
