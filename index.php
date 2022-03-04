@@ -8,9 +8,9 @@ include("dbconfig.php");
 
 if (isset($_GET["Admin"])) $Admin=1; else $Admin=0;
 
+global $smarty;
 
 $smarty->Assign("IMAGESERVER",$IMAGE_SERVER);
 $smarty->Assign("ADMIN",$Admin);
 $smarty->Display("index.tpl.php");
 
-?>

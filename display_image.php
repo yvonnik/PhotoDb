@@ -15,6 +15,7 @@ if (isset($_GET["small"])) $small=rawurldecode($_GET["small"]); //0 full size, 1
 if (isset($_GET["mh"])) $mh=rawurldecode($_GET["mh"]); // Heigth du viewport
 if (isset($_GET["mw"])) $mw=rawurldecode($_GET["mw"]); // Width du viewport
 
+global $bdd;
 $res=$bdd->Execute("SELECT * from images WHERE N=$Id");
 if (!$res) die("Query failed : SELECT * from images WHERE N=$Id");
 if ($res->EOF) die("no record");

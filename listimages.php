@@ -28,35 +28,26 @@
  
  $LocalQuery=stripslashes($LocalQuery);  
  $LocalQuery=utf8_decode($LocalQuery);  
- if ($Query == 0) // Pas de requete, rien à faire
-    {
-     $Nom="Toutes les photos";
-     $Source=-1;
-     $Qualite=-1;
-     $Debut="1900-01-01";
-     $Fin="2200-12-31";
-     $Requete="1";
-    }
- else if ($Query == -2) // Il faut utiliser la LocalQuery
-    {
-     $Nom="Local";
-     $Requete=$LocalQuery;
-    }
- else
+ if ($Query != 0) // si Pas de requete, rien à faire
+ {
+     if ($Query == -2) // Il faut utiliser la LocalQuery
      {
-        $res=$bdd->Execute("SELECT * FROM querys WHERE N=$Query");
-        if (!$res) die("Select failed : SELECT * FROM queries WHERE N=$Query");
-        $Nom=utf8_encode($res->fields["Nom"]);
-        $Source=$res->fields["Source"];
-        $Qualite=$res->fields["Qualite"];
-        $Debut=$res->fields["Debut"];
-        $Fin=$res->fields["Fin"];
-        $Requete= $res->fields["Requete"];
+         $Nom = "Local";
+         $Requete = $LocalQuery;
+     } else {
+         $res = $bdd->Execute("SELECT * FROM querys WHERE N=$Query");
+         if (!$res) die("Select failed : SELECT * FROM queries WHERE N=$Query");
+         $Nom = utf8_encode($res->fields["Nom"]);
+         $Source = $res->fields["Source"];
+         $Qualite = $res->fields["Qualite"];
+         $Debut = $res->fields["Debut"];
+         $Fin = $res->fields["Fin"];
+         $Requete = $res->fields["Requete"];
      }
+ }
 
-    
- 
- // Premier traitement, on remplace les [keyword] par le numéro des keywords
+
+// Premier traitement, on remplace les [keyword] par le numéro des keywords
  
  preg_match_all("/\[.*?\]/",$Requete,$mcs); // voir là https://www.regex101.com/
  
@@ -186,4 +177,3 @@
   die($s);
  }
     
-?>
