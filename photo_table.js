@@ -39,8 +39,9 @@ function refresh_panel(data) {
               message+='<tr><td><b>Qualite</b> </td><td>'+element[i].Qualite+"</td></td>";
               message+='<tr><td><b>Retouche</b> </td><td>'+element[i].Retouche+"</td></td>";
               message+='<tr><td><b>Raw</b> </td><td>'+element[i].Raw+"</td></td>";
-              message+='<tr><td><b>Focale</b> </td><td>'+element[i].Focale+"</td></td>";
-              message+='<tr><td><b>Vitesse</b> </td><td>1/'+element[i].Vitesse+"</td></td>";
+              message+='<tr><td><b>Focale</b> </td><td>'+element[i].Focale+" mm</td></td>";
+              message+='<tr><td><b>Vitesse</b> </td><td>1/'+element[i].Vitesse+" s</td></td>";
+              message+='<tr><td><b>Ouverture</b> </td><td>F'+element[i].Diaphragme+"</td></td>";
               message+='<tr><td><b>ISO</b> </td><td>'+element[i].ISO+"</td></td>";
               message+='<tr><td><b>Mots-clés</b> </td><td>'+element[i].keywords+"</td></td>";
 
