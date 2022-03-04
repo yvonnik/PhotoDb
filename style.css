@@ -250,6 +250,9 @@ button#query_close {
 #navbutton-info { background: url('web_images/sidepanel.png') no-repeat 0px 0px;}
 #navbutton-info:hover { background-position: 0px -64px; }
 
+#navbutton-xl { background: url('web_images/export_excel.png') no-repeat 0px 0px;}
+#navbutton-xl:hover { background-position: 0px -64px; }
+
 #navbutton-fullscreen { background: url('web_images/toggle_full_screen_64.png') no-repeat 0px 0px;}
 #navbutton-fullscreen:hover { background-position: 0px -64px; }
 

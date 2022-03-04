@@ -349,6 +349,9 @@ function photo_copy() {
         <td class="navbutton-info">
             <a Id="navbutton-info" class="navbutton" title="Info Exif" href="#" onClick="if ($('#sidepanel').width() == 0) {$('#sidepanel').width(200);$('#Main').css('marginLeft','200px');} else {$('#sidepanel').width(0);$('#Main').css('marginLeft','0px');} "></a>
         </td>
+        <td class="navbutton-xl">
+            <a Id="navbutton-xl" class="navbutton" title="Export Excel" href="#" onClick="import_excel();"></a>
+        </td>
  
     	
 	  </td>

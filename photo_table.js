@@ -122,6 +122,12 @@ function table_create()
   }  
 }
 
+function import_excel()
+{
+    if ((Query == -2) && (LocalQuery == '')) Query = 0;
+    window.open("import_excel.php?Query="+Query+"&LocalQuery="+LocalQuery,"_blank");
+}
+
 function raffraichir() {
     if ((Query == -2) && (LocalQuery == '')) Query = 0;
     $.ajax({
