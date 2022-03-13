@@ -3,7 +3,7 @@
 include("dbconfig.php");
 
 if (stristr(php_uname(),"windows")) {$unix=0;$windows=1;} else {$unix=1;$windows=0;}
-if ($windows) {$BaseFolder="z:\\Photos\\PhotoDb\\Images";$Sep="\\";}
+if ($windows) {$BaseFolder="c:\\wamp64\\Images";$Sep="\\";}
 //if ($windows) {$BaseFolder="c:\\temp\\PhotoDb\\Images";$Sep="\\";}
 else {$BaseFolder="../../Multimedia/Photos/PhotoDb/Images";$Sep="/";}
 
