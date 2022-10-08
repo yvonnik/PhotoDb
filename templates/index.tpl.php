@@ -273,7 +273,7 @@ function photo_copy() {
         <img id="close" src="web_images/3.png">
         <br>Les photos sélectionnées vont être copiées vers Multimedia/Photos/PhotoDb/Export<br><br>
         <input Id="allfiles_check" type="checkbox" value="1" onclick="togglesize();">Copier aussi les fichiers RAW
-
+        <br>
         <a Id="navbutton-copyok" class="navbutton" href="#" onClick=""></a>
     </div>
             
