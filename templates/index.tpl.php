@@ -167,7 +167,7 @@ function photo_copy() {
     $.ajax({ 
     type: 'POST', 
     url: 'copy.php', 
-    data: { 'Resize': $('#resize_check').prop('checked'), 'MaxSize' : $('#resize_size').val(), 'Selected' : JSON.stringify(Selected)}, 
+    data: { 'Allfiles': $('#allfiles_check').prop('checked'), 'Selected' : JSON.stringify(Selected)},
     dataType: 'html',
     success: function (data) {
         $('#import-log').html(data);
@@ -272,12 +272,8 @@ function photo_copy() {
     <div Id="popup-copy_interior">
         <img id="close" src="web_images/3.png">
         <br>Les photos sélectionnées vont être copiées vers Multimedia/Photos/PhotoDb/Export<br><br>
-        <input Id="resize_check" type="checkbox" value="1" onclick="togglesize();">Resize
-        <div Id="resize_block">
-            <br>Taille maximum :
-            <input Id="resize_size" type="text" value="1024">
-        </div>
-        
+        <input Id="allfiles_check" type="checkbox" value="1" onclick="togglesize();">Copier aussi les fichiers RAW
+
         <a Id="navbutton-copyok" class="navbutton" href="#" onClick=""></a>
     </div>
             

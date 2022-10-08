@@ -12,11 +12,8 @@ else {
     $BaseFolder="../../Multimedia/Photos/PhotoDb/Images";$Sep="/";
     $ExportFolder="../../Multimedia/Photos/PhotoDb/Export";
  }
- 
- 
-     
- if (isset($_POST["Resize"])) $Resize=$_POST["Resize"]; else die("Need Resize"); 
- if (isset($_POST["MaxSize"])) $MaxSize=$_POST["MaxSize"]; else die("Need MaxSize");   
+
+ if (isset($_POST["Allfiles"])) $Allfiles=$_POST["Allfiles"]; else die("Need Allfiles");
  if (isset($_POST["Selected"])) $Selected=$_POST["Selected"]; else die("Need Selected array");
  
  
@@ -41,20 +38,27 @@ else {
         $ImageFolder=$BaseFolder. $Sep . substr($Date,0,4) . $Sep . substr($Date,5,2) . $Sep . substr($Date,8,2);
 
         $filebase="im".sprintf("%06d",$key);
-        if (file_exists($ImageFolder.$Sep.$filebase."r.jpg")) $file=$filebase."r.jpg";
-        else if (file_exists($ImageFolder.$Sep.$filebase."_dxo.jpg")) $file=$filebase."_dxo.jpg";
-        else if (strtoupper($Type) == "VIDEO") $file=$filebase.".".$ext;
-        else $file=$filebase.".jpg"; 
-        
-        $source=$ImageFolder.$Sep.$file;
-        $dest=$ExportFolder.$Sep.$file;
-        
-        //print("copy $source to $dest<br>");
+
+        if ($Allfiles) {
+            $source=$ImageFolder.$Sep.$filebase."*";
+
+        }
+        else {
+            if (file_exists($ImageFolder.$Sep.$filebase."r.jpg")) $file=$filebase."r.jpg";
+            else if (file_exists($ImageFolder.$Sep.$filebase."_dxo.jpg")) $file=$filebase."_dxo.jpg";
+            else if (strtoupper($Type) == "VIDEO") $file=$filebase.".".$ext;
+            else $file=$filebase.".jpg";
+            $source=$ImageFolder.$Sep.$file;
+        }
+
+        $dest=$ExportFolder;
+
+         //print("copy $source to $dest<br>");
         //if (copy($source,$dest) == FALSE) print("copy failed for $source<br>");
         //else {
-        print(exec("cp $source $dest"));flush();
+        print(exec("cp -p $source $dest"));flush();
         $filecopied++;
-        touch($dest,strtotime($Date));
+        //touch($dest,strtotime($Date));
         //}
      }
  }
