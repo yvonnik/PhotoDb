@@ -239,6 +239,9 @@ foreach ($liste as $base) {
          }        
 }
 
+shell_exec("rm /share/Multimedia/Photos/PhotoDb/photodb.backup.sql");
+$retour=shell_exec("/usr/local/mariadb/bin/mysqldump --user=photodb --password=photodb PhotoDb > /share/Multimedia/Photos/PhotoDb/photodb.backup.sql");
+print("<tr><td>Backup db</td><td>done</td><td>$retour</td><td> </td></tr>");
 print("</table>");
 
 
