@@ -17,7 +17,7 @@ if (isset($_POST["Query"])) $Query=$_POST["Query"];
 if (isset($_POST["LocalQuery"])) $LocalQuery=$_POST["LocalQuery"];
 
 $LocalQuery=stripslashes($LocalQuery);
-$LocalQuery=utf8_decode($LocalQuery);
+if (!$unix) $LocalQuery=utf8_decode($LocalQuery);
 if ($Query != 0) // si Pas de requete, rien à faire
 {
     if ($Query == -2) // Il faut utiliser la LocalQuery
@@ -27,7 +27,8 @@ if ($Query != 0) // si Pas de requete, rien à faire
     } else {
         $res = $bdd->Execute("SELECT * FROM querys WHERE N=$Query");
         if (!$res) die("Select failed : SELECT * FROM queries WHERE N=$Query");
-        $Nom = utf8_encode($res->fields["Nom"]);
+        if (!$unix) $Nom = utf8_encode($res->fields["Nom"]);
+        else $Nom = $res->fields["Nom"];
         $Source = $res->fields["Source"];
         $Qualite = $res->fields["Qualite"];
         $Debut = $res->fields["Debut"];

@@ -9,7 +9,7 @@ $res=$bdd->Execute("SELECT * from querys WHERE N=$N");
 if ($res)
  {
     $Nom=$res->fields["Nom"];
-    if ($unix) $Nom=utf8_decode($Nom);
+    //if ($unix) $Nom=utf8_decode($Nom);
     $Source=$res->fields["Source"];
     $Qualite=$res->fields["Qualite"];
     $Debut=$res->fields["Debut"];
@@ -24,7 +24,7 @@ if ($res)
     if ($Qualite > 0) $Requete=$Requete." AND Qualite >= $Qualite";
     
     $Json="{\"Name\":\"$Nom\",\"SQL\":\"$Requete\"}";
-    $Json=utf8_encode($Json);
+    if (!$unix) $Json=utf8_encode($Json);
     //$Json=str_replace("'","\"",$Json);
 
  }

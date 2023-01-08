@@ -21,7 +21,9 @@ function traite($me)
 	 while (!$res->EOF)
 	  {
 	    $Id=$res->fields["N"];
-	 	echo '<li Id="'.$Id.'">'.utf8_encode($res->fields["Nom"]) ;
+        if (!$unix) $Nom = utf8_encode($res->fields["Nom"]);
+        else $Nom = $res->fields["Nom"];
+	 	echo '<li Id="'.$Id.'">'.$Nom ;
 		traite($res->fields["N"]);
 		echo "</li>";
 		$res->MoveNext();

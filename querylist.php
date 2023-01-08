@@ -18,7 +18,9 @@ function traite_dir($me)
 	 while (!$res->EOF)
 	  {
 	    $Id=$res->fields["N"];
-	 	echo '<li Id="folder-'.$Id.'">'.utf8_encode($res->fields["Nom"]);
+        if (!$unix) $Nom=utf8_encode($res->fields["Nom"]);
+        else $Nom=$res->fields["Nom"];
+	 	echo '<li Id="folder-'.$Id.'">'.$Nom;
 		traite_dir($res->fields["N"]);
 		echo "</li>";
 		$res->MoveNext();
@@ -31,7 +33,9 @@ function traite_dir($me)
 	 while (!$res->EOF)
 	  {
 	 	$Id=$res->fields["N"];
-	 	echo "<li Id='$Id'>".utf8_encode($res->fields["Nom"])."</li>";
+         if (!$unix) $Nom=utf8_encode($res->fields["Nom"]);
+         else $Nom=$res->fields["Nom"];
+	 	echo "<li Id='$Id'>".$Nom."</li>";
 		$res->MoveNext();
 	  }
 	}

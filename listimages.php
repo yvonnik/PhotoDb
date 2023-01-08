@@ -27,7 +27,7 @@
  if (isset($_POST["LocalQuery"])) $LocalQuery=$_POST["LocalQuery"];     
  
  $LocalQuery=stripslashes($LocalQuery);  
- $LocalQuery=utf8_decode($LocalQuery);  
+ if (!$unix) $LocalQuery=utf8_decode($LocalQuery);
  if ($Query != 0) // si Pas de requete, rien à faire
  {
      if ($Query == -2) // Il faut utiliser la LocalQuery
@@ -37,7 +37,8 @@
      } else {
          $res = $bdd->Execute("SELECT * FROM querys WHERE N=$Query");
          if (!$res) die("Select failed : SELECT * FROM queries WHERE N=$Query");
-         $Nom = utf8_encode($res->fields["Nom"]);
+         if (!$unix) $Nom = utf8_encode($res->fields["Nom"]);
+         else $Nom = $res->fields["Nom"];
          $Source = $res->fields["Source"];
          $Qualite = $res->fields["Qualite"];
          $Debut = $res->fields["Debut"];
@@ -122,7 +123,7 @@
      $Json.="'Source' : '".$res->fields["Source"]."' ,";
      $Json.="'Qualite' : '".$res->fields["Qualite"]."' ,";
      $Json.="'Retouche' : '".$res->fields["Retouche"]."' ,";
-     $Json.="'Commentaire' : '".urlencode($res->fields["Commentaire"])."' ,";
+     if ($res->fields["Commentaire"] != null) $Json.="'Commentaire' : '".urlencode($res->fields["Commentaire"])."' ,";
      $Json.="'Raw' : '".$res->fields["Raw"]."' ,";
      $Json.="'Focale' : '".$res->fields["Focale"]."' ,";
      $Json.="'Vitesse' : '".$res->fields["Vitesse"]."' ,";
@@ -145,7 +146,8 @@
         while (!$res2->EOF)
         {
             if ($mc != "") $mc.=",";
-            $mc.=utf8_encode($res2->fields["Nom"]);
+            if ($unix) $mc.=$res2->fields["Nom"];
+            else $mc.=utf8_encode($res2->fields["Nom"]);
             $res2->MoveNext();
         } 
        $Json.="'keywords' : '".$mc."',";

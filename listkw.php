@@ -4,7 +4,8 @@
  
  if (isset($_GET["q"])) $q=$_GET["q"]; else die("Need query");   
   
- $q=utf8_decode(urldecode($q));  
+ $q=urldecode($q);
+ if ($unix) $q=utf8_decode($q);
    
 $res=$bdd->Execute("SELECT * FROM motcles WHERE Nom LIKE '%$q%'");
 if (!$res) die("Select failed : SELECT * FROM queries WHERE N=$Query");
