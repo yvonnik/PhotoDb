@@ -12,8 +12,8 @@
      $ImportFolder="c:\\temp\\PhotoDb\\ToImport";
  }
 else {
-    $BaseFolder="../../Multimedia/Photos/PhotoDb/Images";$Sep="/";
-    $ImportFolder="../../Multimedia/Photos/PhotoDb/ToImport";
+    $BaseFolder="/mnt/data/shares/Multimedia/Photos/PhotoDb/Images";$Sep="/";
+    $ImportFolder="/mnt/data/shares/Multimedia/Photos/PhotoDb/ToImport";
  }
  
   
@@ -239,8 +239,8 @@ foreach ($liste as $base) {
          }        
 }
 
-shell_exec("rm /share/Multimedia/Photos/PhotoDb/photodb.backup.sql");
-$retour=shell_exec("/usr/local/mariadb/bin/mysqldump --user=photodb --password=photodb PhotoDb > /share/Multimedia/Photos/PhotoDb/photodb.backup.sql");
+shell_exec("rm /mnt/data/shares/Multimedia/Photos/PhotoDb/photodb.backup.sql");
+$retour=shell_exec("/usr/bin/mysqldump --user=photodb --password=photodb PhotoDb > /mnt/data/shares/Multimedia/Photos/PhotoDb/photodb.backup.sql");
 print("<tr><td>Backup db</td><td>done</td><td>$retour</td><td> </td></tr>");
 print("</table>");
 

@@ -9,8 +9,8 @@
      $ExportFolder="c:\\temp\\PhotoDb\\Export";
  }
 else {
-    $BaseFolder="../../Multimedia/Photos/PhotoDb/Images";$Sep="/";
-    $ExportFolder="../../Multimedia/Photos/PhotoDb/Export";
+    $BaseFolder="/mnt/data/shares/Multimedia/Photos/PhotoDb/Images";$Sep="/";
+    $ExportFolder="/mnt/data/shares/Multimedia/Photos/PhotoDb/Export";
  }
 
  if (isset($_POST["Allfiles"])) $Allfiles=$_POST["Allfiles"]; else die("Need Allfiles");

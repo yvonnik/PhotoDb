@@ -126,7 +126,7 @@ class VideoStream
 if (stristr(php_uname(),"windows")) {$unix=0;$windows=1;} else {$unix=1;$windows=0;}
 if ($windows) {$BaseFolder="c:\\Temp\PhotoDb\\Images";$Sep="\\";}
 //if ($windows) {$BaseFolder="c:\\temp\\PhotoDb\\Images";$Sep="\\";}
-else {$BaseFolder="../../Multimedia/Photos/PhotoDb/Images";$Sep="/";}
+else {$BaseFolder="/mnt/data/shares/Multimedia/Photos/PhotoDb/Images";$Sep="/";}
 
 
 if (isset($_GET["Id"])) $Id=rawurldecode($_GET["Id"]); // num�ro de la photo

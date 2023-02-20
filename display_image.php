@@ -5,7 +5,7 @@ include("dbconfig.php");
 if (stristr(php_uname(),"windows")) {$unix=0;$windows=1;} else {$unix=1;$windows=0;}
 if ($windows) {$BaseFolder="c:\\wamp64\\Images";$Sep="\\";}
 //if ($windows) {$BaseFolder="c:\\temp\\PhotoDb\\Images";$Sep="\\";}
-else {$BaseFolder="/sambashare/mnt/shares/Multimedia/Photos/PhotoDb/Images";$Sep="/";}
+else {$BaseFolder="/mnt/data/shares/Multimedia/Photos/PhotoDb/Images";$Sep="/";}
 
 
 if (isset($_GET["Id"])) $Id=rawurldecode($_GET["Id"]); // num�ro de la photo
