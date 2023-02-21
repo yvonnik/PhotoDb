@@ -96,8 +96,8 @@ foreach ($liste as $base) {
     // récupération de la date
     if (array_key_exists("DateTimeOriginal", $exif)) $date=$exif["DateTimeOriginal"];
     else if (array_key_exists("DateTimeDigitized",$exif)) $date=$exif["DateTimeDigitized"];
-    else if (array_key_exists("FileDateTime", $exif)) $date=date("c",$exif["FileDateTime"]);
-    else $date=filectime($$ImportFolder.$Sep.$base.".jpg");
+    else if (array_key_exists("FileDateTime", $exif)) $date=date(date('Y-m-d H:i:s'),$exif["FileDateTime"]);
+    else $date=date('Y-m-d H:i:s',filectime($$ImportFolder.$Sep.$base.".jpg"));
     
     // Base de copie
     $filebase=$BaseFolder. $Sep . substr($date,0,4) . $Sep . substr($date,5,2) . $Sep . substr($date,8,2).$Sep;
@@ -174,7 +174,7 @@ foreach ($liste as $base) {
     
     
        // Insertion de la ligne d'image et récupération du numéro
-    $sql="INSERT INTO images (Date,InsertDate,Type,Source,ms,Focale,Vitesse,ISO,Diaphragme,Flash,portrait,paysage,largeur,hauteur,Duration,VideoWidth,VideoHeight) VALUES ('$date',STR_TO_DATE('$InsertDate','%Y-%m-%dT%H:%i:%sZ'),'$Type',$nsource,$ms,$Focale,$Vitesse,$ISO,$Diaphragme,$Flash,$portrait,$paysage,$largeur,$hauteur,$Duration,$VideoWidth,$VideoHeight)";
+    $sql="INSERT INTO images (Date,Type,Source,ms,Focale,Vitesse,ISO,Diaphragme,Flash,portrait,paysage,largeur,hauteur,Duration,VideoWidth,VideoHeight) VALUES ('$date','$Type',$nsource,$ms,$Focale,$Vitesse,$ISO,$Diaphragme,$Flash,$portrait,$paysage,$largeur,$hauteur,$Duration,$VideoWidth,$VideoHeight)";
     
     $res=$bdd->Execute($sql);
     if (!$res) die("Query failed : $sql");

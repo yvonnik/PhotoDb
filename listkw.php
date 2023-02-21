@@ -16,7 +16,7 @@ while (!$res->EOF)
  {
      $Json.="{";
      $Json.="'id' : '".$res->fields["N"]."' ,";
-     $Json.="'value' : '".utf8_encode($res->fields["Nom"])."'";
+     $Json.="'value' : '".$res->fields["Nom"]."'";
      
      $Json.="},";
         
