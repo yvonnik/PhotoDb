@@ -9,7 +9,7 @@ $bdd->Execute("DELETE FROM querys");
 
 if (stristr(php_uname(),"windows")) {$unix=0;$windows=1;} else {$unix=1;$windows=0;}
 if ($windows) {$BaseFolder="Sandbox\\Filtres";$Sep="\\";}
-else {$BaseFolder="../../Multimedia/Photos/PhotoDb/Filtres";$Sep="/";}
+else {$BaseFolder="/mnt/data/shares/Multimedia/Photos/PhotoDb/PhotoDb/Filtres";$Sep="/";}
 
 
 $index=1;
