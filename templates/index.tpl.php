@@ -35,17 +35,19 @@ function FullScreenToggle(Nimage)
     FullScreen=!FullScreen;
     if (FullScreen) {
         $(".admin").hide();
-        $("#navbutton-first").hide();
-        $("#navbutton-rewind").hide();  
-        $("#navbutton-forward").hide();
-        $("#navbutton-last").hide();
+        //$("#navbutton-first").hide();
+        //$("#navbutton-rewind").hide();
+        //$("#navbutton-forward").hide();
+        //$("#navbutton-last").hide();
+		$("#navbutton-info").hide();
+		$("#navbutton-xl").hide();
         $("#navbutton-filter").hide();
         $("#navbutton-select").hide();
         $("#navbutton-unselect").hide();
         $("#navbutton-copy").hide();
         $('#navbutton-monomulti').css("background-image","url('web_images/multi_64.png')") ;
-        $("#navbutton-diapo").show();
-        $("#slidercontainer").show();
+        //$("#navbutton-diapo").show();
+        //$("#slidercontainer").show();
     } else {
         if (Admin) $(".admin").show();
         $("#navbutton-first").show();
@@ -56,6 +58,8 @@ function FullScreenToggle(Nimage)
         $("#navbutton-select").show();
         $("#navbutton-unselect").show();
         $("#navbutton-copy").show();
+		$("#navbutton-info").show();
+		$("#navbutton-xl").show();
         $('#navbutton-monomulti').css("background-image","url('web_images/mono_64.png')") ;
         $("#navbutton-diapo").hide();
         $("#slidercontainer").hide();
