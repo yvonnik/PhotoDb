@@ -17,7 +17,8 @@ if ($res)
     $Requete=$res->fields["Requete"];
      
     str_replace("Qualité","Qualite",$Requete);
-    $Requete=str_replace("mots-cl".chr(233)."s", "mots-cles", $Requete); 
+    $Requete=str_replace("mots-cl".chr(233)."s", "mots-cles", $Requete);
+    $Requete=str_replace("mots-clés", "mots-cles", $Requete);
     if (($Debut != "1900-01-01") && ($Debut != "") && ($Debut != "0000-00-00")) $Requete=$Requete." AND Date >= '$Debut'";
     if (($Fin != "2200-12-31") && ($Fin != "") && ($Fin != "0000-00-00")) $Requete=$Requete." AND Date <= '$Fin'";
     if ($Source > 0) $Requete=$Requete." AND Source=$Source";
