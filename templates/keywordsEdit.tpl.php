@@ -30,6 +30,9 @@ function Addkw()
 <body>
     
 <table width="100%">
+    <tr><td>
+            Cliquer sur le parent, et ajoutr les mot-clés, séparés par des virgules
+        </td></tr>
 <tr><td>
     <div Id="newkw">
     <table width="30%" border="0" align="left" cellpadding="1" cellspacing="5">

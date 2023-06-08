@@ -52,8 +52,8 @@ else {
 
 // Gestion de la InsertDate
 date_default_timezone_set ( "UTC" );
-$InsertDate=date("c");
-if (substr($InsertDate,-6,6) == "+00:00") $InsertDate=substr($InsertDate,0,strlen($InsertDate)-6)."Z";
+$InsertDate=date('Y-m-d H:i:s');
+//if (substr($InsertDate,-6,6) == "+00:00") $InsertDate=substr($InsertDate,0,strlen($InsertDate)-6)."Z";
 
 // récupération des infos Exif
 $todelete=array();
@@ -174,7 +174,7 @@ foreach ($liste as $base) {
     
     
        // Insertion de la ligne d'image et récupération du numéro
-    $sql="INSERT INTO images (Date,Type,Source,ms,Focale,Vitesse,ISO,Diaphragme,Flash,portrait,paysage,largeur,hauteur,Duration,VideoWidth,VideoHeight) VALUES ('$date','$Type',$nsource,$ms,$Focale,$Vitesse,$ISO,$Diaphragme,$Flash,$portrait,$paysage,$largeur,$hauteur,$Duration,$VideoWidth,$VideoHeight)";
+    $sql="INSERT INTO images (InsertDate,Date,Type,Source,ms,Focale,Vitesse,ISO,Diaphragme,Flash,portrait,paysage,largeur,hauteur,Duration,VideoWidth,VideoHeight) VALUES ('$InsertDate','$date','$Type',$nsource,$ms,$Focale,$Vitesse,$ISO,$Diaphragme,$Flash,$portrait,$paysage,$largeur,$hauteur,$Duration,$VideoWidth,$VideoHeight)";
     
     $res=$bdd->Execute($sql);
     if (!$res) die("Query failed : $sql");
