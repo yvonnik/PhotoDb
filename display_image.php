@@ -58,9 +58,10 @@ if ($small == 1)
             // on est dans le cas où le viewport est <= à 2560x1440, et l'image est plus grande que le viewport
             // si l'image existe dans le cache 2560x1440, on la renvoie après resize
             // sinon on la créer et on la renvoie après resize
-            
             $file2560=$BaseFolder.$Sep."2560x1440".$Sep."mim".sprintf("%06d.jpg",$Id);
-            if (!is_dir($BaseFolder.$Sep."2560x1440")) mkdir($BaseFolder.$Sep."2560x1440", 0777, true);
+            if (!is_dir($BaseFolder.$Sep."2560x1440")) {
+                if (!mkdir($BaseFolder.$Sep."2560x1440", 0777, true)) echo "folder creation failed, mkdir $BaseFolder".$Sep."2560x1440 ";
+            }
             if (!file_exists($file2560)) update_2560($file,$file2560);
             if (filemtime($file) > filemtime($file2560)) update_2560($file,$file2560); // Le fichier de base a été modifié après le small, il faut reconstuire le small
             $file=$file2560;
